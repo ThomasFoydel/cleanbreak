@@ -1,0 +1,14 @@
+.sequencer {
+  background-color: rgb(228, 228, 228);
+
+  .instrument-container {
+    display: flex;
+    width: 50rem;
+    flex-direction: row;
+
+    .instrument-name {
+      max-width: 8rem;
+      min-width: 8rem;
+    }
+  }
+}

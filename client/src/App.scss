@@ -1,0 +1,45 @@
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div {
+  cursor: default;
+  font-weight: 400;
+}
+
+::selection {
+  color: none;
+  background: none;
+}
+/* For Mozilla Firefox */
+::-moz-selection {
+  color: none;
+  background: none;
+}
+button {
+  outline: none;
+  cursor: pointer;
+  &:hover {
+    color: rgb(172, 68, 68);
+  }
+}
+button::-moz-focus-inner {
+  border: 0;
+}
+
+input:focus {
+  outline-color: rgba(205, 38, 38, 0.644);
+}
