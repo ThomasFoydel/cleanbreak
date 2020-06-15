@@ -2,7 +2,8 @@ import React from 'react';
 import Tone from 'tone';
 import samples from 'samples/drums/index';
 
-// const actx = Tone.context;
+const actx = Tone.context;
+const now = actx.currentTime;
 
 const CTX = React.createContext();
 export { CTX };
@@ -31,6 +32,22 @@ let panVols = {
   closedHat2: new Tone.PanVol(),
   openHat: new Tone.PanVol(),
 };
+let solos = {
+  kick: new Tone.Solo(),
+  snare1: new Tone.Solo(),
+  snare2: new Tone.Solo(),
+  closedHat1: new Tone.Solo(),
+  closedHat2: new Tone.Solo(),
+  openHat: new Tone.Solo(),
+};
+let mutes = {
+  kick: actx.createGain(),
+  snare1: actx.createGain(),
+  snare2: actx.createGain(),
+  closedHat1: actx.createGain(),
+  closedHat2: actx.createGain(),
+  openHat: actx.createGain(),
+};
 
 let instruments = {
   kick: new Tone.Player(samples.kick[4]),
@@ -50,7 +67,11 @@ instrumentKeys.forEach((key) => {
 
 // connect mixer to master
 let panVolKeys = Object.keys(panVols);
-panVolKeys.forEach((key) => Tone.connect(panVols[key], masterVol));
+panVolKeys.forEach((key) => Tone.connect(panVols[key], solos[key]));
+
+Object.keys(solos).forEach((key) => Tone.connect(solos[key], mutes[key]));
+
+Object.keys(mutes).forEach((key) => Tone.connect(mutes[key], masterVol));
 
 let grid = {
   kick: [2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
@@ -88,7 +109,7 @@ function repeat(time) {
 
 export function reducer(state, action) {
   let { payload } = action;
-  let { prop, value } = payload ? payload : {};
+  let { name, value } = payload ? payload : {};
 
   switch (action.type) {
     case 'CHANGE_CLICK_ACTIVE':
@@ -123,9 +144,32 @@ export function reducer(state, action) {
 
       return {
         ...state,
-        panVols: { ...state.panVols, [payload.name]: value },
+        panVols: { ...state.panVols, [name]: value },
       };
-
+    case 'SOLO_INST':
+      solos[name].solo = true;
+      return {
+        ...state,
+        solos: { ...state.solos, [name]: true },
+      };
+    case 'UNSOLO_INST':
+      solos[name].solo = false;
+      return {
+        ...state,
+        solos: { ...state.solos, [name]: false },
+      };
+    case 'MUTE_INST':
+      mutes[name].gain.linearRampToValueAtTime(0, now + 0.01);
+      return {
+        ...state,
+        mutes: { ...state.mutes, [name]: true },
+      };
+    case 'UNMUTE_INST':
+      mutes[name].gain.linearRampToValueAtTime(1, now + 0.01);
+      return {
+        ...state,
+        mutes: { ...state.mutes, [name]: false },
+      };
     case 'CHANGE_SEQUENCE':
       let currentInstrumentGrid = [...state.sequencerGrid[payload.instrument]];
       if (payload.value < 2) {
@@ -167,6 +211,24 @@ export default function Store(props) {
     clickActive: false,
     bpm: Tone.Transport.bpm.value,
     swing: Tone.Transport.swing,
+
+    mutes: {
+      kick: false,
+      snare1: false,
+      snare2: false,
+      openHat: false,
+      closedHat1: false,
+      closedHat2: false,
+    },
+
+    solos: {
+      kick: solos.kick.solo,
+      snare1: solos.snare1.solo,
+      snare2: solos.snare2.solo,
+      openHat: solos.openHat.solo,
+      closedHat1: solos.closedHat1.solo,
+      closedHat2: solos.closedHat2.solo,
+    },
 
     panVols: {
       kick: panVols.kick.volume.value,

@@ -1,3 +1,8 @@
+/* 
+        credit and big thanks to thebabydino for the input styles
+        https://codepen.io/thebabydino/pen/YPRENB 
+*/
+
 $val: 320hz 600hz 1khz 3khz 6khz 12khz;
 
 $input-bw: 1.5em;
@@ -71,6 +76,19 @@ $thumb-r: 0.75em;
       margin-left: 50%;
       width: 7rem;
     }
+  }
+  .solo,
+  .mute {
+    margin-left: 50%;
+    transform: translateY(7rem) translateX(-50%);
+    transition: all 0.3s ease;
+  }
+  .solo-active {
+    color: rgb(240, 213, 4);
+    background: rgb(30, 30, 30);
+  }
+  .mute-active {
+    color: rgb(196, 14, 14);
   }
 }
 

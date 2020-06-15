@@ -9,7 +9,22 @@ const Mixer = () => {
     console.log(value, name);
     updateState({ type: 'CHANGE_MIXER', payload: { name, value } });
   };
-  console.log('panvols: ', appState.panVols);
+  const handleSolo = (e) => {
+    let { name } = e.target;
+    updateState({ type: 'SOLO_INST', payload: { name } });
+  };
+  const handleUnSolo = (e) => {
+    let { name } = e.target;
+    updateState({ type: 'UNSOLO_INST', payload: { name } });
+  };
+  const handleMute = (e) => {
+    let { name } = e.target;
+    updateState({ type: 'MUTE_INST', payload: { name } });
+  };
+  const handleUnMute = (e) => {
+    let { name } = e.target;
+    updateState({ type: 'UNMUTE_INST', payload: { name } });
+  };
   return (
     <div className='mixer'>
       {Object.keys(appState.panVols).map((keyName, i) => (
@@ -23,6 +38,20 @@ const Mixer = () => {
             value={appState.panVols[keyName] * -1}
           />
           <h2 className='name'>{keyName}</h2>
+          <button
+            onClick={appState.solos[keyName] ? handleUnSolo : handleSolo}
+            name={keyName}
+            className={`solo solo-${appState.solos[keyName] && 'active'}`}
+          >
+            solo
+          </button>
+          <button
+            onClick={appState.mutes[keyName] ? handleUnMute : handleMute}
+            name={keyName}
+            className={`mute mute-${appState.mutes[keyName] && 'active'}`}
+          >
+            mute
+          </button>
         </div>
       ))}
     </div>
