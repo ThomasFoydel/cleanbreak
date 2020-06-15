@@ -170,6 +170,13 @@ export function reducer(state, action) {
         ...state,
         mutes: { ...state.mutes, [name]: false },
       };
+    case 'CLEAR_GRID_INST':
+      let clearSection = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      grid[name] = [...clearSection];
+      return {
+        ...state,
+        sequencerGrid: { ...state.sequencerGrid, [name]: [...clearSection] },
+      };
     case 'CHANGE_SEQUENCE':
       let currentInstrumentGrid = [...state.sequencerGrid[payload.instrument]];
       if (payload.value < 2) {

@@ -51,6 +51,14 @@ const SampleSelector = () => {
     });
   };
 
+  const handleClear = (e) => {
+    let { name } = e.target;
+    updateState({
+      type: 'CLEAR_GRID_INST',
+      payload: { name: name },
+    });
+  };
+
   return (
     <div>
       {appState.samples.map((instrument, i) => (
@@ -71,6 +79,13 @@ const SampleSelector = () => {
             className='selector-btn'
           >
             {'>'}
+          </button>
+          <button
+            name={instrument.name}
+            onClick={handleClear}
+            className='clear-btn'
+          >
+            clear
           </button>
         </div>
       ))}
