@@ -4,6 +4,7 @@ import './App.scss';
 import { CTX } from 'context/Store';
 import Tempo from 'components/Tempo/Tempo';
 import Swing from 'components/Swing/Swing';
+import Mixer from 'components/Mixer/Mixer';
 
 function App() {
   const [appState, updateState] = useContext(CTX);
@@ -29,6 +30,7 @@ function App() {
       <Swing />
       <button onClick={handleStart}>start</button>
       <button onClick={handleStop}>stop</button>
+      <Mixer />
     </div>
   );
 }

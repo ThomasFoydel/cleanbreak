@@ -88,7 +88,7 @@ function repeat(time) {
 
 export function reducer(state, action) {
   let { payload } = action;
-  // let { prop, value } = payload ? payload : {};
+  let { prop, value } = payload ? payload : {};
 
   switch (action.type) {
     case 'CHANGE_CLICK_ACTIVE':
@@ -116,6 +116,14 @@ export function reducer(state, action) {
       return {
         ...state,
         samples: [...allInstrumentSamples],
+      };
+    case 'CHANGE_MIXER':
+      value *= -1;
+      panVols[payload.name].volume.value = value;
+
+      return {
+        ...state,
+        panVols: { ...state.panVols, [payload.name]: value },
       };
 
     case 'CHANGE_SEQUENCE':
@@ -159,6 +167,15 @@ export default function Store(props) {
     clickActive: false,
     bpm: Tone.Transport.bpm.value,
     swing: Tone.Transport.swing,
+
+    panVols: {
+      kick: panVols.kick.volume.value,
+      snare1: panVols.snare1.volume.value,
+      snare2: panVols.snare2.volume.value,
+      openHat: panVols.openHat.volume.value,
+      closedHat1: panVols.closedHat1.volume.value,
+      closedHat2: panVols.closedHat2.volume.value,
+    },
     // samples: {
     //   kick: samples.kick[0],
     //   snare1: samples.snare[0],
