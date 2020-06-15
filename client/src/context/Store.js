@@ -9,9 +9,19 @@ export { CTX };
 
 Tone.Transport.scheduleRepeat(repeat, '16n');
 
-const masterVol = new Tone.Volume(-15);
+const masterVol = new Tone.Volume(-5);
 const limiter = new Tone.Limiter(-8).toMaster();
-Tone.connect(masterVol, limiter);
+
+const distortion = new Tone.Distortion(0.4);
+const reverb = new Tone.Reverb(2.4);
+reverb.generate();
+reverb.wet.value = 0.3;
+
+// Tone.connect(masterVol, reverb);
+masterVol.connect(distortion);
+distortion.connect(reverb);
+// Tone.connect(reverb, limiter);
+reverb.connect(limiter);
 
 let panVols = {
   kick: new Tone.PanVol(),
@@ -33,7 +43,10 @@ let instruments = {
 
 // connect instruments to mixer
 let instrumentKeys = Object.keys(instruments);
-instrumentKeys.forEach((key) => Tone.connect(instruments[key], panVols[key]));
+instrumentKeys.forEach((key) => {
+  Tone.connect(instruments[key], panVols[key]);
+  instruments[key].sync();
+});
 
 // connect mixer to master
 let panVolKeys = Object.keys(panVols);
@@ -62,11 +75,12 @@ function repeat(time) {
       }
     });
   }, time);
+
   for (let i = 0; i < gridKeys.length; i++) {
     if (grid[gridKeys[i]][step]) {
       let val = 3 - grid[gridKeys[i]][step];
       instruments[gridKeys[i]].volume.value = -8 * val;
-      instruments[gridKeys[i]].restart();
+      instruments[gridKeys[i]].restart(time);
     }
   }
   index++;

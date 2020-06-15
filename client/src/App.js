@@ -4,7 +4,6 @@ import './App.scss';
 import { CTX } from 'context/Store';
 import Tempo from 'components/Tempo/Tempo';
 import Swing from 'components/Swing/Swing';
-import SampleSelector from 'components/SampleSelector/SampleSelector';
 
 function App() {
   const [appState, updateState] = useContext(CTX);

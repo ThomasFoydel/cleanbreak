@@ -10,6 +10,7 @@ import kick9 from './kick9.wav';
 import kick10 from './kick10.wav';
 import kick11 from './kick11.wav';
 import kick12 from './kick12.wav';
+import kick13 from './kick13.wav';
 
 import snare1 from './snare1.wav';
 import snare2 from './snare2.wav';
@@ -47,6 +48,7 @@ const samples = {
     kick10,
     kick11,
     kick12,
+    kick13,
   ],
   snare: [snare1, snare2, snare3, snare4, snare5, snare6],
   hihat: [hihat1, hihat2, hihat3, hihat4, hihat5, hihat6, hihat7],
