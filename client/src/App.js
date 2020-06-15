@@ -2,6 +2,9 @@ import React, { useEffect, useContext } from 'react';
 import StepSequencer from 'components/StepSequencer/StepSequencer';
 import './App.scss';
 import { CTX } from 'context/Store';
+import Tempo from 'components/Tempo/Tempo';
+import Swing from 'components/Swing/Swing';
+import SampleSelector from 'components/SampleSelector/SampleSelector';
 
 function App() {
   const [appState, updateState] = useContext(CTX);
@@ -13,10 +16,20 @@ function App() {
       updateState({ type: 'CHANGE_CLICK_ACTIVE', payload: false });
     });
   }, []);
+  const handleStart = () => {
+    updateState({ type: 'START' });
+  };
+  const handleStop = () => {
+    updateState({ type: 'STOP' });
+  };
   return (
     <div className='App'>
       <h1>hello world</h1>
       <StepSequencer />
+      <Tempo />
+      <Swing />
+      <button onClick={handleStart}>start</button>
+      <button onClick={handleStop}>stop</button>
     </div>
   );
 }

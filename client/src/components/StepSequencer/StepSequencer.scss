@@ -1,14 +1,42 @@
-.sequencer {
+.sequencer-container {
+  display: flex;
   background-color: rgb(228, 228, 228);
+  width: 64rem;
+}
+.sequencer {
+  // background-color: rgb(228, 228, 228);
+  .square-row {
+    display: flex;
+    width: 100rem;
+  }
 
   .instrument-container {
+    height: 3rem;
     display: flex;
-    width: 50rem;
-    flex-direction: row;
+    width: 57.2rem;
 
     .instrument-name {
       max-width: 8rem;
       min-width: 8rem;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-right: 1rem;
+    }
+  }
+  .timeblocks {
+    margin-left: 9rem;
+    display: flex;
+    width: 48rem;
+    .timeblock {
+      width: 2.5rem;
+      height: 2.5rem;
+      margin: 0.25rem;
+      border-radius: 2px;
+      background: rgb(187, 187, 187);
+    }
+    .active {
+      background: rgb(148, 35, 35);
     }
   }
 }
