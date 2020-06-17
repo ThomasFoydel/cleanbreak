@@ -1,5 +1,36 @@
+html,
+body {
+  overscroll-behavior: none;
+}
 html {
   font-size: 62.5%;
+  height: 100%;
+  // background: linear-gradient(rgba(0, 0, 0, 0.099), rgba(255, 255, 255, 0.179)),
+  //   url('imgs/circuits.jpg');
+  // background-size: cover;
+
+  // background-repeat: no-repeat;
+  // background-attachment: fixed;
+  // background-position: center;
+}
+.App {
+  min-height: 100%;
+}
+.background {
+  background: linear-gradient(rgba(0, 0, 0, 0.099), rgba(255, 255, 255, 0.179)),
+    url('imgs/circuits.jpg');
+  background-size: cover;
+  min-height: 180%;
+
+  min-width: 130rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  filter: grayscale(100%);
+  z-index: -1;
 }
 
 body {

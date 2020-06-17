@@ -31,7 +31,7 @@ const Mixer = () => {
         <div className='inst' key={i}>
           <input
             onChange={handleChange}
-            className='mixer-input'
+            className='range-input'
             type='range'
             name={keyName}
             max={30}

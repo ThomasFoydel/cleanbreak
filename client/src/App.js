@@ -5,6 +5,8 @@ import { CTX } from 'context/Store';
 import Tempo from 'components/Tempo/Tempo';
 import Swing from 'components/Swing/Swing';
 import Mixer from 'components/Mixer/Mixer';
+import ReverbSenders from 'components/ReverbSenders/ReverbSenders';
+import DistortionSenders from 'components/DistortionSenders/DistortionSenders';
 
 function App() {
   const [appState, updateState] = useContext(CTX);
@@ -23,9 +25,12 @@ function App() {
     updateState({ type: 'STOP' });
   };
   return (
-    <div className='App'>
+    <div className='App '>
+      <div className='background'></div>
       <h1>hello world</h1>
       <StepSequencer />
+      <DistortionSenders />
+      <ReverbSenders />
       <Tempo />
       <Swing />
       <button onClick={handleStart}>start</button>

@@ -13,16 +13,10 @@ Tone.Transport.scheduleRepeat(repeat, '16n');
 const masterVol = new Tone.Volume(-5);
 const limiter = new Tone.Limiter(-8).toMaster();
 
-const distortion = new Tone.Distortion(0.4);
-const reverb = new Tone.Reverb(2.4);
-reverb.generate();
-reverb.wet.value = 0.3;
-
 // Tone.connect(masterVol, reverb);
-masterVol.connect(distortion);
-distortion.connect(reverb);
+// masterVol.connect(distortion);
+// distortion.connect(reverb);
 // Tone.connect(reverb, limiter);
-reverb.connect(limiter);
 
 let panVols = {
   kick: new Tone.PanVol(),
@@ -57,6 +51,25 @@ let instruments = {
   closedHat2: new Tone.Player(samples.hihat[2]),
   openHat: new Tone.Player(samples.openhat[1]),
 };
+
+let reverbSends = {};
+Object.keys(instruments).forEach((key) => {
+  reverbSends[key] = solos[key].send('reverb', -Infinity);
+});
+let distortionSends = {};
+Object.keys(instruments).map(
+  (key) => (distortionSends[key] = solos[key].send('distortion', -Infinity))
+);
+
+const distortion = new Tone.Distortion(0.4).receive('distortion');
+const reverb = new Tone.Reverb(2.4).receive('reverb');
+reverb.generate();
+reverb.wet.value = 0.3;
+reverb.connect(limiter);
+distortion.connect(limiter);
+masterVol.connect(limiter);
+
+// reverbSends.openHat.gain.value = -1;
 
 // connect instruments to mixer
 let instrumentKeys = Object.keys(instruments);
@@ -195,10 +208,19 @@ export function reducer(state, action) {
           [payload.instrument]: [...currentInstrumentGrid],
         },
       };
-    // return {
-    //   ...state,
-    //   sequencerGrid: {...sequencerGrid, [payload.instrument]:  }
-    // };
+    case 'CHANGE_REVERB_SENDS':
+      reverbSends[name].gain.value = value;
+      return {
+        ...state,
+        reverbSends: { ...state.reverbSends, [name]: value },
+      };
+    case 'CHANGE_DISTORTION_SENDS':
+      distortionSends[name].gain.value = value;
+      return {
+        ...state,
+        distortionSends: { ...state.distortionSends, [name]: value },
+      };
+
     case 'START':
       Tone.Transport.start();
       return { ...state };
@@ -218,6 +240,23 @@ export default function Store(props) {
     clickActive: false,
     bpm: Tone.Transport.bpm.value,
     swing: Tone.Transport.swing,
+
+    reverbSends: {
+      kick: -50,
+      snare1: -50,
+      snare2: -50,
+      openHat: -50,
+      closedHat1: -50,
+      closedHat2: -50,
+    },
+    distortionSends: {
+      kick: -50,
+      snare1: -50,
+      snare2: -50,
+      openHat: -50,
+      closedHat1: -50,
+      closedHat2: -50,
+    },
 
     mutes: {
       kick: false,

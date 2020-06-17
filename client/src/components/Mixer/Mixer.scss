@@ -34,7 +34,7 @@ $thumb-r: 0.75em;
 }
 
 @mixin track-focus() {
-  background: #898586;
+  background: #494949;
 }
 
 @mixin thumb() {
@@ -59,28 +59,41 @@ $thumb-r: 0.75em;
   background-size: 1.1 * $thumb-r 100%;
 }
 
-.mixer {
+.mixer,
+.reverb-senders,
+.distortion-senders {
   width: 54rem;
-  background: rgb(57, 57, 57);
+  background: linear-gradient(rgb(57, 57, 57), rgb(71, 71, 71));
   border-radius: 2px;
   display: flex;
-  height: 30rem;
+  height: 33rem;
   transform: translateX(-50%);
+  margin-bottom: 1rem;
   margin-left: 50%;
+  // border: 1px white solid;
+
+  .effect-name {
+    color: white;
+    transform: translateX(-50%);
+    margin-left: 50%;
+    position: absolute;
+  }
+
   .inst {
     transform: translateY(14rem);
     .name {
       text-align: center;
       color: rgb(235, 235, 235);
-      transform: translateY(8rem) translateX(-50%);
+      transform: translateY(13rem) translateX(-50%);
       margin-left: 50%;
       width: 7rem;
+      font-size: 1.4rem;
     }
   }
   .solo,
   .mute {
     margin-left: 50%;
-    transform: translateY(7rem) translateX(-50%);
+    transform: translateY(3.6rem) translateX(-50%);
     transition: all 0.3s ease;
   }
   .solo-active {
@@ -92,7 +105,7 @@ $thumb-r: 0.75em;
   }
 }
 
-.mixer-input {
+.range-input {
   transform: rotate(-270deg);
   &,
   &::-webkit-slider-runnable-track,
@@ -106,7 +119,7 @@ $thumb-r: 0.75em;
   border: solid $input-bw transparent;
   padding: 0;
   //   width: $track-w;
-  min-width: 20rem;
+  min-width: 18rem;
   //   height: $input-h;
   height: 2.3rem;
   background: repeating-linear-gradient(

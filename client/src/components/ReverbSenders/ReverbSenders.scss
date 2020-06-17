@@ -1,0 +1,14 @@
+.reverb-senders {
+  //   .reverb-name {
+  //     transform: translateX(-50%) translateY(20rem);
+  //   }
+  // background: red;
+  max-width: 42rem;
+  .reverb-name {
+    text-align: center;
+    color: rgb(235, 235, 235);
+    transform: translateY(12.5rem) translateX(-50%);
+    margin-left: 50%;
+    width: 7rem;
+  }
+}

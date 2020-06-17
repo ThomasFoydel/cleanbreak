@@ -1,9 +1,11 @@
 .sample-selector {
   display: flex;
-  //   margin-left: -1rem;
-  .selector-btn {
-    width: 2.5rem;
-    height: 2.5rem;
-    margin: 0.25rem;
+
+  .selector-btn,
+  .clear-btn {
+    width: 5rem;
+    height: 5rem;
+    margin: 0.5rem;
+    font-size: 1.9rem;
   }
 }
