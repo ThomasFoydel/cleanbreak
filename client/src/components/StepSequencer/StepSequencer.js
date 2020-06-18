@@ -37,7 +37,7 @@ const StepSequencer = () => {
           </div>
         ))}
         <div className='timeblocks'>
-          {appState.sequencerGrid.kick.map((block, i) => (
+          {appState.sequencerGrid.A.map((block, i) => (
             <div className='timeblock' id={i} key={i}></div>
           ))}
         </div>

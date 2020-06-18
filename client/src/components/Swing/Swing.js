@@ -11,6 +11,7 @@ const Swing = () => {
     <div>
       <input
         type='range'
+        max={25}
         value={appState.swing * 100}
         onChange={handleChange}
       />

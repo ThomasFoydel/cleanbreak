@@ -63,19 +63,26 @@ $thumb-r: 0.75em;
 .reverb-senders,
 .distortion-senders {
   width: 54rem;
-  background: linear-gradient(rgb(57, 57, 57), rgb(71, 71, 71));
+  // background: linear-gradient(
+  //   rgba(173, 173, 173, 0.741),
+  //   rgba(194, 194, 194, 0.741)
+  // );
+  backdrop-filter: invert(0.7); //  blur(2px);
   border-radius: 2px;
   display: flex;
   height: 33rem;
   transform: translateX(-50%);
   margin-bottom: 1rem;
   margin-left: 50%;
+  color: rgb(241, 241, 241);
   // border: 1px white solid;
 
   .effect-name {
-    color: white;
-    transform: translateX(-50%);
-    margin-left: 50%;
+    letter-spacing: 1rem;
+    font-weight: bold;
+    font-size: 2.9rem;
+    width: 100%;
+    text-align: center;
     position: absolute;
   }
 
@@ -83,11 +90,15 @@ $thumb-r: 0.75em;
     transform: translateY(14rem);
     .name {
       text-align: center;
-      color: rgb(235, 235, 235);
+      color: rgb(233, 233, 233);
       transform: translateY(13rem) translateX(-50%);
       margin-left: 50%;
-      width: 7rem;
-      font-size: 1.4rem;
+      width: 6.6rem;
+      background: rgba(58, 58, 58, 0.5);
+      // border: 1px solid rgba(255, 255, 255, 0.562);
+      border-radius: 2px;
+      font-size: 1.3rem;
+      padding: 0.2rem 0rem;
     }
   }
   .solo,

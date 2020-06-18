@@ -34,25 +34,45 @@ import openhat4 from './openhat4.wav';
 import openhat5 from './openhat5.wav';
 import openhat6 from './openhat6.wav';
 
-const samples = {
-  kick: [
-    kick1,
-    kick2,
-    kick3,
-    kick4,
-    kick5,
-    kick6,
-    kick7,
-    kick8,
-    kick9,
-    kick10,
-    kick11,
-    kick12,
-    kick13,
-  ],
-  snare: [snare1, snare2, snare3, snare4, snare5, snare6],
-  hihat: [hihat1, hihat2, hihat3, hihat4, hihat5, hihat6, hihat7],
-  openhat: [openhat1, openhat2, openhat3, openhat4, openhat5, openhat6],
-};
+const samples =
+  // {
+  //   '8-bit':
+  [
+    { name: 'Kick 01', sample: kick1 },
+    { name: 'Kick 02', sample: kick2 },
+    { name: 'Kick 03', sample: kick3 },
+    { name: 'Kick 04', sample: kick4 },
+    { name: 'Kick 05', sample: kick5 },
+    { name: 'Kick 06', sample: kick6 },
+    { name: 'Kick 07', sample: kick7 },
+    { name: 'Kick 08', sample: kick8 },
+    { name: 'Kick 09', sample: kick9 },
+    { name: 'Kick 10', sample: kick10 },
+    { name: 'Kick 11', sample: kick11 },
+    { name: 'Kick 12', sample: kick12 },
+
+    { name: 'Snare 01', sample: snare1 },
+    { name: 'Snare 02', sample: snare2 },
+    { name: 'Snare 03', sample: snare3 },
+    { name: 'Snare 04', sample: snare4 },
+    { name: 'Snare 05', sample: snare5 },
+    { name: 'Snare 06', sample: snare6 },
+
+    { name: 'Hihat 01', sample: hihat1 },
+    { name: 'Hihat 02', sample: hihat2 },
+    { name: 'Hihat 03', sample: hihat3 },
+    { name: 'Hihat 04', sample: hihat4 },
+    { name: 'Hihat 05', sample: hihat5 },
+    { name: 'Hihat 06', sample: hihat6 },
+    { name: 'Hihat 07', sample: hihat7 },
+
+    { name: 'Open Hat 01', sample: openhat1 },
+    { name: 'Open Hat 02', sample: openhat2 },
+    { name: 'Open Hat 03', sample: openhat3 },
+    { name: 'Open Hat 04', sample: openhat4 },
+    { name: 'Open Hat 05', sample: openhat5 },
+    { name: 'Open Hat 06', sample: openhat6 },
+  ];
+// };
 
 export default samples;

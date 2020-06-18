@@ -1,53 +1,102 @@
 import React, { useContext } from 'react';
 import './SampleSelector.scss';
 import samples from 'samples/drums/index';
-
+import SampleDropDown from 'components/SampleSelector/SampleDropDown';
 import { CTX } from 'context/Store';
 
 const SampleSelector = () => {
   const [appState, updateState] = useContext(CTX);
 
-  const handleIncrement = (e) => {
-    let { id, name } = e.target;
-    let instrumentSamples = samples[id];
-
-    let currentSample = appState.samples.filter((inst) => inst.name === name)[0]
-      .sample;
-    let currentIndex = instrumentSamples.indexOf(currentSample);
-
-    let newIndex;
-    if (currentIndex < instrumentSamples.length - 1) {
-      newIndex = currentIndex + 1;
-    } else {
-      newIndex = 0;
+  const handleIncDec = (e) => {
+    let direction = e.target.attributes[1].value;
+    const { id, name } = e.target;
+    const instrumentIndex = appState.samples.findIndex(
+      (sample) => sample.name === name
+    );
+    const currentSampleName = appState.samples[instrumentIndex].sampleName;
+    let sampleIndex = samples.findIndex(
+      (sample) => sample.name === currentSampleName
+    );
+    if (direction === 'increment') {
+      if (sampleIndex < samples.length - 1) {
+        sampleIndex++;
+      } else {
+        sampleIndex = 0;
+      }
+    } else if (direction === 'decrement') {
+      if (sampleIndex > 0) {
+        sampleIndex--;
+      } else {
+        sampleIndex = samples.length - 1;
+      }
     }
-    let newSampleUrl = instrumentSamples[newIndex];
-
+    let newSampleUrl = samples[sampleIndex].sample;
+    let newSampleName = samples[sampleIndex].name;
     updateState({
       type: 'CHANGE_SAMPLE',
-      payload: { instrument: id, newSampleUrl, name: name },
+      payload: {
+        instrument: id,
+        newSampleUrl,
+        newSampleName,
+        sampleIndex,
+        name: name,
+      },
+    });
+  };
+
+  const handleIncrement = (e) => {
+    const { id, name } = e.target;
+    const instrumentIndex = appState.samples.findIndex(
+      (sample) => sample.name === name
+    );
+    const currentSampleName = appState.samples[instrumentIndex].sampleName;
+    let sampleIndex = samples.findIndex(
+      (sample) => sample.name === currentSampleName
+    );
+    if (sampleIndex < samples.length - 1) {
+      sampleIndex++;
+    } else {
+      sampleIndex = 0;
+    }
+    let newSampleUrl = samples[sampleIndex].sample;
+    let newSampleName = samples[sampleIndex].name;
+    updateState({
+      type: 'CHANGE_SAMPLE',
+      payload: {
+        instrument: id,
+        newSampleUrl,
+        newSampleName,
+        sampleIndex,
+        name: name,
+      },
     });
   };
 
   const handleDecrement = (e) => {
-    let { id, name } = e.target;
-    let instrumentSamples = samples[id];
-
-    let currentSample = appState.samples.filter((inst) => inst.name === name)[0]
-      .sample;
-    let currentIndex = instrumentSamples.indexOf(currentSample);
-
-    let newIndex;
-    if (currentIndex > 0) {
-      newIndex = currentIndex - 1;
+    const { id, name } = e.target;
+    const instrumentIndex = appState.samples.findIndex(
+      (sample) => sample.name === name
+    );
+    const currentSampleName = appState.samples[instrumentIndex].sampleName;
+    let sampleIndex = samples.findIndex(
+      (sample) => sample.name === currentSampleName
+    );
+    if (sampleIndex > 0) {
+      sampleIndex--;
     } else {
-      newIndex = instrumentSamples.length - 1;
+      sampleIndex = samples.length - 1;
     }
-    let newSampleUrl = instrumentSamples[newIndex];
-
+    let newSampleUrl = samples[sampleIndex].sample;
+    let newSampleName = samples[sampleIndex].name;
     updateState({
       type: 'CHANGE_SAMPLE',
-      payload: { instrument: id, newSampleUrl, name: name },
+      payload: {
+        instrument: id,
+        newSampleUrl,
+        newSampleName,
+        sampleIndex,
+        name: name,
+      },
     });
   };
 
@@ -60,22 +109,24 @@ const SampleSelector = () => {
   };
 
   return (
-    <div>
+    <div className='sample-selector-container'>
       {appState.samples.map((instrument, i) => (
         <div className='sample-selector' key={i}>
           <button
             id={instrument.type}
             name={instrument.name}
-            onClick={handleDecrement}
+            direction='decrement'
+            onClick={handleIncDec}
             className='selector-btn'
           >
             {'<'}
           </button>
-
+          <SampleDropDown name={instrument.name} samples={samples} />
           <button
             id={instrument.type}
             name={instrument.name}
-            onClick={handleIncrement}
+            direction='increment'
+            onClick={handleIncDec}
             className='selector-btn'
           >
             {'>'}

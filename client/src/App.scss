@@ -1,6 +1,7 @@
 html,
 body {
   overscroll-behavior: none;
+  overflow: hidden;
 }
 html {
   font-size: 62.5%;
@@ -12,17 +13,18 @@ html {
   // background-repeat: no-repeat;
   // background-attachment: fixed;
   // background-position: center;
+  // overflow-x: hidden;
 }
 .App {
   min-height: 100%;
 }
 .background {
   background: linear-gradient(rgba(0, 0, 0, 0.099), rgba(255, 255, 255, 0.179)),
-    url('imgs/circuits.jpg');
+    // url('imgs/circuits.jpg');
+      url('imgs/circuits3.png');
   background-size: cover;
   min-height: 180%;
-
-  min-width: 130rem;
+  min-width: 100vw;
   position: absolute;
   left: 0;
   top: 0;
@@ -73,4 +75,15 @@ button::-moz-focus-inner {
 
 input:focus {
   outline-color: rgba(205, 38, 38, 0.644);
+}
+
+.components-container {
+  position: absolute;
+  // top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 125rem;
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: scroll;
 }

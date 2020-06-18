@@ -19,37 +19,37 @@ const limiter = new Tone.Limiter(-8).toMaster();
 // Tone.connect(reverb, limiter);
 
 let panVols = {
-  kick: new Tone.PanVol(),
-  snare1: new Tone.PanVol(),
-  snare2: new Tone.PanVol(),
-  closedHat1: new Tone.PanVol(),
-  closedHat2: new Tone.PanVol(),
-  openHat: new Tone.PanVol(),
+  A: new Tone.PanVol(),
+  B: new Tone.PanVol(),
+  C: new Tone.PanVol(),
+  D: new Tone.PanVol(),
+  E: new Tone.PanVol(),
+  F: new Tone.PanVol(),
 };
 let solos = {
-  kick: new Tone.Solo(),
-  snare1: new Tone.Solo(),
-  snare2: new Tone.Solo(),
-  closedHat1: new Tone.Solo(),
-  closedHat2: new Tone.Solo(),
-  openHat: new Tone.Solo(),
+  A: new Tone.Solo(),
+  B: new Tone.Solo(),
+  C: new Tone.Solo(),
+  D: new Tone.Solo(),
+  E: new Tone.Solo(),
+  F: new Tone.Solo(),
 };
 let mutes = {
-  kick: actx.createGain(),
-  snare1: actx.createGain(),
-  snare2: actx.createGain(),
-  closedHat1: actx.createGain(),
-  closedHat2: actx.createGain(),
-  openHat: actx.createGain(),
+  A: actx.createGain(),
+  B: actx.createGain(),
+  C: actx.createGain(),
+  D: actx.createGain(),
+  E: actx.createGain(),
+  F: actx.createGain(),
 };
 
 let instruments = {
-  kick: new Tone.Player(samples.kick[4]),
-  snare1: new Tone.Player(samples.snare[1]),
-  snare2: new Tone.Player(samples.snare[2]),
-  closedHat1: new Tone.Player(samples.hihat[1]),
-  closedHat2: new Tone.Player(samples.hihat[2]),
-  openHat: new Tone.Player(samples.openhat[1]),
+  A: new Tone.Player(samples[4].sample),
+  B: new Tone.Player(samples[1].sample),
+  C: new Tone.Player(samples[2].sample),
+  D: new Tone.Player(samples[1].sample),
+  E: new Tone.Player(samples[2].sample),
+  F: new Tone.Player(samples[1].sample),
 };
 
 let reverbSends = {};
@@ -69,7 +69,7 @@ reverb.connect(limiter);
 distortion.connect(limiter);
 masterVol.connect(limiter);
 
-// reverbSends.openHat.gain.value = -1;
+// reverbSends.F.gain.value = -1;
 
 // connect instruments to mixer
 let instrumentKeys = Object.keys(instruments);
@@ -87,12 +87,12 @@ Object.keys(solos).forEach((key) => Tone.connect(solos[key], mutes[key]));
 Object.keys(mutes).forEach((key) => Tone.connect(mutes[key], masterVol));
 
 let grid = {
-  kick: [2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
-  snare1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  snare2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  openHat: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  closedHat1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  closedHat2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  A: [2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
+  B: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  C: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  F: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  D: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  E: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 };
 let gridKeys = Object.keys(grid);
 let index = 0;
@@ -135,22 +135,16 @@ export function reducer(state, action) {
       return { ...state, swing: payload };
     case 'CHANGE_SAMPLE':
       instruments[payload.name].load(payload.newSampleUrl);
-
-      /* copy of state */
-      let allInstrumentSamples = [...state.samples];
-      /* return current instrument state  {type: "kick", name: "kick", sample: "/static/media/kick1.bd95b458.wav"}   */
-      let currentInst = state.samples.filter(
-        (inst) => inst.name === payload.name
-      )[0];
-      /* index of current instrument */
-      let currentIndex = allInstrumentSamples.indexOf(currentInst);
-
+      let stateCopy = [...state.samples];
+      let currentIndex = stateCopy.findIndex((inst) => inst.name === name);
+      let currentInst = stateCopy[currentIndex];
       currentInst.sample = payload.newSampleUrl;
-      allInstrumentSamples[currentIndex] = currentInst;
+      currentInst.sampleName = payload.newSampleName;
       return {
         ...state,
-        samples: [...allInstrumentSamples],
+        samples: [...stateCopy],
       };
+      return { ...state };
     case 'CHANGE_MIXER':
       value *= -1;
       panVols[payload.name].volume.value = value;
@@ -242,71 +236,71 @@ export default function Store(props) {
     swing: Tone.Transport.swing,
 
     reverbSends: {
-      kick: -50,
-      snare1: -50,
-      snare2: -50,
-      openHat: -50,
-      closedHat1: -50,
-      closedHat2: -50,
+      A: -50,
+      B: -50,
+      C: -50,
+      F: -50,
+      D: -50,
+      E: -50,
     },
     distortionSends: {
-      kick: -50,
-      snare1: -50,
-      snare2: -50,
-      openHat: -50,
-      closedHat1: -50,
-      closedHat2: -50,
+      A: -50,
+      B: -50,
+      C: -50,
+      F: -50,
+      D: -50,
+      E: -50,
     },
 
     mutes: {
-      kick: false,
-      snare1: false,
-      snare2: false,
-      openHat: false,
-      closedHat1: false,
-      closedHat2: false,
+      A: false,
+      B: false,
+      C: false,
+      F: false,
+      D: false,
+      E: false,
     },
 
     solos: {
-      kick: solos.kick.solo,
-      snare1: solos.snare1.solo,
-      snare2: solos.snare2.solo,
-      openHat: solos.openHat.solo,
-      closedHat1: solos.closedHat1.solo,
-      closedHat2: solos.closedHat2.solo,
+      A: solos.A.solo,
+      B: solos.B.solo,
+      C: solos.C.solo,
+      F: solos.F.solo,
+      D: solos.D.solo,
+      E: solos.E.solo,
     },
 
     panVols: {
-      kick: panVols.kick.volume.value,
-      snare1: panVols.snare1.volume.value,
-      snare2: panVols.snare2.volume.value,
-      openHat: panVols.openHat.volume.value,
-      closedHat1: panVols.closedHat1.volume.value,
-      closedHat2: panVols.closedHat2.volume.value,
+      A: panVols.A.volume.value,
+      B: panVols.B.volume.value,
+      C: panVols.C.volume.value,
+      F: panVols.F.volume.value,
+      D: panVols.D.volume.value,
+      E: panVols.E.volume.value,
     },
     // samples: {
-    //   kick: samples.kick[0],
-    //   snare1: samples.snare[0],
-    //   snare2: samples.snare[1],
-    //   openhat: samples.openhat[0],
-    //   closedHat1: samples.closedHat[0],
-    //   closedHat2: samples.closedHat[1],
+    //   A: samples.A[0],
+    //   B: samples.snare[0],
+    //   C: samples.snare[1],
+    //   F: samples.F[0],
+    //   D: samples.closedHat[0],
+    //   E: samples.closedHat[1],
     // },
     samples: [
-      { type: 'kick', name: 'kick', sample: samples.kick[4] },
-      { type: 'snare', name: 'snare1', sample: samples.snare[1] },
-      { type: 'snare', name: 'snare2', sample: samples.snare[2] },
-      { type: 'openhat', name: 'openHat', sample: samples.openhat[1] },
-      { type: 'hihat', name: 'closedHat1', sample: samples.hihat[2] },
-      { type: 'hihat', name: 'closedHat2', sample: samples.hihat[1] },
+      { name: 'A', sample: samples[4].sample, sampleName: samples[4].name },
+      { name: 'B', sample: samples[1].sample, sampleName: samples[1].name },
+      { name: 'C', sample: samples[2].sample, sampleName: samples[2].name },
+      { name: 'D', sample: samples[1].sample, sampleName: samples[1].name },
+      { name: 'E', sample: samples[2].sample, sampleName: samples[2].name },
+      { name: 'F', sample: samples[1].sample, sampleName: samples[1].name },
     ],
     sequencerGrid: {
-      kick: [2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
-      snare1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      snare2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      openHat: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      closedHat1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      closedHat2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      A: [2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
+      B: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      C: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      D: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      E: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      F: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     },
   });
 

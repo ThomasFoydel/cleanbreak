@@ -1,13 +1,13 @@
 .sequencer-container {
   display: flex;
-  // background-color: rgb(84, 84, 84);
-  backdrop-filter: invert(0.7);
+  background-color: rgba(212, 212, 212, 0.349);
+  backdrop-filter: invert(1) blur(2px);
   color: white;
-  width: 124rem;
+  width: 125rem;
   border-radius: 2px;
   padding: 2rem 0;
-  margin-left: 50%;
-  transform: translateX(-50%);
+  // margin-left: 50%;
+  // transform: translateX(-50%);
 }
 .sequencer {
   // background-color: rgb(228, 228, 228);
@@ -21,14 +21,16 @@
   }
 
   .instrument-container {
-    height: 6rem;
+    height: 5rem;
     display: flex;
-    width: 105rem;
+    width: 84rem;
     background: rgb(40, 40, 40);
+    border-radius: 2px;
+    margin-left: 1.3rem;
 
     .instrument-name {
-      max-width: 8rem;
-      min-width: 8rem;
+      max-width: 2rem;
+      min-width: 2rem;
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -36,16 +38,18 @@
     }
   }
   .timeblocks {
-    margin-left: 9rem;
+    margin-left: 4.3rem;
     display: flex;
     width: 96rem;
+    // margin-left: 1.3rem;
 
     .timeblock {
-      width: 5rem;
-      height: 5rem;
-      margin: 0.5rem;
+      width: 4.2rem;
+      height: 4.2rem;
+      margin: 0.42rem;
       border-radius: 2px;
-      background: #98989872;
+      background: #8080807a;
+
       // transition: all 0.025s ease-in;
     }
     .active {
