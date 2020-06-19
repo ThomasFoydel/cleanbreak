@@ -9,8 +9,10 @@ const SampleDropDown = ({ name, samples }) => {
 
   return (
     <div
+      id='sample-selecta'
       className='sample-dropdown'
       onClick={() => setOpened(!opened)}
+      onScroll={(e) => e.preventDefault()}
       onMouseLeave={() => setOpened(false)}
       //   style={{ height: hover ? '12rem' : '4rem' }}
     >

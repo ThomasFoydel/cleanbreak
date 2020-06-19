@@ -71,12 +71,12 @@ $thumb-r: 0.75em;
   border-radius: 2px;
   display: flex;
   height: 33rem;
-  transform: translateX(-50%);
-  margin-bottom: 1rem;
-  margin-left: 50%;
+  // transform: translateX(-50%);
+  // margin-bottom: 1rem;
+  // margin-left: 50%;
   color: rgb(241, 241, 241);
   // border: 1px white solid;
-
+  // position: relative;
   .effect-name {
     letter-spacing: 1rem;
     font-weight: bold;

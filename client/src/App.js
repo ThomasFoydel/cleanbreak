@@ -7,16 +7,9 @@ import Swing from 'components/Swing/Swing';
 import Mixer from 'components/Mixer/Mixer';
 import ReverbSenders from 'components/ReverbSenders/ReverbSenders';
 import DistortionSenders from 'components/DistortionSenders/DistortionSenders';
-import { Parallax, ParallaxLayer } from 'react-spring/renderprops-addons';
 
 function App() {
   const [appState, updateState] = useContext(CTX);
-  const { page } = appState;
-  let parallax;
-
-  // useEffect(() => {
-  //   parallax.scrollTo(page);
-  // }, [page]);
 
   useEffect(() => {
     window.addEventListener('mousedown', function () {

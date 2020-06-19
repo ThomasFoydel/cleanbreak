@@ -19,6 +19,7 @@ const Mixer = () => {
   };
   const handleMute = (e) => {
     let { name } = e.target;
+    console.log('name: ', name);
     updateState({ type: 'MUTE_INST', payload: { name } });
   };
   const handleUnMute = (e) => {
@@ -29,6 +30,8 @@ const Mixer = () => {
     <div className='mixer'>
       {Object.keys(appState.panVols).map((keyName, i) => (
         <div className='inst' key={i}>
+          {/* {console.log(keyName)}
+          {console.log(appState.solos)} */}
           <input
             onChange={handleChange}
             className='range-input'

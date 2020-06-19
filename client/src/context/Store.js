@@ -80,11 +80,10 @@ instrumentKeys.forEach((key) => {
 
 // connect mixer to master
 let panVolKeys = Object.keys(panVols);
-panVolKeys.forEach((key) => Tone.connect(panVols[key], solos[key]));
+panVolKeys.forEach((key) => Tone.connect(panVols[key], mutes[key]));
 
-Object.keys(solos).forEach((key) => Tone.connect(solos[key], mutes[key]));
-
-Object.keys(mutes).forEach((key) => Tone.connect(mutes[key], masterVol));
+Object.keys(mutes).forEach((key) => Tone.connect(mutes[key], solos[key]));
+Object.keys(solos).forEach((key) => Tone.connect(solos[key], masterVol));
 
 let grid = {
   A: [2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
@@ -230,6 +229,7 @@ export function reducer(state, action) {
 
 export default function Store(props) {
   const stateHook = React.useReducer(reducer, {
+    page: 0,
     isLoggedIn: false,
     clickActive: false,
     bpm: Tone.Transport.bpm.value,
