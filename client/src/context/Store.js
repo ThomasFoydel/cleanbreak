@@ -133,17 +133,19 @@ export function reducer(state, action) {
       Tone.Transport.swing = payload;
       return { ...state, swing: payload };
     case 'CHANGE_SAMPLE':
-      instruments[payload.name].load(payload.newSampleUrl);
+      // console.log('  payload.newSampleUrl:', payload.newSampleUrl);
+
+      instruments[name].load(payload.newSampleUrl);
       let stateCopy = [...state.samples];
       let currentIndex = stateCopy.findIndex((inst) => inst.name === name);
       let currentInst = stateCopy[currentIndex];
       currentInst.sample = payload.newSampleUrl;
+      console.log(' currentInst:', currentInst);
       currentInst.sampleName = payload.newSampleName;
       return {
         ...state,
         samples: [...stateCopy],
       };
-      return { ...state };
     case 'CHANGE_MIXER':
       value *= -1;
       panVols[payload.name].volume.value = value;

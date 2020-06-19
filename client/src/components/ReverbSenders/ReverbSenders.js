@@ -16,20 +16,22 @@ const ReverbSenders = () => {
   return (
     <div className='reverb-senders'>
       <h1 className='effect-name'>reverb</h1>
-      {Object.keys(appState.reverbSends).map((inst, i) => (
-        <div className='inst' key={i}>
-          <h2 className='reverb-name'>{inst}</h2>
-          <input
-            className='range-input'
-            type='range'
-            min={0}
-            max={50}
-            name={inst}
-            value={appState.reverbSends[inst] * -1}
-            onChange={handleChange}
-          />
-        </div>
-      ))}
+      {Object.keys(appState.reverbSends)
+        .sort()
+        .map((inst, i) => (
+          <div className='inst' key={i}>
+            <h2 className='reverb-name'>{inst}</h2>
+            <input
+              className='range-input'
+              type='range'
+              min={0}
+              max={50}
+              name={inst}
+              value={appState.reverbSends[inst] * -1}
+              onChange={handleChange}
+            />
+          </div>
+        ))}
     </div>
   );
 };

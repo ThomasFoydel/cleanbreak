@@ -44,62 +44,6 @@ const SampleSelector = () => {
     });
   };
 
-  const handleIncrement = (e) => {
-    const { id, name } = e.target;
-    const instrumentIndex = appState.samples.findIndex(
-      (sample) => sample.name === name
-    );
-    const currentSampleName = appState.samples[instrumentIndex].sampleName;
-    let sampleIndex = samples.findIndex(
-      (sample) => sample.name === currentSampleName
-    );
-    if (sampleIndex < samples.length - 1) {
-      sampleIndex++;
-    } else {
-      sampleIndex = 0;
-    }
-    let newSampleUrl = samples[sampleIndex].sample;
-    let newSampleName = samples[sampleIndex].name;
-    updateState({
-      type: 'CHANGE_SAMPLE',
-      payload: {
-        instrument: id,
-        newSampleUrl,
-        newSampleName,
-        sampleIndex,
-        name: name,
-      },
-    });
-  };
-
-  const handleDecrement = (e) => {
-    const { id, name } = e.target;
-    const instrumentIndex = appState.samples.findIndex(
-      (sample) => sample.name === name
-    );
-    const currentSampleName = appState.samples[instrumentIndex].sampleName;
-    let sampleIndex = samples.findIndex(
-      (sample) => sample.name === currentSampleName
-    );
-    if (sampleIndex > 0) {
-      sampleIndex--;
-    } else {
-      sampleIndex = samples.length - 1;
-    }
-    let newSampleUrl = samples[sampleIndex].sample;
-    let newSampleName = samples[sampleIndex].name;
-    updateState({
-      type: 'CHANGE_SAMPLE',
-      payload: {
-        instrument: id,
-        newSampleUrl,
-        newSampleName,
-        sampleIndex,
-        name: name,
-      },
-    });
-  };
-
   const handleClear = (e) => {
     let { name } = e.target;
     updateState({

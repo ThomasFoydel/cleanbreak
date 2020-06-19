@@ -7,12 +7,44 @@ const SampleDropDown = ({ name, samples }) => {
 
   let index = appState.samples.findIndex((sample) => sample.name === name);
 
+  const handleSelect = (e) => {
+    e.preventDefault();
+    let id = e.target.id;
+    let newSampleName = e.target.attributes.name.value;
+    console.log('newSampleName: ', newSampleName);
+    console.log('id: ', id);
+
+    let index = appState.samples.findIndex(
+      (sample) => sample.name === newSampleName
+    );
+
+    updateState({
+      type: 'CHANGE_SAMPLE',
+      payload: {
+        instrument: name,
+        newSampleUrl: id,
+        newSampleName,
+        sampleIndex: index,
+        name,
+      },
+    });
+  };
+
+  const handleClick = (e) => {
+    if (e.target.className === 'sample-name') {
+      console.log('NNNAME : ', e.target.attributes.name.value);
+      handleSelect(e);
+    } else {
+      // console.log(e.target.id);
+      setOpened(!opened);
+    }
+  };
+
   return (
     <div
       id='sample-selecta'
       className='sample-dropdown'
-      onClick={() => setOpened(!opened)}
-      onScroll={(e) => e.preventDefault()}
+      onClick={handleClick}
       onMouseLeave={() => setOpened(false)}
       //   style={{ height: hover ? '12rem' : '4rem' }}
     >
@@ -30,7 +62,14 @@ const SampleDropDown = ({ name, samples }) => {
         }}
       >
         {samples.map((sample, i) => (
-          <div className='sample-name' key={i}>
+          <div
+            className='sample-name'
+            name={sample.name}
+            onClick={handleClick}
+            id={sample.sample}
+            key={i}
+          >
+            {/* {console.log('SAMPLE!!: ', sample.name)} */}
             {sample.name}
           </div>
         ))}

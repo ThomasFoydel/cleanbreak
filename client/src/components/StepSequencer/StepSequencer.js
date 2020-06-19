@@ -16,6 +16,7 @@ const StepSequencer = () => {
       updateState({ type: 'CHANGE_SEQUENCE', payload: e });
     }
   };
+
   return (
     <div className='sequencer-container'>
       <div className='sequencer'>
