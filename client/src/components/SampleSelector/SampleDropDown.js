@@ -11,9 +11,6 @@ const SampleDropDown = ({ name, samples }) => {
     e.preventDefault();
     let id = e.target.id;
     let newSampleName = e.target.attributes.name.value;
-    console.log('newSampleName: ', newSampleName);
-    console.log('id: ', id);
-
     let index = appState.samples.findIndex(
       (sample) => sample.name === newSampleName
     );

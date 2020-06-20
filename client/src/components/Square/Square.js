@@ -34,7 +34,7 @@ const Square = ({ handleClick, instrument, step, value, handleMouseEnter }) => {
   return (
     <animated.div
       style={animationProps}
-      onClick={handleSquareClick}
+      onMouseDown={handleSquareClick}
       className='square'
       onMouseEnter={handleSquareMouseEnter}
     ></animated.div>

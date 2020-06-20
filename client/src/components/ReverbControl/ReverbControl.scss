@@ -1,0 +1,14 @@
+.reverb-control {
+  background: rgba(0, 0, 0, 0.296);
+  backdrop-filter: invert(1) blur(2px);
+  width: 20rem;
+  height: 26rem;
+  margin: 5rem 5rem;
+  z-index: 5;
+  color: white;
+  //   display: flex;
+
+  .range-input {
+    transform: rotate(-90deg) translateY(3rem) translateX(-2rem);
+  }
+}

@@ -13,11 +13,6 @@ Tone.Transport.scheduleRepeat(repeat, '16n');
 const masterVol = new Tone.Volume(-5);
 const limiter = new Tone.Limiter(-8).toMaster();
 
-// Tone.connect(masterVol, reverb);
-// masterVol.connect(distortion);
-// distortion.connect(reverb);
-// Tone.connect(reverb, limiter);
-
 let panVols = {
   A: new Tone.PanVol(),
   B: new Tone.PanVol(),
@@ -57,16 +52,29 @@ Object.keys(instruments).forEach((key) => {
   reverbSends[key] = solos[key].send('reverb', -Infinity);
 });
 let distortionSends = {};
-Object.keys(instruments).map(
+Object.keys(instruments).forEach(
   (key) => (distortionSends[key] = solos[key].send('distortion', -Infinity))
 );
+let pingPongSends = {};
+Object.keys(instruments).forEach((key) => {
+  pingPongSends[key] = solos[key].send('pingpong', -Infinity);
+});
+// let flangerSends = {};
+// Object.keys(instruments).forEach((key) => {
+//   flangerSends[key] = solos[key].send('flanger',  -Infinity);
+// });
 
 const distortion = new Tone.Distortion(0.4).receive('distortion');
 const reverb = new Tone.Reverb(2.4).receive('reverb');
 reverb.generate();
+const pingPong = new Tone.PingPongDelay().receive('pingpong');
+// const flanger = new Tone.BitCrusher(4).receive('flanger');
+
 reverb.wet.value = 0.3;
-reverb.connect(limiter);
 distortion.connect(limiter);
+reverb.connect(limiter);
+pingPong.connect(limiter);
+// flanger.connect(limiter);
 masterVol.connect(limiter);
 
 // reverbSends.F.gain.value = -1;
@@ -121,7 +129,7 @@ function repeat(time) {
 
 export function reducer(state, action) {
   let { payload } = action;
-  let { name, value } = payload ? payload : {};
+  let { name, value, type } = payload ? payload : {};
 
   switch (action.type) {
     case 'CHANGE_CLICK_ACTIVE':
@@ -133,14 +141,11 @@ export function reducer(state, action) {
       Tone.Transport.swing = payload;
       return { ...state, swing: payload };
     case 'CHANGE_SAMPLE':
-      // console.log('  payload.newSampleUrl:', payload.newSampleUrl);
-
       instruments[name].load(payload.newSampleUrl);
       let stateCopy = [...state.samples];
       let currentIndex = stateCopy.findIndex((inst) => inst.name === name);
       let currentInst = stateCopy[currentIndex];
       currentInst.sample = payload.newSampleUrl;
-      console.log(' currentInst:', currentInst);
       currentInst.sampleName = payload.newSampleName;
       return {
         ...state,
@@ -215,6 +220,12 @@ export function reducer(state, action) {
         ...state,
         distortionSends: { ...state.distortionSends, [name]: value },
       };
+    case 'CHANGE_PINGPONG_SENDS':
+      pingPongSends[name].gain.value = value;
+      return {
+        ...state,
+        pingPongSends: { ...state.pingPongSends, [name]: value },
+      };
 
     case 'START':
       Tone.Transport.start();
@@ -222,6 +233,13 @@ export function reducer(state, action) {
     case 'STOP':
       Tone.Transport.pause();
       return { ...state };
+    case 'CHANGE_REVERB':
+      reverb[type] = value;
+      reverb.generate();
+      return {
+        ...state,
+        reverb: { ...state.reverb, [type]: value },
+      };
     default:
       console.log('REDUCER ERROR: action: ', action);
       // throw Error('reducer error');
@@ -236,6 +254,11 @@ export default function Store(props) {
     clickActive: false,
     bpm: Tone.Transport.bpm.value,
     swing: Tone.Transport.swing,
+
+    reverb: {
+      preDelay: reverb.preDelay,
+      decay: reverb.decay,
+    },
 
     reverbSends: {
       A: -50,

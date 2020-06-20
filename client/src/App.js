@@ -7,6 +7,7 @@ import Swing from 'components/Swing/Swing';
 import Mixer from 'components/Mixer/Mixer';
 import ReverbSenders from 'components/ReverbSenders/ReverbSenders';
 import DistortionSenders from 'components/DistortionSenders/DistortionSenders';
+import ReverbControl from 'components/ReverbControl/ReverbControl';
 
 function App() {
   const [appState, updateState] = useContext(CTX);
@@ -34,6 +35,7 @@ function App() {
         <button onClick={handleStop}>stop</button>
         <Tempo />
         <Swing />
+        <ReverbControl />
         <DistortionSenders />
         <ReverbSenders />
         <Mixer />
