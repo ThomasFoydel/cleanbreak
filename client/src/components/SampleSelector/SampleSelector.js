@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import './SampleSelector.scss';
-import samples from 'samples/drums/index';
+import samples from 'samples/op/index';
 import SampleDropDown from 'components/SampleSelector/SampleDropDown';
 import { CTX } from 'context/Store';
 

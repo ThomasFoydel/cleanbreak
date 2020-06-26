@@ -2,7 +2,8 @@
   //   .reverb-name {
   //     transform: translateX(-50%) translateY(20rem);
   //   }
-  // background: red;
+  background: rgba(0, 0, 0, 0.336);
+  backdrop-filter: blur(2px) invert(1);
   max-width: 42rem;
   .reverb-name {
     text-align: center;

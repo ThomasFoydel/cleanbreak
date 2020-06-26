@@ -9,6 +9,7 @@ const Swing = () => {
   };
   return (
     <div>
+      <div className='name'>swing</div>
       <input
         type='range'
         max={25}

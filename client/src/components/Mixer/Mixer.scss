@@ -58,10 +58,28 @@ $thumb-r: 0.75em;
     linear-gradient(#cdc0c0, #fcf5ef, #fcf5ef, #cdc0c0);
   background-size: 1.1 * $thumb-r 100%;
 }
+
+.mixer {
+  min-height: 43rem;
+  transform: translateX(-50%);
+  margin-left: 50%;
+  max-width: 52.5rem;
+  .pan-control {
+    width: 8rem;
+    margin-left: 2px;
+    padding-left: 0.5rem;
+  }
+  .range-input {
+    padding-right: 14px;
+  }
+}
+
+.pingpong-control,
 .reverb-control,
 .mixer,
 .reverb-senders,
-.distortion-senders {
+.distortion-senders,
+.pingpong-senders {
   width: 54rem;
   // background: linear-gradient(
   //   rgba(173, 173, 173, 0.741),
@@ -71,12 +89,9 @@ $thumb-r: 0.75em;
   border-radius: 2px;
   display: flex;
   height: 33rem;
-  // transform: translateX(-50%);
-  // margin-bottom: 1rem;
-  // margin-left: 50%;
+
   color: rgb(241, 241, 241);
-  // border: 1px white solid;
-  // position: relative;
+  position: relative;
   .effect-name {
     letter-spacing: 1rem;
     font-weight: bold;

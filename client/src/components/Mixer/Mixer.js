@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import './Mixer.scss';
+import PanControl from 'components/PanControl/PanControl';
+
 import { CTX } from 'context/Store';
 
 const Mixer = () => {
@@ -39,6 +41,7 @@ const Mixer = () => {
               value={appState.panVols[keyName] * -1}
             />
             <h2 className='name'>{keyName}</h2>
+            <PanControl name={keyName} />
             <button
               onClick={appState.solos[keyName] ? handleUnSolo : handleSolo}
               name={keyName}

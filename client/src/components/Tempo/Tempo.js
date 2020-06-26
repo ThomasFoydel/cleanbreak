@@ -8,6 +8,7 @@ const Tempo = () => {
   };
   return (
     <div>
+      <div className='name'>tempo</div>
       <input
         type='range'
         min='65'

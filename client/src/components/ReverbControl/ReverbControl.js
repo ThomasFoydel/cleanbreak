@@ -19,29 +19,48 @@ const ReverbControl = () => {
 
     updateState({ type: 'CHANGE_REVERB', payload: { type: id, value } });
   };
+
+  const handleMix = (e) => {
+    let { value, id } = e.target;
+    value = +value;
+    value /= 100;
+
+    updateState({ type: 'CHANGE_REVERB', payload: { type: id, value } });
+  };
   return (
     <div className='reverb-control'>
       <div className='effect-name'>REVERB</div>
       <div className='inst'>
+        <h2 className='name'>decay</h2>
         <input
           type='range'
           className='range-input'
           id='decay'
           step={10}
           value={appState.reverb.decay * 20}
-          // value={appState.reverb.decay}
           onChange={handleDecay}
         />
       </div>
       <div className='inst'>
+        <h2 className='name'>pre-delay</h2>
         <input
           type='range'
           className='range-input'
           id='preDelay'
           step={5}
           value={appState.reverb.preDelay * 100}
-          // value={appState.reverb.preDelay}
           onChange={handlePreDelay}
+        />
+      </div>
+      <div className='inst'>
+        <h2 className='name'>mix</h2>
+        <input
+          type='range'
+          className='range-input'
+          id='wet'
+          step={5}
+          value={appState.reverb.wet * 100}
+          onChange={handleMix}
         />
       </div>
     </div>

@@ -16,7 +16,7 @@ const DistortionSenders = () => {
   return (
     <div className='distortion-senders'>
       <h1 className='effect-name'>distortion</h1>
-      {Object.keys(appState.reverbSends)
+      {Object.keys(appState.distortionSends)
         .sort()
         .map((inst, i) => (
           <div className='inst' key={i}>

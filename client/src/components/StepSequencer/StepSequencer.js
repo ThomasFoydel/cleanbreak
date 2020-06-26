@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import Square from 'components/Square/Square';
 import SampleSelector from 'components/SampleSelector/SampleSelector';
+import StartStop from 'components/StartStop/StartStop';
+
 import { CTX } from 'context/Store';
 
 import './StepSequencer.scss';
@@ -44,6 +46,7 @@ const StepSequencer = () => {
         </div>
       </div>
       <SampleSelector />
+      <StartStop />
     </div>
   );
 };

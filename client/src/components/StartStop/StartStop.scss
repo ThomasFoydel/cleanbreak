@@ -1,0 +1,53 @@
+.start-stop {
+  .buttons-container {
+    display: flex;
+    justify-content: space-around;
+  }
+  .tempo-swing {
+    width: 13.5rem;
+    margin-left: 0.8rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.play-triangle,
+.pause-container,
+.pause-button {
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.play-triangle {
+  clip-path: polygon(100% 50%, 0% 100%, 0 0);
+  width: 4rem;
+  height: 4rem;
+  background: rgb(255, 25, 25);
+}
+.playing {
+  background: rgba(141, 141, 141, 0.692);
+}
+
+.pause-button {
+  width: 4rem;
+  height: 4rem;
+  background: rgba(141, 141, 141, 0.692);
+
+  clip-path: polygon(
+    39% 0,
+    1% 0%,
+    0% 100%,
+    39% 100%,
+    39% 50%,
+    61% 50%,
+    61% 100%,
+    100% 100%,
+    100% 0,
+    61% 0,
+    61% 50%,
+    39% 50%
+  );
+}
+
+.paused-false {
+  background: rgb(255, 25, 25);
+}

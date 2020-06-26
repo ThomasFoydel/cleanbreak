@@ -1,6 +1,6 @@
 import React from 'react';
 import Tone from 'tone';
-import samples from 'samples/drums/index';
+import samples from 'samples/op/index';
 
 const actx = Tone.context;
 const now = actx.currentTime;
@@ -46,19 +46,20 @@ let instruments = {
   E: new Tone.Player(samples[2].sample),
   F: new Tone.Player(samples[1].sample),
 };
+let pingPongSends = {};
+Object.keys(instruments).forEach((key) => {
+  pingPongSends[key] = solos[key].send('pingpong', -Infinity);
+});
 
 let reverbSends = {};
 Object.keys(instruments).forEach((key) => {
   reverbSends[key] = solos[key].send('reverb', -Infinity);
 });
 let distortionSends = {};
-Object.keys(instruments).forEach(
-  (key) => (distortionSends[key] = solos[key].send('distortion', -Infinity))
-);
-let pingPongSends = {};
 Object.keys(instruments).forEach((key) => {
-  pingPongSends[key] = solos[key].send('pingpong', -Infinity);
+  distortionSends[key] = solos[key].send('distortion', -Infinity);
 });
+
 // let flangerSends = {};
 // Object.keys(instruments).forEach((key) => {
 //   flangerSends[key] = solos[key].send('flanger',  -Infinity);
@@ -66,8 +67,8 @@ Object.keys(instruments).forEach((key) => {
 
 const distortion = new Tone.Distortion(0.4).receive('distortion');
 const reverb = new Tone.Reverb(2.4).receive('reverb');
-reverb.generate();
 const pingPong = new Tone.PingPongDelay().receive('pingpong');
+reverb.generate();
 // const flanger = new Tone.BitCrusher(4).receive('flanger');
 
 reverb.wet.value = 0.3;
@@ -227,19 +228,30 @@ export function reducer(state, action) {
         pingPongSends: { ...state.pingPongSends, [name]: value },
       };
 
+    case 'CHANGE_PINGPONG':
+      pingPong[type].value = value;
+      return { ...state, pingPong: { ...state.pingPong, [type]: value } };
+
     case 'START':
       Tone.Transport.start();
-      return { ...state };
+      return { ...state, playing: true };
     case 'STOP':
       Tone.Transport.pause();
-      return { ...state };
+      return { ...state, playing: false };
     case 'CHANGE_REVERB':
-      reverb[type] = value;
+      if (type === 'mix') {
+        reverb.mix.value = value;
+      } else {
+        reverb[type] = value;
+      }
       reverb.generate();
       return {
         ...state,
         reverb: { ...state.reverb, [type]: value },
       };
+    case 'CHANGE_PAN':
+      panVols[type].pan.value = value;
+      return { ...state, panVolPans: { ...state.panVolPans, [type]: value } };
     default:
       console.log('REDUCER ERROR: action: ', action);
       // throw Error('reducer error');
@@ -254,10 +266,17 @@ export default function Store(props) {
     clickActive: false,
     bpm: Tone.Transport.bpm.value,
     swing: Tone.Transport.swing,
+    playing: false,
 
     reverb: {
       preDelay: reverb.preDelay,
       decay: reverb.decay,
+      wet: reverb.wet.value,
+    },
+    pingPong: {
+      wet: pingPong.wet.value,
+      delayTime: pingPong.delayTime.value,
+      feedback: pingPong.feedback.value,
     },
 
     reverbSends: {
@@ -269,6 +288,14 @@ export default function Store(props) {
       E: -50,
     },
     distortionSends: {
+      A: -50,
+      B: -50,
+      C: -50,
+      F: -50,
+      D: -50,
+      E: -50,
+    },
+    pingPongSends: {
       A: -50,
       B: -50,
       C: -50,
@@ -302,6 +329,14 @@ export default function Store(props) {
       F: panVols.F.volume.value,
       D: panVols.D.volume.value,
       E: panVols.E.volume.value,
+    },
+    panVolPans: {
+      A: panVols.A.pan.value,
+      B: panVols.B.pan.value,
+      C: panVols.C.pan.value,
+      F: panVols.F.pan.value,
+      D: panVols.D.pan.value,
+      E: panVols.E.pan.value,
     },
     // samples: {
     //   A: samples.A[0],
