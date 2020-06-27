@@ -8,6 +8,8 @@ const now = actx.currentTime;
 const CTX = React.createContext();
 export { CTX };
 
+Tone.Transport.bpm.value = 85;
+
 Tone.Transport.scheduleRepeat(repeat, '16n');
 
 const masterVol = new Tone.Volume(-5);
@@ -39,12 +41,12 @@ let mutes = {
 };
 
 let instruments = {
-  A: new Tone.Player(samples[4].sample),
-  B: new Tone.Player(samples[1].sample),
-  C: new Tone.Player(samples[2].sample),
-  D: new Tone.Player(samples[1].sample),
-  E: new Tone.Player(samples[2].sample),
-  F: new Tone.Player(samples[1].sample),
+  A: new Tone.Player(samples[29].sample),
+  B: new Tone.Player(samples[13].sample),
+  C: new Tone.Player(samples[63].sample),
+  D: new Tone.Player(samples[51].sample),
+  E: new Tone.Player(samples[10].sample),
+  F: new Tone.Player(samples[57].sample),
 };
 let pingPongSends = {};
 Object.keys(instruments).forEach((key) => {
@@ -95,12 +97,12 @@ Object.keys(mutes).forEach((key) => Tone.connect(mutes[key], solos[key]));
 Object.keys(solos).forEach((key) => Tone.connect(solos[key], masterVol));
 
 let grid = {
-  A: [2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
-  B: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  C: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  F: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  D: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  E: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  A: [2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0],
+  B: [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
+  C: [0, 0, 0, 0, 2, 0, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0],
+  D: [0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
+  E: [2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1],
+  F: [1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1],
 };
 let gridKeys = Object.keys(grid);
 let index = 0;
@@ -357,21 +359,23 @@ export default function Store(props) {
     //   D: samples.closedHat[0],
     //   E: samples.closedHat[1],
     // },
+
+    // lofi hat1 , traprim01
     samples: [
-      { name: 'A', sample: samples[4].sample, sampleName: samples[4].name },
-      { name: 'B', sample: samples[1].sample, sampleName: samples[1].name },
-      { name: 'C', sample: samples[2].sample, sampleName: samples[2].name },
-      { name: 'D', sample: samples[1].sample, sampleName: samples[1].name },
-      { name: 'E', sample: samples[2].sample, sampleName: samples[2].name },
-      { name: 'F', sample: samples[1].sample, sampleName: samples[1].name },
+      { name: 'A', sample: samples[29].sample, sampleName: samples[29].name },
+      { name: 'B', sample: samples[13].sample, sampleName: samples[13].name },
+      { name: 'C', sample: samples[63].sample, sampleName: samples[63].name },
+      { name: 'D', sample: samples[51].sample, sampleName: samples[51].name },
+      { name: 'E', sample: samples[10].sample, sampleName: samples[10].name },
+      { name: 'F', sample: samples[57].sample, sampleName: samples[57].name },
     ],
     sequencerGrid: {
-      A: [2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
-      B: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      C: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      D: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      E: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      F: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      A: [2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0],
+      B: [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
+      C: [0, 0, 0, 0, 2, 0, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0],
+      D: [0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
+      E: [2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1],
+      F: [1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1],
     },
   });
 
