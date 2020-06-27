@@ -1,8 +1,11 @@
 .mixer {
-  min-height: 43rem;
+  padding-top: 5rem;
+  min-height: 39.5rem;
   transform: translateX(-50%);
   margin-left: 50%;
   max-width: 52.5rem;
+  margin-top: 1rem;
+
   .pan-control {
     width: 8rem;
     margin-left: 2px;
@@ -11,6 +14,7 @@
   .range-input {
     padding-right: 14px;
   }
+
   .solo,
   .mute {
     margin-left: 50%;
@@ -21,7 +25,29 @@
     color: rgb(240, 213, 4);
     background: rgb(30, 30, 30);
   }
+  .solo {
+    padding: 0.1rem 0.8rem;
+    margin-bottom: 0.1rem;
+    &:hover {
+      background: rgb(103, 103, 103);
+    }
+  }
+  .mute:hover {
+    color: rgb(172, 68, 68);
+  }
   .mute-active {
     color: rgb(196, 14, 14);
+  }
+
+  .effect-name {
+    position: absolute;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    color: rgb(225, 225, 225);
+    background: rgba(0, 0, 0, 0.6);
+    padding: 0 0.6rem;
+    font-size: 3rem;
+    font-weight: bold;
+    top: 0;
   }
 }

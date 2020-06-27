@@ -28,6 +28,7 @@ const Mixer = () => {
   };
   return (
     <div className='mixer'>
+      <div className='effect-name'>mixer</div>
       {Object.keys(appState.panVols)
         .sort()
         .map((keyName, i) => (

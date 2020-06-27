@@ -5,12 +5,14 @@
   margin-left: 50%;
   transform: translateX(-50%);
   position: relative;
+  width: 63rem;
+
   .effect-name {
     position: absolute;
     margin-left: 50%;
     transform: translateX(-50%);
-    color: white;
-    background: rgba(0, 0, 0, 0.35);
+    color: rgb(225, 225, 225);
+    background: rgba(0, 0, 0, 0.6);
     padding: 0 0.6rem;
     top: -2rem;
     font-size: 3rem;

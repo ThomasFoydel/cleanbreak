@@ -62,10 +62,7 @@ Object.keys(instruments).forEach((key) => {
   distortionSends[key] = solos[key].send('distortion', -Infinity);
 });
 
-// let flangerSends = {};
-// Object.keys(instruments).forEach((key) => {
-//   flangerSends[key] = solos[key].send('flanger',  -Infinity);
-// });
+distortionSends.A.gain.value = -5;
 
 const distortion = new Tone.Distortion(0.4).receive('distortion');
 const reverb = new Tone.Reverb(2.4).receive('reverb');
@@ -301,7 +298,7 @@ export default function Store(props) {
       E: -50,
     },
     distortionSends: {
-      A: -50,
+      A: -5,
       B: -50,
       C: -50,
       F: -50,
@@ -351,16 +348,7 @@ export default function Store(props) {
       D: panVols.D.pan.value,
       E: panVols.E.pan.value,
     },
-    // samples: {
-    //   A: samples.A[0],
-    //   B: samples.snare[0],
-    //   C: samples.snare[1],
-    //   F: samples.F[0],
-    //   D: samples.closedHat[0],
-    //   E: samples.closedHat[1],
-    // },
 
-    // lofi hat1 , traprim01
     samples: [
       { name: 'A', sample: samples[29].sample, sampleName: samples[29].name },
       { name: 'B', sample: samples[13].sample, sampleName: samples[13].name },
