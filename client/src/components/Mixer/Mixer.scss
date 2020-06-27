@@ -1,20 +1,25 @@
 .mixer {
   padding-top: 5rem;
-  min-height: 39.5rem;
+  min-height: 43.5rem;
   transform: translateX(-50%);
   margin-left: 50%;
   max-width: 52.5rem;
   margin-top: 1rem;
 
   .pan-control {
+    z-index: 2;
+    margin-top: 4rem;
     width: 8rem;
     margin-left: 2px;
     padding-left: 0.5rem;
+    // background: red;
   }
   .range-input {
     padding-right: 14px;
   }
-
+  .mixer-name {
+    transform: translateY(14.5rem) translateX(-50%) !important;
+  }
   .solo,
   .mute {
     margin-left: 50%;

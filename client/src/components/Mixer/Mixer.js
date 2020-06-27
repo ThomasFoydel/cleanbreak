@@ -41,7 +41,7 @@ const Mixer = () => {
               max={30}
               value={appState.panVols[keyName] * -1}
             />
-            <h2 className='name'>{keyName}</h2>
+            <h2 className='name mixer-name'>{keyName}</h2>
             <PanControl name={keyName} />
             <button
               onClick={appState.solos[keyName] ? handleUnSolo : handleSolo}
