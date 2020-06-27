@@ -4,13 +4,14 @@ import './App.scss';
 import { CTX } from 'context/Store';
 
 import Mixer from 'components/Mixer/Mixer';
-import ReverbSenders from 'components/ReverbSenders/ReverbSenders';
 // import DistortionSenders from 'components/DistortionSenders/DistortionSenders';
 // import PingPongSenders from 'components/PingPongSenders/PingPongSenders';
 // import PingPongControl from 'components/PingPongControl/PingPongControl';
 import Distortion from 'components/Distortion/Distortion';
 import PingPong from 'components/PingPong/PingPong';
-import ReverbControl from 'components/ReverbControl/ReverbControl';
+import Reverb from 'components/Reverb/Reverb';
+// import ReverbControl from 'components/ReverbControl/ReverbControl';
+// import ReverbSenders from 'components/ReverbSenders/ReverbSenders';
 
 function App() {
   const [appState, updateState] = useContext(CTX);
@@ -34,11 +35,11 @@ function App() {
         <PingPong />
 
         <Distortion />
-
-        <div className='flex'>
+        <Reverb />
+        {/* <div className='flex'>
           <ReverbSenders />
           <ReverbControl />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -15,12 +15,11 @@ const ReverbSenders = () => {
 
   return (
     <div className='reverb-senders'>
-      <h1 className='effect-name'>reverb</h1>
       {Object.keys(appState.reverbSends)
         .sort()
         .map((inst, i) => (
           <div className='inst' key={i}>
-            <h2 className='reverb-name'>{inst}</h2>
+            <h2 className='reverb-name name'>{inst}</h2>
             <input
               className='range-input'
               type='range'

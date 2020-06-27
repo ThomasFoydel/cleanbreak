@@ -29,7 +29,6 @@ const ReverbControl = () => {
   };
   return (
     <div className='reverb-control'>
-      <div className='effect-name'>REVERB</div>
       <div className='inst'>
         <h2 className='name'>decay</h2>
         <input

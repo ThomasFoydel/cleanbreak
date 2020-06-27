@@ -241,8 +241,8 @@ export function reducer(state, action) {
       Tone.Transport.pause();
       return { ...state, playing: false };
     case 'CHANGE_REVERB':
-      if (type === 'mix') {
-        reverb.mix.value = value;
+      if (type === 'wet') {
+        reverb.wet.value = value;
       } else {
         reverb[type] = value;
       }
@@ -288,7 +288,7 @@ export default function Store(props) {
       feedback: pingPong.feedback.value,
     },
     distortion: {
-      distortion: distortion.distortion.value,
+      distortion: distortion.distortion,
       wet: distortion.wet.value,
     },
 
