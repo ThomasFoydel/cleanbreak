@@ -1,10 +1,18 @@
-.pingpong {
+// .distortion {
+//   display: flex;
+//   transform: translateX(-50%);
+//   margin-left: 50%;
+// }
+
+.distortion {
   margin-top: 1rem;
   margin-bottom: 1rem;
   display: flex;
   margin-left: 50%;
   transform: translateX(-50%);
   position: relative;
+  width: 56rem;
+
   .effect-name {
     position: absolute;
     margin-left: 50%;
@@ -12,7 +20,6 @@
     color: white;
     background: rgba(0, 0, 0, 0.35);
     padding: 0 0.6rem;
-    top: -2rem;
     font-size: 3rem;
     font-weight: bold;
   }

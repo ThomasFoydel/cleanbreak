@@ -252,6 +252,13 @@ export function reducer(state, action) {
     case 'CHANGE_PAN':
       panVols[type].pan.value = value;
       return { ...state, panVolPans: { ...state.panVolPans, [type]: value } };
+    case 'CHANGE_DISTORTION':
+      if (type === 'distortion') {
+        distortion.distortion = value;
+      } else {
+        distortion[type].value = value;
+      }
+      return { ...state, distortion: { ...state.distortion, [type]: value } };
     default:
       console.log('REDUCER ERROR: action: ', action);
       // throw Error('reducer error');
@@ -277,6 +284,10 @@ export default function Store(props) {
       wet: pingPong.wet.value,
       delayTime: pingPong.delayTime.value,
       feedback: pingPong.feedback.value,
+    },
+    distortion: {
+      distortion: distortion.distortion.value,
+      wet: distortion.wet.value,
     },
 
     reverbSends: {

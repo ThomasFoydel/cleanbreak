@@ -25,7 +25,6 @@ const PingPongControl = () => {
 
   return (
     <div className='pingpong-control'>
-      <div className='effect-name'>ping pong</div>
       <div className='inst'>
         <h2 className='name'>mix</h2>
         <input

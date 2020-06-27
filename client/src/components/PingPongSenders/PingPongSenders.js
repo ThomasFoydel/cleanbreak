@@ -15,7 +15,6 @@ const PingPongSenders = () => {
 
   return (
     <div className='pingpong-senders'>
-      <h1 className='effect-name'>ping pong</h1>
       {Object.keys(appState.pingPongSends)
         .sort()
         .map((inst, i) => (

@@ -5,9 +5,10 @@ import { CTX } from 'context/Store';
 
 import Mixer from 'components/Mixer/Mixer';
 import ReverbSenders from 'components/ReverbSenders/ReverbSenders';
-import DistortionSenders from 'components/DistortionSenders/DistortionSenders';
+// import DistortionSenders from 'components/DistortionSenders/DistortionSenders';
 // import PingPongSenders from 'components/PingPongSenders/PingPongSenders';
 // import PingPongControl from 'components/PingPongControl/PingPongControl';
+import Distortion from 'components/Distortion/Distortion';
 import PingPong from 'components/PingPong/PingPong';
 import ReverbControl from 'components/ReverbControl/ReverbControl';
 
@@ -31,11 +32,8 @@ function App() {
 
         <Mixer />
         <PingPong />
-        {/* <div className='flex'>
-          <PingPongSenders />
-          <PingPongControl />
-        </div> */}
-        <DistortionSenders />
+
+        <Distortion />
 
         <div className='flex'>
           <ReverbSenders />

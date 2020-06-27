@@ -8,6 +8,7 @@ const PingPong = () => {
     <div className='pingpong'>
       <PingPongControl />
       <PingPongSenders />
+      <h1 className='effect-name'>ping pong</h1>
     </div>
   );
 };
