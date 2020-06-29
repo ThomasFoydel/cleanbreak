@@ -132,6 +132,30 @@ export function reducer(state, action) {
   let { name, value, type } = payload ? payload : {};
 
   switch (action.type) {
+    case 'LOGIN':
+      let { user, token } = payload;
+      console.log(user);
+      localStorage.setItem('cleanbreak-token', token);
+      const presetsArray = [];
+      if (user.presets) {
+        user.presets.forEach((preset, i) => {
+          const presetObj = {
+            text: preset.name,
+            value: preset.params,
+          };
+          presetsArray.push(presetObj);
+        });
+      }
+      return {
+        ...state,
+        isLoggedIn: true,
+        user: { name: user.name, email: user.email },
+        presets: presetsArray,
+      };
+
+    case 'LOGOUT':
+      localStorage.removeItem('cleanbreak-token');
+      return { ...state, isLoggedIn: false };
     case 'CHANGE_CLICK_ACTIVE':
       return { ...state, clickActive: payload };
     case 'CHANGE_TEMPO':
@@ -268,7 +292,7 @@ export function reducer(state, action) {
 export default function Store(props) {
   const stateHook = React.useReducer(reducer, {
     page: 0,
-    isLoggedIn: false,
+    isLoggedIn: true,
     clickActive: false,
     bpm: Tone.Transport.bpm.value,
     swing: Tone.Transport.swing,
