@@ -27,15 +27,6 @@ const Auth = ({ closeAuth, login }) => {
     <animated.div style={authAnimation}>
       <div className='auth'>
         <button onClick={closeAuth}>close</button>
-        <button
-          onClick={() => {
-            currentShow === 'login'
-              ? setCurrentShow('register')
-              : setCurrentShow('login');
-          }}
-        >
-          toggle
-        </button>
         <animated.div style={loginAnimation}>
           <Login
             setCurrentShow={setCurrentShow}

@@ -4,7 +4,6 @@ import StepSequencer from 'components/StepSequencer/StepSequencer';
 import './App.scss';
 import { CTX } from 'context/Store';
 import Auth from 'components/Auth/Auth';
-import Store from 'context/Store';
 
 import Mixer from 'components/Mixer/Mixer';
 import Distortion from 'components/Distortion/Distortion';
@@ -49,10 +48,8 @@ function App() {
     setDisplayAuth(true);
   };
 
-  console.log('appState: ', appState);
   return (
     <div className='App '>
-      <button onClick={login}>login</button>
       {appState.isLoggedIn ? (
         <button onClick={logout}>logout</button>
       ) : (

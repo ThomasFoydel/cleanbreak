@@ -292,7 +292,7 @@ export function reducer(state, action) {
 export default function Store(props) {
   const stateHook = React.useReducer(reducer, {
     page: 0,
-    isLoggedIn: true,
+    isLoggedIn: false,
     clickActive: false,
     bpm: Tone.Transport.bpm.value,
     swing: Tone.Transport.swing,
