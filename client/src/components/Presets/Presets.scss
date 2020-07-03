@@ -1,0 +1,9 @@
+.presets {
+  position: absolute;
+  z-index: 3;
+  .preset-op-open {
+    background: grey;
+    width: 10rem;
+    height: 6rem;
+  }
+}

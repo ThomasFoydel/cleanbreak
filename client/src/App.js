@@ -4,6 +4,7 @@ import StepSequencer from 'components/StepSequencer/StepSequencer';
 import './App.scss';
 import { CTX } from 'context/Store';
 import Auth from 'components/Auth/Auth';
+import Axios from 'axios';
 
 import Mixer from 'components/Mixer/Mixer';
 import Distortion from 'components/Distortion/Distortion';
@@ -22,6 +23,43 @@ function App() {
       updateState({ type: 'CHANGE_CLICK_ACTIVE', payload: false });
     });
   }, []);
+
+  useEffect(() => {
+    let subscribed = true;
+    if (subscribed) {
+      const foundToken = localStorage.getItem('cleanbreak-token');
+      if (!foundToken) {
+        updateState({
+          type: 'LOGOUT',
+        });
+      } else {
+        const setAuthInfo = async () => {
+          Axios.get('/auth/user', {
+            headers: { 'x-auth-token': foundToken },
+          })
+            .then((result) => {
+              if (result.data.err) {
+                console.log('err: ', result.data.err);
+              } else {
+                updateState({
+                  type: 'LOGIN',
+                  payload: { user: result.data, token: foundToken },
+                });
+              }
+            })
+            .catch((err) => {
+              updateState({
+                type: 'LOGOUT',
+              });
+            });
+        };
+        setAuthInfo();
+      }
+    }
+    return () => {
+      subscribed = false;
+    };
+  }, [updateState]);
 
   const closeAuth = () => {
     ReactDOM.render(<div />, document.getElementById('modal'));
@@ -47,7 +85,6 @@ function App() {
     );
     setDisplayAuth(true);
   };
-
   return (
     <div className='App '>
       {appState.isLoggedIn ? (

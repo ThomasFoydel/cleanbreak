@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import Square from 'components/Square/Square';
 import SampleSelector from 'components/SampleSelector/SampleSelector';
 import StartStop from 'components/StartStop/StartStop';
+import Presets from 'components/Presets/Presets';
+import PresetSelector from 'components/PresetSelector/PresetSelector';
 
 import { CTX } from 'context/Store';
 
@@ -21,6 +23,7 @@ const StepSequencer = () => {
 
   return (
     <div className='sequencer-container'>
+      {appState.isLoggedIn && <Presets />}
       <div className='sequencer'>
         {Object.keys(appState.sequencerGrid).map((inst, i) => (
           <div key={i} className='instrument-container'>
@@ -47,6 +50,7 @@ const StepSequencer = () => {
       </div>
       <SampleSelector />
       <StartStop />
+      <PresetSelector />
     </div>
   );
 };

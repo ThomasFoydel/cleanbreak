@@ -14,12 +14,9 @@ function findWithAttr(array, attr, val) {
 }
 
 /* save over existing preset */
-router.post('/saveover', auth, async (req, res) => {
+router.post('/save', auth, async (req, res) => {
   let { userId } = req.tokenUser;
   let { state, name } = req.body;
-  if (name === 'default') {
-    return res.send({ err: 'cannot save over default' });
-  }
 
   const foundUser = await User.findById(userId);
   const foundPresets = foundUser.presets;
@@ -50,7 +47,7 @@ router.post('/saveover', auth, async (req, res) => {
 });
 
 /* save new preset */
-router.post('/savenew', auth, async (req, res) => {
+router.post('/newsave', auth, async (req, res) => {
   let { name, state, username } = req.body;
   const { userId } = req.tokenUser;
 

@@ -39,7 +39,6 @@ let mutes = {
   E: actx.createGain(),
   F: actx.createGain(),
 };
-
 let instruments = {
   A: new Tone.Player(samples[29].sample),
   B: new Tone.Player(samples[13].sample),
@@ -48,11 +47,11 @@ let instruments = {
   E: new Tone.Player(samples[10].sample),
   F: new Tone.Player(samples[57].sample),
 };
+
 let pingPongSends = {};
 Object.keys(instruments).forEach((key) => {
   pingPongSends[key] = solos[key].send('pingpong', -Infinity);
 });
-
 let reverbSends = {};
 Object.keys(instruments).forEach((key) => {
   reverbSends[key] = solos[key].send('reverb', -Infinity);
@@ -68,16 +67,12 @@ const distortion = new Tone.Distortion(0.4).receive('distortion');
 const reverb = new Tone.Reverb(2.4).receive('reverb');
 const pingPong = new Tone.PingPongDelay().receive('pingpong');
 reverb.generate();
-// const flanger = new Tone.BitCrusher(4).receive('flanger');
 
 reverb.wet.value = 0.3;
 distortion.connect(limiter);
 reverb.connect(limiter);
 pingPong.connect(limiter);
-// flanger.connect(limiter);
 masterVol.connect(limiter);
-
-// reverbSends.F.gain.value = -1;
 
 // connect instruments to mixer
 let instrumentKeys = Object.keys(instruments);
@@ -134,7 +129,6 @@ export function reducer(state, action) {
   switch (action.type) {
     case 'LOGIN':
       let { user, token } = payload;
-      console.log(user);
       localStorage.setItem('cleanbreak-token', token);
       const presetsArray = [];
       if (user.presets) {
@@ -282,6 +276,49 @@ export function reducer(state, action) {
         distortion[type].value = value;
       }
       return { ...state, distortion: { ...state.distortion, [type]: value } };
+
+    case 'LOAD_PRESET':
+      Tone.Transport.bpm.value = value.bpm;
+      distortion.distortion = value.distortion.distortion;
+      distortion.wet.value = value.distortion.wet;
+      pingPong.wet.value = value.pingPong.wet;
+      pingPong.delayTime.value = value.pingPong.delayTime;
+      pingPong.feedback.value = value.pingPong.feedback;
+      reverb.preDelay = value.reverb.preDelay;
+      reverb.decay = value.reverb.decay;
+      reverb.wet.value = value.reverb.wet;
+      grid = value.sequencerGrid;
+      Tone.Transport.swing = value.swing;
+
+      gridKeys.forEach((key) => {
+        distortionSends[key].gain.value = value.distortionSends[key];
+        reverbSends[key].gain.value = value.reverbSends[key];
+        pingPongSends[key].gain.value = value.pingPongSends[key];
+        if (value.mutes[key]) {
+          mutes[key].gain.linearRampToValueAtTime(0, now + 0.01);
+        } else {
+          mutes[key].gain.linearRampToValueAtTime(1, now + 0.01);
+        }
+        panVols[key].volume.value = value.panVols[key];
+        panVols[key].pan.value = value.panVolPans[key];
+        solos[key].solo = value.solos[key];
+
+        samples.forEach((sample, i) => {
+          if (sample.name === key) {
+            instruments[key].load(value.samples[i].sample);
+          }
+        });
+      });
+
+      return { ...state, ...value, currentPreset: action.current };
+
+    case 'UPDATE_PRESETS':
+      return {
+        ...state,
+        presets: [...payload.presets],
+        currentPreset: payload.current,
+      };
+
     default:
       console.log('REDUCER ERROR: action: ', action);
       // throw Error('reducer error');
@@ -291,13 +328,14 @@ export function reducer(state, action) {
 
 export default function Store(props) {
   const stateHook = React.useReducer(reducer, {
-    page: 0,
+    currentPreset: 'default',
     isLoggedIn: false,
     clickActive: false,
+    playing: false,
+    presets: [],
+
     bpm: Tone.Transport.bpm.value,
     swing: Tone.Transport.swing,
-    playing: false,
-
     reverb: {
       preDelay: reverb.preDelay,
       decay: reverb.decay,
@@ -312,7 +350,6 @@ export default function Store(props) {
       distortion: distortion.distortion,
       wet: distortion.wet.value,
     },
-
     reverbSends: {
       A: -50,
       B: -50,
@@ -337,7 +374,6 @@ export default function Store(props) {
       D: -50,
       E: -50,
     },
-
     mutes: {
       A: false,
       B: false,
@@ -346,7 +382,6 @@ export default function Store(props) {
       D: false,
       E: false,
     },
-
     solos: {
       A: solos.A.solo,
       B: solos.B.solo,
@@ -355,7 +390,6 @@ export default function Store(props) {
       D: solos.D.solo,
       E: solos.E.solo,
     },
-
     panVols: {
       A: panVols.A.volume.value,
       B: panVols.B.volume.value,
@@ -372,7 +406,6 @@ export default function Store(props) {
       D: panVols.D.pan.value,
       E: panVols.E.pan.value,
     },
-
     samples: [
       { name: 'A', sample: samples[29].sample, sampleName: samples[29].name },
       { name: 'B', sample: samples[13].sample, sampleName: samples[13].name },
@@ -390,6 +423,5 @@ export default function Store(props) {
       F: [1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1],
     },
   });
-
   return <CTX.Provider value={stateHook}>{props.children}</CTX.Provider>;
 }

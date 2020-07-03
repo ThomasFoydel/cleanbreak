@@ -1,0 +1,35 @@
+.preset-selector {
+  background: rgb(40, 40, 40);
+  border-radius: 2px;
+  width: 37.1rem;
+  height: 6rem;
+  position: absolute;
+  right: 1rem;
+  bottom: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 2.4rem;
+  text-align: center;
+  padding: 0 0.5rem;
+  .decrement,
+  .increment {
+    width: 6rem;
+    height: 5rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    background: rgb(239, 239, 239);
+    color: black;
+    font-weight: bold;
+    border-radius: 2px;
+    cursor: pointer;
+    &:hover {
+      background: rgb(159, 159, 159);
+    }
+  }
+
+  .current-preset {
+  }
+}
