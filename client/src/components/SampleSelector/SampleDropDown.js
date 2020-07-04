@@ -29,7 +29,6 @@ const SampleDropDown = ({ name, samples }) => {
 
   const handleClick = (e) => {
     if (e.target.className === 'sample-name') {
-      console.log('NNNAME : ', e.target.attributes.name.value);
       handleSelect(e);
     } else {
       // console.log(e.target.id);
@@ -43,7 +42,6 @@ const SampleDropDown = ({ name, samples }) => {
       className='sample-dropdown'
       onClick={handleClick}
       onMouseLeave={() => setOpened(false)}
-      //   style={{ height: hover ? '12rem' : '4rem' }}
     >
       <div className='currentsample-name'>
         {appState.samples[index].sampleName}
@@ -66,18 +64,10 @@ const SampleDropDown = ({ name, samples }) => {
             id={sample.sample}
             key={i}
           >
-            {/* {console.log('SAMPLE!!: ', sample.name)} */}
             {sample.name}
           </div>
         ))}
       </div>
-      {/* {opened && (
-        <div className='hover-open'>
-          {samples.map((sample) => (
-            <div className='sample-name'>{sample.name}</div>
-          ))}
-        </div>
-      )} */}
     </div>
   );
 };

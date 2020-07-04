@@ -108,8 +108,8 @@ const Presets = () => {
 
   return (
     <div className='presets'>
-      <button onClick={() => open('saveNew')}>save new</button>
-      <button onClick={() => open('saveOver')}>save over</button>
+      <button onClick={() => open('saveNew')}>save as</button>
+      <button onClick={() => open('saveOver')}>save</button>
       <button onClick={() => open('delete')}>delete</button>
 
       {display.saveNew && (
@@ -119,22 +119,22 @@ const Presets = () => {
             onChange={handleTextInput}
             placeholder='preset name'
           />
-          <button onClick={saveNew}>save new</button>
-          <button onClick={closeAll}>close</button>
+          <button onClick={saveNew}>save</button>
+          <button onClick={closeAll}>cancel</button>
         </div>
       )}
 
       {display.saveOver && (
         <div className='preset-op-open save-over'>
-          <button onClick={saveOver}>save over</button>
-          <button onClick={closeAll}>close</button>
+          <button onClick={saveOver}>confirm save</button>
+          <button onClick={closeAll}>cancel</button>
         </div>
       )}
 
       {display.delete && (
         <div className='preset-op-open delete'>
-          <button onClick={deletePreset}>delete</button>
-          <button onClick={closeAll}>close</button>
+          <button onClick={deletePreset}>confirm delete</button>
+          <button onClick={closeAll}>cancel</button>
         </div>
       )}
     </div>

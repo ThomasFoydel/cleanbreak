@@ -1,0 +1,27 @@
+.preset-dropdown {
+  height: 30rem;
+  width: 23.6rem;
+  background: red;
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 1s ease;
+  background: rgb(175, 24, 24);
+  border: 2px solid rgb(175, 24, 24);
+  border-top: none;
+  overflow-y: scroll;
+
+  .preset-name {
+    border-radius: 2px;
+    background: #c2c2c2;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background: rgb(59, 59, 59);
+      color: rgb(235, 63, 63);
+    }
+  }
+}

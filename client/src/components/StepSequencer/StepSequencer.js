@@ -23,7 +23,6 @@ const StepSequencer = () => {
 
   return (
     <div className='sequencer-container'>
-      {appState.isLoggedIn && <Presets />}
       <div className='sequencer'>
         {Object.keys(appState.sequencerGrid).map((inst, i) => (
           <div key={i} className='instrument-container'>
@@ -50,6 +49,7 @@ const StepSequencer = () => {
       </div>
       <SampleSelector />
       <StartStop />
+      <Presets />
       <PresetSelector />
     </div>
   );

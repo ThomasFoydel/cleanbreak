@@ -31,5 +31,24 @@
   }
 
   .current-preset {
+    cursor: pointer;
+    background: #d1d1d1;
+    color: #222;
+    width: 24rem;
+    height: 5rem;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      background: rgb(100, 100, 100);
+      border: 2px solid rgb(175, 24, 24);
+      width: 23.6rem;
+      height: 4.6rem;
+    }
+  }
+
+  .dropdown-container {
+    position: relative;
   }
 }

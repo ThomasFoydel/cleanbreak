@@ -90,15 +90,19 @@ function App() {
       {appState.isLoggedIn ? (
         <button onClick={logout}>logout</button>
       ) : (
-        <button onClick={openAuth}>open auth</button>
+        <button className='open-auth' onClick={openAuth}>
+          login / register
+        </button>
       )}
       <div className='background'></div>
       <div className='components-container'>
         <StepSequencer />
-        <Mixer />
-        <Distortion />
-        <PingPong />
-        <Reverb />
+        <div className='effects-container'>
+          <Mixer />
+          <Distortion />
+          <PingPong />
+          <Reverb />
+        </div>
       </div>
     </div>
   );

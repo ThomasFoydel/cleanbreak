@@ -1,9 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
+import PresetDropDown from 'components/PresetDropDown/PresetDropDown';
+
 import './PresetSelector.scss';
 import { CTX } from 'context/Store';
 
 const PresetSelector = () => {
   const [appState, updateState] = useContext(CTX);
+  const [dropDown, setDropDown] = useState(false);
+
   let { presets, currentPreset } = appState;
 
   function findWithAttr(array, attr, val) {
@@ -44,12 +48,25 @@ const PresetSelector = () => {
     }
   };
 
+  const toggleDropDown = () => {
+    setDropDown(!dropDown);
+  };
+
+  const closeDropDown = () => {
+    setDropDown(false);
+  };
+
   return (
     <div className='preset-selector'>
       <div onClick={handleSelector} id='left' className='decrement'>
         {'<'}
       </div>
-      <div className='current-preset'>{appState.currentPreset}</div>
+      <div onMouseLeave={closeDropDown} className='dropdown-container'>
+        <div className='current-preset' onClick={toggleDropDown}>
+          {appState.currentPreset}
+        </div>
+        <PresetDropDown open={dropDown} />
+      </div>
       <div onClick={handleSelector} id='right' className='increment'>
         {'>'}
       </div>

@@ -339,3 +339,30 @@ input:focus {
   top: 0;
   right: 0;
 }
+
+.effects-container {
+  min-width: 125rem;
+  position: relative;
+}
+
+.open-auth {
+  // padding: 0.5rem 0.8rem;
+  margin: 0.8rem 0;
+  // margin-left: 0;
+  // position: absolute;
+  // width: 30%;
+  // margin-left: 50%;
+  // transform: translateX(-50%);
+  width: 100%;
+  background: rgba(63, 63, 63, 0.4);
+  color: rgba(255, 255, 255, 0.4);
+
+  font-size: 2rem;
+  letter-spacing: 1.2rem;
+  text-align: center;
+  transition: all 0.2s ease;
+  &:hover {
+    background: rgba(63, 63, 63, 1);
+    color: rgba(255, 255, 255, 1);
+  }
+}

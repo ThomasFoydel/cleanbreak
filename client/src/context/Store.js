@@ -290,6 +290,10 @@ export function reducer(state, action) {
       grid = value.sequencerGrid;
       Tone.Transport.swing = value.swing;
 
+      value.samples.forEach((sample, i) => {
+        instruments[sample.name].load(value.samples[i].sample);
+      });
+
       gridKeys.forEach((key) => {
         distortionSends[key].gain.value = value.distortionSends[key];
         reverbSends[key].gain.value = value.reverbSends[key];
@@ -302,12 +306,6 @@ export function reducer(state, action) {
         panVols[key].volume.value = value.panVols[key];
         panVols[key].pan.value = value.panVolPans[key];
         solos[key].solo = value.solos[key];
-
-        samples.forEach((sample, i) => {
-          if (sample.name === key) {
-            instruments[key].load(value.samples[i].sample);
-          }
-        });
       });
 
       return { ...state, ...value, currentPreset: action.current };
