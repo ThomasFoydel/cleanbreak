@@ -26,16 +26,17 @@ const Auth = ({ closeAuth, login }) => {
   return (
     <animated.div style={authAnimation}>
       <div className='auth'>
-        <button onClick={closeAuth}>close</button>
+        <div className='close-btn' onClick={closeAuth}></div>
         <animated.div style={loginAnimation}>
           <Login
+            currentShow={currentShow}
             setCurrentShow={setCurrentShow}
             login={login}
             closeAuth={closeAuth}
           />
         </animated.div>
         <animated.div style={registerAnimation}>
-          <Register setCurrentShow={setCurrentShow} />
+          <Register setCurrentShow={setCurrentShow} currentShow={currentShow} />
         </animated.div>
       </div>
     </animated.div>

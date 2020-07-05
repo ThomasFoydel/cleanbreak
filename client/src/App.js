@@ -14,6 +14,7 @@ import Reverb from 'components/Reverb/Reverb';
 function App() {
   const [appState, updateState] = useContext(CTX);
   const [displayAuth, setDisplayAuth] = useState(false);
+  let { isLoggedIn } = appState;
 
   useEffect(() => {
     window.addEventListener('mousedown', function () {
@@ -87,11 +88,7 @@ function App() {
   };
   return (
     <div className='App '>
-      {appState.isLoggedIn ? (
-        <button className='logout-btn' onClick={logout}>
-          logout
-        </button>
-      ) : (
+      {!isLoggedIn && (
         <button className='open-auth' onClick={openAuth}>
           login / register
         </button>
@@ -109,6 +106,11 @@ function App() {
           <StepSequencer openAuth={openAuth} />
         </div>
       </div>
+      {isLoggedIn && (
+        <button className='logout-btn' onClick={logout}>
+          logout
+        </button>
+      )}
     </div>
   );
 }

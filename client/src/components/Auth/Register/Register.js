@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-const Register = ({ setCurrentShow }) => {
+const Register = ({ setCurrentShow, currentShow }) => {
   const [formValues, setFormValues] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -39,7 +39,11 @@ const Register = ({ setCurrentShow }) => {
   };
 
   return (
-    <div className='register'>
+    <div
+      className='register'
+      style={{ zIndex: currentShow === 'register' ? '20' : '10' }}
+    >
+      <div className='title'>register</div>
       <input
         onKeyPress={handleKeyDown}
         className='center'

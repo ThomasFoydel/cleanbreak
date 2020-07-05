@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Axios from 'axios';
 
-const Login = ({ setCurrentShow, closeAuth, login }) => {
+const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
   const [formValues, setFormValues] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -44,7 +44,10 @@ const Login = ({ setCurrentShow, closeAuth, login }) => {
   };
 
   return (
-    <div className='login'>
+    <div
+      className='login'
+      style={{ zIndex: currentShow === 'login' ? '20' : '10' }}
+    >
       <div className='title'>sign in</div>
       <div className='default-user-login'>
         for testing:
@@ -72,7 +75,7 @@ const Login = ({ setCurrentShow, closeAuth, login }) => {
         dontbubble='true'
       />
       <div className='btns-container center'>
-        <button className='signin-btn' onClick={handleSubmit}>
+        <button className='login-btn' onClick={handleSubmit}>
           sign in
         </button>
         <button
