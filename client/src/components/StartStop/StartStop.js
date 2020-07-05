@@ -22,10 +22,9 @@ const StartStop = () => {
         <Swing />
       </div>
       <div className='buttons-container'>
-        <div
-          className={`play-triangle ${playing && 'playing'}`}
-          onClick={handleStart}
-        ></div>
+        <div className='triangle-container' onClick={handleStart}>
+          <div className={`play-triangle ${playing && 'playing'}`}></div>
+        </div>
         <div className='pause-container' onClick={handleStop}>
           <div className={`pause-button paused-${!playing}`}></div>
         </div>
