@@ -6,11 +6,8 @@
   width: 125rem;
   border-radius: 2px;
   padding: 2rem 0;
-  // margin-left: 50%;
-  // transform: translateX(-50%);
 }
 .sequencer {
-  // background-color: rgb(228, 228, 228);
   .square-row {
     display: flex;
     width: 100rem;
@@ -41,7 +38,6 @@
     margin-left: 4.3rem;
     display: flex;
     width: 96rem;
-    // margin-left: 1.3rem;
 
     .timeblock {
       width: 4.2rem;
@@ -49,8 +45,6 @@
       margin: 0.42rem;
       border-radius: 2px;
       background: #8080807a;
-
-      // transition: all 0.025s ease-in;
     }
     .active {
       background: rgb(148, 35, 35);

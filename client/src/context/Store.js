@@ -74,14 +74,14 @@ reverb.connect(limiter);
 pingPong.connect(limiter);
 masterVol.connect(limiter);
 
-// connect instruments to mixer
+/* connect instruments to mixer */
 let instrumentKeys = Object.keys(instruments);
 instrumentKeys.forEach((key) => {
   Tone.connect(instruments[key], panVols[key]);
   instruments[key].sync();
 });
 
-// connect mixer to master
+/* connect mixer to master */
 let panVolKeys = Object.keys(panVols);
 panVolKeys.forEach((key) => Tone.connect(panVols[key], mutes[key]));
 
@@ -319,7 +319,7 @@ export function reducer(state, action) {
 
     default:
       console.log('REDUCER ERROR: action: ', action);
-      // throw Error('reducer error');
+      /* throw Error('reducer error'); */
       return { ...state };
   }
 }

@@ -5,12 +5,6 @@ const PanControl = ({ name }) => {
   const [appState, updateState] = useContext(CTX);
 
   const handlePan = (e, tag) => {
-    // let { value } = e.target;
-    // console.log(value);
-
-    // e /= 100;
-    // e = e.toFixed(2);
-    console.log(e);
     updateState({ type: 'CHANGE_PAN', payload: { type: name, value: e } });
   };
   return (

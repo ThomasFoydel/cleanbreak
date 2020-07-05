@@ -27,14 +27,14 @@ const PresetSelector = ({ openAuth }) => {
         if (currentIndex > 0) {
           newCurrent = presets[currentIndex - 1];
         } else {
-          // user has hit zero, go to end of list
+          /* user has hit zero, go to end of list */
           newCurrent = presets[presets.length - 1];
         }
       } else if (id === 'right') {
         if (currentIndex < presets.length - 1) {
           newCurrent = presets[currentIndex + 1];
         } else {
-          // user has hit end of list, go back to zero
+          /* user has hit end of list, go back to zero */
           newCurrent = presets[0];
         }
       }

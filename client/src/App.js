@@ -13,7 +13,6 @@ import Reverb from 'components/Reverb/Reverb';
 
 function App() {
   const [appState, updateState] = useContext(CTX);
-  const [displayAuth, setDisplayAuth] = useState(false);
   let { isLoggedIn } = appState;
 
   useEffect(() => {
@@ -64,7 +63,6 @@ function App() {
 
   const closeAuth = () => {
     ReactDOM.render(<div />, document.getElementById('modal'));
-    setDisplayAuth(false);
   };
 
   const logout = () => {
@@ -81,10 +79,8 @@ function App() {
           <Auth CTX={CTX} closeAuth={closeAuth} login={login} />
         </div>
       </div>,
-
       document.getElementById('modal')
     );
-    setDisplayAuth(true);
   };
   return (
     <div className='App '>

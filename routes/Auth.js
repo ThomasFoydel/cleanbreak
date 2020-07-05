@@ -99,7 +99,7 @@ router.post('/login', (req, res) => {
   });
 });
 
-// get user auth info (happens on every reload of ui, in app.js)
+/* get user auth info (happens on every reload of ui, in app.js) */
 router.get('/user/', auth, async (req, res) => {
   let { tokenUser } = req;
   if (tokenUser) {

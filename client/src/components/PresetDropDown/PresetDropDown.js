@@ -23,7 +23,6 @@ const PresetDropDown = ({ open }) => {
       style={{
         zIndex: open ? '3' : '-1',
         opacity: open ? '1' : '0',
-        // display: open ? 'inherit' : 'none',
         transform: open
           ? 'translateX(-50%) translateY(-.2rem)'
           : 'translateX(-50%) translateY(-5rem)',

@@ -89,7 +89,7 @@ router.post('/delete', auth, async (req, res) => {
     return res.send({ err: 'cannot delete default preset' });
   }
 
-  // check if preset exists
+  /* check if preset exists */
   const foundUser = await User.findById(userId);
   if (foundUser.presets) {
     if (!foundUser.presets.some((preset) => preset.name === name)) {
@@ -97,7 +97,7 @@ router.post('/delete', auth, async (req, res) => {
     }
   }
 
-  // determine index/name of new current preset
+  /* determine index/name of new current preset */
   let newIndex;
   const deleteIndex = findWithAttr(foundUser.presets, 'name', name);
   if (deleteIndex > 0) {
