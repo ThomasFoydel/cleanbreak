@@ -12,6 +12,7 @@
   font-size: 2.4rem;
   text-align: center;
   padding: 0 0.5rem;
+
   .decrement,
   .increment {
     width: 6rem;
@@ -19,7 +20,6 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-
     background: rgb(239, 239, 239);
     color: black;
     font-weight: bold;
@@ -28,27 +28,42 @@
     &:hover {
       background: rgb(159, 159, 159);
     }
+
+    .presets-list {
+      overflow-y: scroll;
+    }
   }
 
   .current-preset {
+    // background: #d1d1d1;
+    // border: none;
+    // width: 24rem;
+    // height: 5rem;
     cursor: pointer;
-    background: #d1d1d1;
-    color: #222;
-    width: 24rem;
-    height: 5rem;
     border-radius: 2px;
     display: flex;
     justify-content: center;
     align-items: center;
-    &:hover {
-      background: rgb(100, 100, 100);
-      border: 2px solid rgb(175, 24, 24);
-      width: 23.6rem;
-      height: 4.6rem;
-    }
+    color: #222;
+    // &:hover {
+    //   background: rgb(100, 100, 100);
+    //   border: 2px solid rgb(175, 24, 24);
+    //   width: 23.6rem;
+    //   height: 4.6rem;
+    // }
   }
 
   .dropdown-container {
-    position: relative;
+    background: rgb(209, 209, 209);
+    position: absolute;
+    background: red;
+    border-radius: 2px;
+    color: rgb(5, 5, 5);
+    text-align: center;
+    position: aboslute;
+    cursor: pointer;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0.5rem;
   }
 }

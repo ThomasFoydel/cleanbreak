@@ -4,7 +4,7 @@ import PresetDropDown from 'components/PresetDropDown/PresetDropDown';
 import './PresetSelector.scss';
 import { CTX } from 'context/Store';
 
-const PresetSelector = () => {
+const PresetSelector = ({ openAuth }) => {
   const [appState, updateState] = useContext(CTX);
   const [dropDown, setDropDown] = useState(false);
 
@@ -38,18 +38,23 @@ const PresetSelector = () => {
           newCurrent = presets[0];
         }
       }
-      //   closeSaveDelete();
 
       updateState({
         type: 'LOAD_PRESET',
         payload: { value: newCurrent.value },
         current: newCurrent.text,
       });
+    } else {
+      openAuth();
     }
   };
 
   const toggleDropDown = () => {
-    setDropDown(!dropDown);
+    if (appState.isLoggedIn) {
+      setDropDown(!dropDown);
+    } else {
+      openAuth();
+    }
   };
 
   const closeDropDown = () => {
@@ -62,7 +67,16 @@ const PresetSelector = () => {
         {'<'}
       </div>
       <div onMouseLeave={closeDropDown} className='dropdown-container'>
-        <div className='current-preset' onClick={toggleDropDown}>
+        <div
+          className='current-preset'
+          onClick={toggleDropDown}
+          style={{
+            background: dropDown ? 'rgb(100, 100, 100)' : ' #d1d1d1',
+            border: dropDown ? '2px solid rgb(175, 24, 24)' : 'none',
+            width: dropDown ? '23.6rem' : '24rem',
+            height: dropDown ? '4.6rem' : '5rem',
+          }}
+        >
           {appState.currentPreset}
         </div>
         <PresetDropDown open={dropDown} />

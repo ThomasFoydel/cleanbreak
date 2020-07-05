@@ -9,7 +9,7 @@ import { CTX } from 'context/Store';
 
 import './StepSequencer.scss';
 
-const StepSequencer = () => {
+const StepSequencer = ({ openAuth }) => {
   const [appState, updateState] = useContext(CTX);
 
   const handleStepClick = (e) => {
@@ -50,7 +50,7 @@ const StepSequencer = () => {
       <SampleSelector />
       <StartStop />
       <Presets />
-      <PresetSelector />
+      <PresetSelector openAuth={openAuth} />
     </div>
   );
 };

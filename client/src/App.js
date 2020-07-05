@@ -88,7 +88,9 @@ function App() {
   return (
     <div className='App '>
       {appState.isLoggedIn ? (
-        <button onClick={logout}>logout</button>
+        <button className='logout-btn' onClick={logout}>
+          logout
+        </button>
       ) : (
         <button className='open-auth' onClick={openAuth}>
           login / register
@@ -96,12 +98,15 @@ function App() {
       )}
       <div className='background'></div>
       <div className='components-container'>
-        <StepSequencer />
+        <div className='space'></div>
         <div className='effects-container'>
           <Mixer />
           <Distortion />
           <PingPong />
           <Reverb />
+        </div>
+        <div className='step-container'>
+          <StepSequencer openAuth={openAuth} />
         </div>
       </div>
     </div>

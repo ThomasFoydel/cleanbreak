@@ -28,7 +28,7 @@ const SampleDropDown = ({ name, samples }) => {
   };
 
   const handleClick = (e) => {
-    if (e.target.className === 'sample-name') {
+    if (e.target.getAttribute('type') === 'sample-name') {
       handleSelect(e);
     } else {
       // console.log(e.target.id);
@@ -38,7 +38,7 @@ const SampleDropDown = ({ name, samples }) => {
 
   return (
     <div
-      id='sample-selecta'
+      // id='sample-selecta'
       className='sample-dropdown'
       onClick={handleClick}
       onMouseLeave={() => setOpened(false)}
@@ -58,7 +58,12 @@ const SampleDropDown = ({ name, samples }) => {
       >
         {samples.map((sample, i) => (
           <div
-            className='sample-name'
+            type='sample-name'
+            // className='sample-name'
+            className={`sample-name ${
+              sample.name === appState.samples[index].sampleName &&
+              'current-active-sample'
+            }`}
             name={sample.name}
             onClick={handleClick}
             id={sample.sample}

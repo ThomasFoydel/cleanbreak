@@ -21,6 +21,9 @@
     font-size: 1.8rem;
     border: none;
     border-radius: 2px;
+    &:hover {
+      background: rgb(159, 159, 159);
+    }
   }
   .clear-btn {
     width: 6rem;
@@ -34,12 +37,12 @@
   margin-top: 0.4rem;
   border-radius: 2px;
   color: rgb(5, 5, 5);
-  letter-spacing: 0rem;
   width: 7rem;
   font-size: 1rem;
   text-align: center;
   position: relative;
   cursor: pointer;
+
   &:hover {
     background: rgb(100, 100, 100);
     border: 2px solid rgb(175, 24, 24);
@@ -76,7 +79,11 @@
     border-radius: 2px;
     border: 2px solid rgb(175, 24, 24);
     border-top: none;
-
     transition: all ease 0.4s;
+  }
+
+  .current-active-sample {
+    background: rgb(59, 59, 59);
+    color: #ddd;
   }
 }
