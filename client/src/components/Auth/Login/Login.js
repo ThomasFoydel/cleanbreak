@@ -22,7 +22,8 @@ const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
   };
 
   const handleChange = (e) => {
-    let { value, id } = e.target;
+    let { value } = e.target;
+    let id = e.target.getAttribute('name');
     setFormValues({ ...formValues, [id]: value });
   };
   const handleSubmit = async () => {
@@ -62,7 +63,7 @@ const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
         onKeyPress={handleKeyDown}
         onChange={handleChange}
         placeholder='email'
-        id='email'
+        name='email'
         dontbubble='true'
       />
       <input
@@ -71,7 +72,7 @@ const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
         onKeyPress={handleKeyDown}
         placeholder='password'
         onChange={handleChange}
-        id='password'
+        name='password'
         dontbubble='true'
       />
       <div className='btns-container center'>
