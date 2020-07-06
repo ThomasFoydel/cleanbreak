@@ -22,12 +22,13 @@ const filter = (state) => {
     }, {});
 };
 
-const Presets = () => {
+const Presets = ({ openAuth }) => {
   const [appState, updateState] = useContext(CTX);
   const [display, setDisplay] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
   const [presetName, setPresetName] = useState('');
   const foundToken = localStorage.getItem('cleanbreak-token');
+  let { isLoggedIn } = appState;
 
   const open = (id) => {
     setDisplay({ [id]: true });
@@ -94,7 +95,36 @@ const Presets = () => {
       })
       .catch((err) => console.log('save preset error: ', err));
   };
-  const deletePreset = (data) => {};
+  const deletePreset = (data) => {
+    Axios.post(
+      '/presets/delete',
+      { name: appState.currentPreset, username: appState.user.name },
+      { headers: { 'x-auth-token': foundToken } }
+    )
+      .then((result) => {
+        if (result.data.err) {
+          closeAll();
+          setErrorMessage(result.data.err);
+        } else {
+          updateState({
+            type: 'UPDATE_PRESETS',
+            payload: {
+              presets: result.data.presets,
+              current: result.data.current,
+            },
+          });
+          updateState({
+            type: 'LOAD_PRESET',
+            text: result.data.current,
+            payload: result.data.presets[result.data.newCurrentIndex],
+          });
+          closeAll();
+        }
+      })
+      .catch((err) => {
+        console.log('save preset error: ', err);
+      });
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -108,9 +138,15 @@ const Presets = () => {
 
   return (
     <div className='presets'>
-      <button onClick={() => open('saveNew')}>save as</button>
-      <button onClick={() => open('saveOver')}>save</button>
-      <button onClick={() => open('delete')}>delete</button>
+      <button onClick={() => (isLoggedIn ? open('saveNew') : openAuth())}>
+        save as
+      </button>
+      <button onClick={() => (isLoggedIn ? open('saveOver') : openAuth())}>
+        save
+      </button>
+      <button onClick={() => (isLoggedIn ? open('delete') : openAuth())}>
+        delete
+      </button>
 
       {display.saveNew && (
         <div className='preset-op-open save-new'>
@@ -119,24 +155,38 @@ const Presets = () => {
             onChange={handleTextInput}
             placeholder='preset name'
           />
-          <button onClick={saveNew}>save</button>
-          <button onClick={closeAll}>cancel</button>
+          <button className='confirm' onClick={saveNew}>
+            save
+          </button>
+          <button className='cancel' onClick={closeAll}>
+            cancel
+          </button>
         </div>
       )}
 
       {display.saveOver && (
         <div className='preset-op-open save-over'>
-          <button onClick={saveOver}>confirm save</button>
-          <button onClick={closeAll}>cancel</button>
+          <button className='confirm' onClick={saveOver}>
+            confirm save
+          </button>
+          <button className='cancel' onClick={closeAll}>
+            cancel
+          </button>
         </div>
       )}
 
       {display.delete && (
         <div className='preset-op-open delete'>
-          <button onClick={deletePreset}>confirm delete</button>
-          <button onClick={closeAll}>cancel</button>
+          <button className='confirm' onClick={deletePreset}>
+            confirm delete
+          </button>
+          <button className='cancel' onClick={closeAll}>
+            cancel
+          </button>
         </div>
       )}
+
+      <div className='err-msg'>{errorMessage}</div>
     </div>
   );
 };

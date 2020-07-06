@@ -117,12 +117,12 @@
 }
 .triangle-container,
 .pause-container {
-  background: #efefef;
+  background: linear-gradient(-45deg, #ededed, #d2d2d2);
   padding: 0.6rem;
   border-radius: 0.2rem;
   margin-top: -1rem;
   &:hover {
-    background: rgba(235, 235, 235, 0.66);
+    // background: rgba(235, 235, 235, 0.66);
     .play-triangle {
       background: rgb(169, 14, 14);
     }

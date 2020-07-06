@@ -49,7 +49,7 @@ const StepSequencer = ({ openAuth }) => {
       </div>
       <SampleSelector />
       <StartStop />
-      <Presets />
+      <Presets openAuth={openAuth} />
       <PresetSelector openAuth={openAuth} />
     </div>
   );

@@ -32,4 +32,25 @@
   .delete {
     margin-top: 1.3rem;
   }
+
+  .err-msg {
+    padding: 1rem;
+  }
+  .cancel {
+    background: rgba(238, 238, 238, 0);
+    border: none;
+    color: rgb(216, 216, 216);
+    width: 4rem;
+    &:hover {
+      color: white;
+      text-decoration: underline;
+    }
+  }
+  .confirm {
+    &:hover {
+      color: rgb(237, 237, 237);
+      background: rgb(165, 20, 20);
+      border-radius: 2px;
+    }
+  }
 }
