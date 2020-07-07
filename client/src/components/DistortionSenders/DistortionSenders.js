@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import './DistortionSenders.scss';
 import { CTX } from 'context/Store';
 const DistortionSenders = () => {

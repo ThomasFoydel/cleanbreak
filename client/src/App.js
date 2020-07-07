@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import ReactDOM from 'react-dom';
 import StepSequencer from 'components/StepSequencer/StepSequencer';
 import './App.scss';
