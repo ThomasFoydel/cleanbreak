@@ -39,9 +39,7 @@ router.post('/save', auth, async (req, res) => {
         newArray.push(presetObj);
       });
 
-      const nameOfNewPreset =
-        updatedUser.presets[updatedUser.presets.length - 1].name;
-      return res.send({ presets: newArray, current: nameOfNewPreset });
+      return res.send({ presets: newArray, current: name });
     })
     .catch((err) => console.log('preset update error: ', err));
 });
