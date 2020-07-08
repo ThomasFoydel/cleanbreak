@@ -62,6 +62,7 @@ const Presets = ({ openAuth }) => {
             },
           });
           closeAll();
+          setErrorMessage('new preset saved!');
           setPresetName('');
         }
       })
@@ -90,8 +91,9 @@ const Presets = ({ openAuth }) => {
               current: result.data.current,
             },
           });
+          closeAll();
+          setErrorMessage('preset saved!');
         }
-        closeAll();
       })
       .catch((err) => console.log('save preset error: ', err));
   };
@@ -119,6 +121,7 @@ const Presets = ({ openAuth }) => {
             payload: result.data.presets[result.data.newCurrentIndex],
           });
           closeAll();
+          setErrorMessage('preset deleted!');
         }
       })
       .catch((err) => {
@@ -129,7 +132,7 @@ const Presets = ({ openAuth }) => {
   useEffect(() => {
     setTimeout(() => {
       setErrorMessage('');
-    }, 2800);
+    }, 1900);
   }, [errorMessage]);
 
   const handleTextInput = (e) => {

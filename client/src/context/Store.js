@@ -150,6 +150,12 @@ export function reducer(state, action) {
     case 'LOGOUT':
       localStorage.removeItem('cleanbreak-token');
       return { ...state, isLoggedIn: false };
+
+    case 'REVERT':
+      return {
+        ...state,
+      };
+
     case 'CHANGE_CLICK_ACTIVE':
       return { ...state, clickActive: payload };
     case 'CHANGE_TEMPO':

@@ -4,6 +4,7 @@ import SampleSelector from 'components/SampleSelector/SampleSelector';
 import StartStop from 'components/StartStop/StartStop';
 import Presets from 'components/Presets/Presets';
 import PresetSelector from 'components/PresetSelector/PresetSelector';
+import RevertButton from 'components/RevertButton/RevertButton';
 
 import { CTX } from 'context/Store';
 
@@ -51,6 +52,7 @@ const StepSequencer = ({ openAuth }) => {
       <StartStop />
       <Presets openAuth={openAuth} />
       <PresetSelector openAuth={openAuth} />
+      <RevertButton openAuth={openAuth} />
     </div>
   );
 };

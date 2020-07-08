@@ -18,6 +18,10 @@ router.post('/save', auth, async (req, res) => {
   let { userId } = req.tokenUser;
   let { state, name } = req.body;
 
+  if (name === 'default') {
+    return res.send({ err: 'cannot save over default' });
+  }
+
   const foundUser = await User.findById(userId);
   const foundPresets = foundUser.presets;
 
@@ -127,6 +131,20 @@ router.post('/delete', auth, async (req, res) => {
       });
     })
     .catch((err) => console.log('save preset error: ', err));
+});
+
+router.get('/revert/:presetName', auth, async (req, res) => {
+  let { userId } = req.tokenUser;
+  let { presetName } = req.params;
+  User.findById(userId)
+    .then((user) => {
+      let revertIndex = findWithAttr(user.presets, 'name', presetName);
+      let presetFromDb = user.presets[revertIndex];
+      res.send({ presetFromDb });
+    })
+    .catch((err) => {
+      res.send({ err });
+    });
 });
 
 module.exports = router;
