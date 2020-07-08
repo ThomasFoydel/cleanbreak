@@ -1,6 +1,6 @@
 <div align="center"><h1>Clean Break</h1></div>
 
-<div align="center"><h5>A drum machine for the browser<a href="http://clean-break.herokuapp.com/">live demo here</a></h5></div>
+<div align="center"><h5>A drum machine for the browser <a href="http://clean-break.herokuapp.com/">live demo here</a></h5></div>
 
 <img src="/client/public/imgs/preview.jpg" width="100%" >
 
