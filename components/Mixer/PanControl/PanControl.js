@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import CircleRange from '../CircleRange/CircleRange'
+import CircleRange from '../../CircleRange/CircleRange'
+import { CTX } from '../../../context/Store'
 import styles from './PanControl.module.scss'
-import { CTX } from '../../context/Store'
 
 const PanControl = ({ name }) => {
   const [appState, updateState] = useContext(CTX)

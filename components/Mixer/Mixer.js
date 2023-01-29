@@ -1,6 +1,6 @@
 import cn from 'classnames'
 import React, { useContext } from 'react'
-import PanControl from '../PanControl/PanControl'
+import PanControl from './PanControl/PanControl'
 import { CTX } from '../../context/Store'
 import styles from './Mixer.module.scss'
 import RangeInput from '../RangeInput/RangeInput'
