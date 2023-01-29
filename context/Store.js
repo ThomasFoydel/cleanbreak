@@ -8,14 +8,15 @@ let CTX
 if (Tone && typeof window !== 'undefined') {
   const actx = Tone.context
   const now = actx.currentTime
+  let started = false
 
   CTX = React.createContext()
 
   console.log(typeof window)
   console.log(Tone.Transport)
-  // Tone.Transport.bpm.value = 85
+  Tone.Transport.bpm.value = 85
 
-  // Tone.Transport.scheduleRepeat(repeat, '16n')
+  Tone.Transport.scheduleRepeat(repeat, '16n')
 
   const masterVol = new Tone.Volume(-5)
   const limiter = new Tone.Limiter(-8).toDestination()
@@ -108,10 +109,12 @@ if (Tone && typeof window !== 'undefined') {
   let index = 0
 
   function repeat(time) {
-    let step = index % 16
+    const step = index % 16
+    // console.log('repeat! ', time, index, step)
     Tone.Draw.schedule(function () {
-      var blocks = document.querySelectorAll('.timeblock')
+      const blocks = document.querySelectorAll('.timeblock')
       blocks.forEach((block) => {
+        console.log('block.id, step: ', Number(block.id) === step)
         if (Number(block.id) === step) {
           block.classList.add('active')
         } else {
@@ -264,6 +267,11 @@ if (Tone && typeof window !== 'undefined') {
         return { ...state, pingPong: { ...state.pingPong, [type]: value } }
 
       case 'START':
+        if (!started) {
+          started = true
+          Tone.start()
+        }
+
         Tone.Transport.start()
         return { ...state, playing: true }
       case 'STOP':
@@ -332,8 +340,7 @@ if (Tone && typeof window !== 'undefined') {
         }
 
       default:
-        console.log('REDUCER ERROR: action: ', action)
-        /* throw Error('reducer error'); */
+        console.error('REDUCER ERROR: action: ', action)
         return { ...state }
     }
   }

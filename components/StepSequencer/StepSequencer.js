@@ -1,3 +1,4 @@
+import cn from 'classnames'
 import React, { useContext } from 'react'
 import SampleSelector from '../SampleSelector/SampleSelector'
 import PresetSelector from '../PresetSelector/PresetSelector'
@@ -42,7 +43,10 @@ const StepSequencer = ({ openAuth }) => {
         ))}
         <div className={styles.timeblocks}>
           {appState.sequencerGrid.A.map((block, i) => (
-            <div className={styles.timeblock} id={i} key={i}></div>
+            <div
+              className={cn(styles.timeblock, 'timeblock')}
+              id={i}
+              key={i}></div>
           ))}
         </div>
       </div>
