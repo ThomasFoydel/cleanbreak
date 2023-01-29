@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom'
 import React, { useEffect, useContext } from 'react'
 // import StepSequencer from '../components/StepSequencer/StepSequencer'
 import Distortion from '../components/Distortion/Distortion'
-// import PingPong from '../components/PingPong/PingPong'
+import PingPong from '../components/PingPong/PingPong'
 // import Reverb from '../components/Reverb/Reverb'
 import Mixer from '../components/Mixer/Mixer'
 import styles from '../styles/Main.module.scss'
@@ -94,7 +94,7 @@ function App() {
         <div className={styles.effectsContainer}>
           <Mixer />
           <Distortion />
-          {/* <PingPong /> */}
+          <PingPong />
           {/* <Reverb /> */}
         </div>
         <div className={styles.stepContainer}>

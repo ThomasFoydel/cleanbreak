@@ -1,16 +1,18 @@
-import React from 'react';
-import PingPongControl from 'components/PingPongControl/PingPongControl';
-import PingPongSenders from 'components/PingPongSenders/PingPongSenders';
-import './PingPong.scss';
+import React from 'react'
+import PingPongControl from './PingPongControl/PingPongControl'
+import PingPongSenders from './PingPongSenders/PingPongSenders'
+import styles from './PingPong.module.scss'
 
 const PingPong = () => {
   return (
-    <div className='pingpong'>
-      <PingPongControl />
-      <PingPongSenders />
-      <h1 className='effect-name'>ping pong</h1>
+    <div className={styles.pingPong}>
+      <h1 className={styles.effectName}>ping pong</h1>
+      <div className='flex'>
+        <PingPongControl />
+        <PingPongSenders />
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export default PingPong;
+export default PingPong

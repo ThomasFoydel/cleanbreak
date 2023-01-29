@@ -1,14 +1,16 @@
-.pingpong {
+.pingPong {
+  width: 63rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  display: flex;
   margin-left: 50%;
   transform: translateX(-50%);
+  background: rgba(52, 52, 52, 0.3);
   position: relative;
-  width: 63rem;
+  backdrop-filter: invert(0.7);
+  padding: 0 0.2rem 1rem 0.2rem;
 
-  .effect-name {
-    position: absolute;
+  .effectName {
+    text-align: center;
     margin-left: 50%;
     transform: translateX(-50%);
     color: rgb(225, 225, 225);
