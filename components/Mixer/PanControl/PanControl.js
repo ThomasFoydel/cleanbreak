@@ -9,6 +9,7 @@ const PanControl = ({ name }) => {
   const handlePan = (e, tag) => {
     updateState({ type: 'CHANGE_PAN', payload: { type: name, value: e } })
   }
+  
   return (
     <div className={styles.panControl}>
       <CircleRange

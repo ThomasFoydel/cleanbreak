@@ -1,4 +1,4 @@
-.preset-dropdown {
+.presetDropdown {
   position: absolute;
   left: 50%;
   width: 23.6rem;
@@ -12,7 +12,7 @@
   max-height: 14rem;
   overflow-y: scroll;
 
-  .preset-name {
+  .presetName {
     border-radius: 2px;
     background: #c2c2c2;
     transition: all 0.2s ease;
@@ -26,7 +26,7 @@
     }
   }
 
-  .current-active-preset {
+  .currentActivePreset {
     background: rgb(59, 59, 59);
     color: #ddd;
   }
