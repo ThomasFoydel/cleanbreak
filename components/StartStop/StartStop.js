@@ -1,36 +1,38 @@
-import React, { useContext } from 'react';
-import Tempo from 'components/Tempo/Tempo';
-import Swing from 'components/Swing/Swing';
-
-import './StartStop.scss';
-import { CTX } from 'context/Store';
+import cn from 'classnames'
+import React, { useContext } from 'react'
+import styles from './StartStop.module.scss'
+import { CTX } from '../../context/Store'
+import Swing from '../Swing/Swing'
+import Tempo from '../Tempo/Tempo'
 
 const StartStop = () => {
-  const [appState, updateState] = useContext(CTX);
-  let { playing } = appState;
+  const [{ playing }, updateState] = useContext(CTX)
 
-  const handleStart = () => {
-    updateState({ type: 'START' });
-  };
-  const handleStop = () => {
-    updateState({ type: 'STOP' });
-  };
+  const handleStart = () => updateState({ type: 'START' })
+
+  const handleStop = () => updateState({ type: 'STOP' })
+
   return (
-    <div className='start-stop'>
-      <div className='tempo-swing'>
+    <div className={styles.startStop}>
+      <div className={styles.tempoSwing}>
         <Tempo />
         <Swing />
       </div>
-      <div className='buttons-container'>
-        <div className='triangle-container' onClick={handleStart}>
-          <div className={`play-triangle ${playing && 'playing'}`}></div>
+      <div className={styles.buttonsContainer}>
+        <div className={styles.triangleContainer} onClick={handleStart}>
+          <div className={cn(styles.playTriangle, playing && styles.playing)} />
         </div>
-        <div className='pause-container' onClick={handleStop}>
-          <div className={`pause-button paused-${!playing}`}></div>
+        <div className={styles.pauseContainer} onClick={handleStop}>
+          <div
+            className={cn(
+              styles.pauseButton,
+              paused ? styles.pausedTrue : styles.pausedFalse
+            )}
+          />
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default StartStop;
+export default StartStop
