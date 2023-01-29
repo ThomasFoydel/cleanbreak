@@ -3,9 +3,9 @@ import React, { useEffect, useContext } from 'react'
 // import StepSequencer from '../components/StepSequencer/StepSequencer'
 import Distortion from '../components/Distortion/Distortion'
 import PingPong from '../components/PingPong/PingPong'
-// import Reverb from '../components/Reverb/Reverb'
-import Mixer from '../components/Mixer/Mixer'
+import Reverb from '../components/Reverb/Reverb'
 import styles from '../styles/Main.module.scss'
+import Mixer from '../components/Mixer/Mixer'
 import Auth from '../components/Auth/Auth'
 import { CTX } from '../context/Store'
 
@@ -95,7 +95,7 @@ function App() {
           <Mixer />
           <Distortion />
           <PingPong />
-          {/* <Reverb /> */}
+          <Reverb />
         </div>
         <div className={styles.stepContainer}>
           {/* <StepSequencer openAuth={openAuth} /> */}

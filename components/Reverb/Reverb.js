@@ -1,16 +1,18 @@
-import React from 'react';
-import ReverbControl from 'components/ReverbControl/ReverbControl';
-import ReverbSenders from 'components/ReverbSenders/ReverbSenders';
-import './Reverb.scss';
+import React from 'react'
+import ReverbControl from './ReverbControl/ReverbControl'
+import ReverbSenders from './ReverbSenders/ReverbSenders'
+import styles from './Reverb.module.scss'
 
 const Reverb = () => {
   return (
-    <div className='reverb'>
-      <ReverbControl />
-      <ReverbSenders />
-      <div className='effect-name'>reverb</div>
+    <div className={styles.reverb}>
+      <div className={styles.effectName}>reverb</div>
+      <div className='flex'>
+        <ReverbControl />
+        <ReverbSenders />
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export default Reverb;
+export default Reverb
