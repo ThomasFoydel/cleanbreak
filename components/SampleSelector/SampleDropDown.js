@@ -1,19 +1,21 @@
-import React, { useContext, useState } from 'react';
-import { CTX } from 'context/Store';
+import cn from 'classnames'
+import React, { useContext, useState } from 'react'
+import styles from './SampleSelector.module.scss'
+import { CTX } from '../../context/Store'
 
 const SampleDropDown = ({ name, samples }) => {
-  const [appState, updateState] = useContext(CTX);
-  const [opened, setOpened] = useState(false);
+  const [appState, updateState] = useContext(CTX)
+  const [opened, setOpened] = useState(false)
 
-  let index = appState.samples.findIndex((sample) => sample.name === name);
+  const index = appState.samples.findIndex((sample) => sample.name === name)
 
   const handleSelect = (e) => {
-    e.preventDefault();
-    let id = e.target.id;
-    let newSampleName = e.target.attributes.name.value;
-    let index = appState.samples.findIndex(
+    e.preventDefault()
+    const { id } = e.target
+    const newSampleName = e.target.attributes.name.value
+    const index = appState.samples.findIndex(
       (sample) => sample.name === newSampleName
-    );
+    )
 
     updateState({
       type: 'CHANGE_SAMPLE',
@@ -22,56 +24,52 @@ const SampleDropDown = ({ name, samples }) => {
         newSampleUrl: id,
         newSampleName,
         sampleIndex: index,
-        name,
-      },
-    });
-  };
+        name
+      }
+    })
+  }
 
   const handleClick = (e) => {
     if (e.target.getAttribute('type') === 'sample-name') {
-      handleSelect(e);
-    } else {
-      setOpened(!opened);
-    }
-  };
+      handleSelect(e)
+    } else setOpened(!opened)
+  }
 
   return (
     <div
-      className='sample-dropdown'
+      className={styles.sampleDropdown}
       onClick={handleClick}
-      onMouseLeave={() => setOpened(false)}
-    >
-      <div className='currentsample-name'>
+      onMouseLeave={() => setOpened(false)}>
+      <div className={styles.currentsampleName}>
         {appState.samples[index].sampleName}
       </div>
       <div
-        className='hover-open'
+        className={styles.hoverOpen}
         style={{
           zIndex: opened ? '3' : '-1',
           opacity: opened ? '1' : '0',
           transform: opened
             ? 'translateX(-50%) translateY(0)'
-            : 'translateX(-50%) translateY(-4rem)',
-        }}
-      >
+            : 'translateX(-50%) translateY(-4rem)'
+        }}>
         {samples.map((sample, i) => (
           <div
             type='sample-name'
-            className={`sample-name ${
+            className={cn(
+              styles.sampleName,
               sample.name === appState.samples[index].sampleName &&
-              'current-active-sample'
-            }`}
+                styles.currentActiveSample
+            )}
             name={sample.name}
             onClick={handleClick}
             id={sample.sample}
-            key={i}
-          >
+            key={i}>
             {sample.name}
           </div>
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SampleDropDown;
+export default SampleDropDown

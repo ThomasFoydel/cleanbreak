@@ -1,36 +1,38 @@
-.sample-selector-container {
+.sampleSelectorContainer {
   margin-left: -14.4rem;
   background: rgb(40, 40, 40);
   height: 30rem;
   border-radius: 2px;
 }
-.sample-selector {
+.sampleSelector {
   display: flex;
   height: 5rem;
 
-  .selector-btn {
+  .selectorBtn {
     font-weight: bold;
     padding-top: 0.4rem;
   }
 
-  .selector-btn,
-  .clear-btn {
+  .selectorBtn,
+  .clearBtn {
     width: 4.2rem;
     height: 4.2rem;
     margin: 0.42rem;
     font-size: 1.8rem;
     border: none;
     border-radius: 2px;
+
     &:hover {
       background: rgb(159, 159, 159);
     }
   }
-  .clear-btn {
+
+  .clearBtn {
     width: 6rem;
   }
 }
 
-.sample-dropdown {
+.sampleDropdown {
   background: rgb(209, 209, 209);
   height: 3rem;
   padding-top: 1.2rem;
@@ -51,12 +53,12 @@
     height: 2.8rem;
   }
 
-  .currentsample-name,
-  .sample-name {
+  .currentSampleName,
+  .sampleName {
     cursor: pointer;
   }
 
-  .sample-name {
+  .sampleName {
     border-radius: 2px;
     background: rgb(194, 194, 194);
     transition: all 0.2s ease;
@@ -67,7 +69,7 @@
     }
   }
 
-  .hover-open {
+  .hoverOpen {
     height: 11rem;
     overflow-y: scroll;
     position: absolute;
@@ -82,7 +84,7 @@
     transition: all ease 0.4s;
   }
 
-  .current-active-sample {
+  .currentActiveSample {
     background: rgb(59, 59, 59);
     color: #ddd;
   }
