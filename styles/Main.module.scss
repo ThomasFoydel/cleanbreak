@@ -1,9 +1,4 @@
-/* 
-        credit and big thanks to thebabydino for the input styles
-        https://codepen.io/thebabydino/pen/YPRENB 
-*/
-
-$val: 320hz 600hz 1khz 3khz 6khz 12khz;
+$val: 320Hz 600Hz 1kHz 3kHz 6kHz 12kHz;
 
 $input-bw: 1.5em;
 $input-h: 2.25em;
@@ -43,34 +38,21 @@ $thumb-r: 0.75em;
   height: $thumb-h;
   border-radius: 0.5em;
   box-shadow: -0.125em 0 0.25em #928886, inset -1px 0 1px #fff;
-  background: radial-gradient(
-        #ebe1e0 10%,
-        rgba(#ebe1e0, 0.2) 10%,
-        rgba(#ebe1e0, 0) 72%
-      )
-      no-repeat 50% 50%,
-    radial-gradient(#{at 100% 50%}, #e9dfde, #eae1de 71%, transparent 71%)
-      no-repeat ($thumb-w - 2 * $thumb-r) 50%,
+  background: radial-gradient(#ebe1e0 10%, rgba(#ebe1e0, 0.2) 10%, rgba(#ebe1e0, 0) 72%) no-repeat
+      50% 50%,
+    radial-gradient(#{at 100% 50%}, #e9dfde, #eae1de 71%, transparent 71%) no-repeat
+      ($thumb-w - 2 * $thumb-r) 50%,
     linear-gradient(90deg, #e9dfde, #d0c8c6) no-repeat 100% 50%,
-    radial-gradient(#{at 0 50%}, #d0c6c5, #c6baba 71%, transparent 71%)
-      no-repeat $thumb-r 50%,
+    radial-gradient(#{at 0 50%}, #d0c6c5, #c6baba 71%, transparent 71%) no-repeat $thumb-r 50%,
     linear-gradient(90deg, #e3d9d8, #d0c6c5) no-repeat 0 50%,
     linear-gradient(#cdc0c0, #fcf5ef, #fcf5ef, #cdc0c0);
   background-size: 1.1 * $thumb-r 100%;
 }
 
-html,
-body {
-  overscroll-behavior: none;
-  overflow: hidden;
-}
-html {
-  font-size: 62.5%;
-  height: 100%;
-}
 .App {
   min-height: 100%;
 }
+
 .background {
   background: linear-gradient(rgba(0, 0, 0, 0.099), rgba(255, 255, 255, 0.179)),
     url('imgs/circuits3.png');
@@ -87,44 +69,8 @@ html {
   z-index: -1;
 }
 
-body {
-  font-family: 'Source Sans Pro', sans-serif;
-  font-weight: 400;
-  line-height: 1.7;
-  box-sizing: border-box;
-}
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-div {
-  cursor: default;
-  font-weight: 400;
-}
 
-::selection {
-  color: none;
-  background: none;
-}
-/* For Mozilla Firefox */
-::-moz-selection {
-  color: none;
-  background: none;
-}
-button {
-  outline: none;
-  cursor: pointer;
-}
-button::-moz-focus-inner {
-  border: 0;
-}
-
-input:focus {
-  outline-color: rgba(205, 38, 38, 0.644);
-}
 
 .components-container {
   position: absolute;
@@ -137,9 +83,6 @@ input:focus {
   overflow: scroll;
 }
 
-.flex {
-  display: flex;
-}
 
 .pingpong-control,
 .distortion-control,
@@ -183,13 +126,10 @@ input:focus {
   }
 
   align-self: center;
-  //   margin: -$input-bw/2 0;
   margin: -7rem;
   border: solid $input-bw transparent;
   padding: 0;
-  //   width: $track-w;
   min-width: 18rem;
-  //   height: $input-h;
   height: 2.3rem;
   background: repeating-linear-gradient(
         90deg,
@@ -207,8 +147,7 @@ input:focus {
         transparent $track-u
       )
       no-repeat 50% $ruler-line-off + $input-h + $input-bw border-box,
-    linear-gradient(90deg, $input-bg-ct, $input-bg-c, $input-bg-ct) no-repeat
-      50% 50% border-box;
+    linear-gradient(90deg, $input-bg-ct, $input-bg-c, $input-bg-ct) no-repeat 50% 50% border-box;
   background-size: $track-k * $track-u + $ruler-line-w $ruler-line-h,
     $track-k * $track-u + $ruler-line-w $ruler-line-h, 100% $input-h;
   font-size: 1em;
@@ -247,8 +186,7 @@ input:focus {
     &:before,
     &:after {
       position: absolute;
-      font: #{$ruler-fs * 1em}/#{3 * $track-u/$ruler-fs} trebuchet ms, arial,
-        sans-serif;
+      font: #{$ruler-fs * 1em}/#{3 * $track-u/$ruler-fs} trebuchet ms, arial, sans-serif;
     }
     &:before {
       top: 50%;
@@ -347,6 +285,7 @@ input:focus {
   transition: all 0.2s ease;
   position: fixed;
   z-index: 1;
+
   &:hover {
     background: rgba(63, 63, 63, 1);
     color: rgba(255, 255, 255, 1);
@@ -367,6 +306,7 @@ input:focus {
   right: 1rem;
   opacity: 0.6;
   padding: 0.2rem 1rem;
+  
   &:hover {
     opacity: 1;
   }
