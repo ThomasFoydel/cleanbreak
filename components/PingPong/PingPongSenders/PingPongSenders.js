@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import RangeInput from '../../RangeInput/RangeInput'
 import styles from './PingPongSenders.module.scss'
 import { CTX } from '../../../context/Store'
 import cn from 'classnames'
@@ -21,17 +22,13 @@ const PingPongSenders = () => {
         .sort()
         .map((inst, i) => (
           <div className='inst' key={i}>
-            <div className='input-container'>
-              <input
-                className='range-input'
-                type='range'
-                min={0}
-                max={50}
-                name={inst}
-                value={appState.pingPongSends[inst] * -1}
-                onChange={handleChange}
-              />
-            </div>
+            <RangeInput
+              min={0}
+              max={50}
+              name={inst}
+              value={appState.pingPongSends[inst] * -1}
+              onChange={handleChange}
+            />
             <h2 className='name'>{inst}</h2>
           </div>
         ))}

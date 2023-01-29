@@ -1,6 +1,7 @@
 import cn from 'classnames'
 import React, { useContext } from 'react'
 import { CTX } from '../../../context/Store'
+import RangeInput from '../../RangeInput/RangeInput'
 import styles from './DistortionSenders.module.scss'
 
 const DistortionSenders = () => {
@@ -18,17 +19,13 @@ const DistortionSenders = () => {
         .sort()
         .map((inst, i) => (
           <div className='inst' key={i}>
-            <div className='input-container'>
-              <input
-                className='range-input'
-                type='range'
-                min={0}
-                max={50}
-                name={inst}
-                value={appState.distortionSends[inst] * -1}
-                onChange={handleChange}
-              />
-            </div>
+            <RangeInput
+              min={0}
+              max={50}
+              name={inst}
+              value={appState.distortionSends[inst] * -1}
+              onChange={handleChange}
+            />
             <h2 className='name'>{inst}</h2>
           </div>
         ))}

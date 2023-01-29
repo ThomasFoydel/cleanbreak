@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 import PanControl from '../PanControl/PanControl'
 import { CTX } from '../../context/Store'
 import styles from './Mixer.module.scss'
+import RangeInput from '../RangeInput/RangeInput'
 
 const Mixer = () => {
   const [appState, updateState] = useContext(CTX)
@@ -35,16 +36,13 @@ const Mixer = () => {
           .sort()
           .map((keyName, i) => (
             <div className='inst' key={i}>
-              <div className='input-container'>
-                <input
-                  onChange={handleChange}
-                  className='range-input'
-                  type='range'
-                  name={keyName}
-                  max={30}
-                  value={appState.panVols[keyName] * -1}
-                />
-              </div>
+              <RangeInput
+                onChange={handleChange}
+                name={keyName}
+                max={30}
+                value={appState.panVols[keyName] * -1}
+              />
+
               <h2 className={cn('name', styles.mixerName)}>{keyName}</h2>
               <PanControl name={keyName} />
               <button

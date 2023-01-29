@@ -2,6 +2,7 @@ import cn from 'classnames'
 import React, { useContext } from 'react'
 import styles from './PingPongControl.module.scss'
 import { CTX } from '../../../context/Store'
+import RangeInput from '../../RangeInput/RangeInput'
 
 const PingPongControl = () => {
   const [appState, updateState] = useContext(CTX)
@@ -27,42 +28,31 @@ const PingPongControl = () => {
   return (
     <div className={cn(styles.pingPongControl, 'controller')}>
       <div className='inst'>
-        <div className='input-container'>
-          <input
-            type='range'
-            className='range-input'
-            id='wet'
-            step={10}
-            value={appState.pingPong.wet * 100}
-            onChange={handleMix}
-          />
-        </div>
+        <RangeInput
+          id='wet'
+          step={10}
+          value={appState.pingPong.wet * 100}
+          onChange={handleMix}
+        />
         <h2 className='name'>mix</h2>
       </div>
       <div className='inst'>
-        <div className='input-container'>
-          <input
-            type='range'
-            className='range-input'
-            id='delayTime'
-            step={10}
-            value={appState.pingPong.delayTime * 50}
-            onChange={handleDelayTime}
-          />
-        </div>
+        <RangeInput
+          id='delayTime'
+          step={10}
+          value={appState.pingPong.delayTime * 50}
+          onChange={handleDelayTime}
+        />
+
         <h2 className='name'>time</h2>
       </div>
       <div className='inst'>
-        <div className='input-container'>
-          <input
-            type='range'
-            className='range-input'
-            id='feedback'
-            step={10}
-            value={appState.pingPong.feedback * 100}
-            onChange={handleFeedback}
-          />
-        </div>
+        <RangeInput
+          id='feedback'
+          step={10}
+          value={appState.pingPong.feedback * 100}
+          onChange={handleFeedback}
+        />
         <h2 className='name'>feedback</h2>
       </div>
     </div>
