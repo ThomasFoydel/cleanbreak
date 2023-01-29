@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import PresetDropDown from '../PresetDropDown/PresetDropDown'
+import PresetDropDown from './PresetDropDown/PresetDropDown'
 import styles from './PresetSelector.module.scss'
 import { CTX } from '../../context/Store'
 

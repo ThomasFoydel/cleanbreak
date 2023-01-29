@@ -1,7 +1,7 @@
 import cn from 'classnames'
 import React, { useContext } from 'react'
 import styles from './PresetDropDown.module.scss'
-import { CTX } from '../../context/Store'
+import { CTX } from '../../../context/Store'
 
 const PresetDropDown = ({ open }) => {
   const [appState, updateState] = useContext(CTX)
