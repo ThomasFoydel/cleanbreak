@@ -138,6 +138,7 @@ input:focus {
   backdrop-filter: invert(0.7);
   border-radius: 2px;
   display: flex;
+  justify-content: center;
   height: 33rem;
   color: rgb(225, 225, 225);
   position: relative;
@@ -160,13 +161,12 @@ input:focus {
 }
 
 .range-input {
-  transform: rotate(-270deg);
+  transform: rotate(-270deg) translateY(-50%);
   &,
   &::-webkit-slider-runnable-track,
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
   }
-
   align-self: center;
   margin: -7rem;
   border: solid $input-bw transparent;

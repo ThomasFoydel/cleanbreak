@@ -1,20 +1,19 @@
-import React, { useContext } from 'react';
-import './DistortionSenders.scss';
-import { CTX } from 'context/Store';
-const DistortionSenders = () => {
-  const [appState, updateState] = useContext(CTX);
-  const handleChange = (e) => {
-    let { value, name } = e.target;
-    value *= -1;
+import cn from 'classnames'
+import React, { useContext } from 'react'
+import { CTX } from '../../context/Store'
+import styles from './DistortionSenders.module.scss'
 
-    updateState({
-      type: 'CHANGE_DISTORTION_SENDS',
-      payload: { name, value },
-    });
-  };
+const DistortionSenders = () => {
+  const [appState, updateState] = useContext(CTX)
+
+  const handleChange = (e) => {
+    let { value, name } = e.target
+    value *= -1
+    updateState({ type: 'CHANGE_DISTORTION_SENDS', payload: { name, value } })
+  }
 
   return (
-    <div className='distortion-senders'>
+    <div className={cn(styles.distortionSenders, 'controller')}>
       {Object.keys(appState.distortionSends)
         .sort()
         .map((inst, i) => (
@@ -32,7 +31,7 @@ const DistortionSenders = () => {
           </div>
         ))}
     </div>
-  );
-};
+  )
+}
 
-export default DistortionSenders;
+export default DistortionSenders
