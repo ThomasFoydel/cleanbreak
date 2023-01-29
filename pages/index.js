@@ -91,7 +91,7 @@ function App() {
       <div className={styles.background}></div>
       <div className={styles.componentsContainer}>
         <div className={styles.space}></div>
-        <div className={styles.effectsContainer}>
+        {/* <div className={styles.effectsContainer}>
           <Mixer />
           <Distortion />
           <PingPong />
@@ -99,7 +99,7 @@ function App() {
         </div>
         <div className={styles.stepContainer}>
           <StepSequencer openAuth={openAuth} />
-        </div>
+        </div> */}
       </div>
       {/* {isLoggedIn && (
         <button className="logout-btn" onClick={logout}>

@@ -31,6 +31,7 @@
       80% 0%,
       50% 30%
     );
+
     &:hover {
       background: rgb(161, 18, 18);
     }
@@ -54,6 +55,7 @@
     transform: translateX(-50%);
     width: 80%;
   }
+
   input {
     width: 22rem;
     border-top: none;
@@ -62,6 +64,7 @@
     border-radius: 2px;
     padding: 0.3rem;
   }
+
   button,
   input {
     margin-top: 0.5rem;
@@ -76,6 +79,7 @@
   .signin-btn {
     background: rgba(238, 238, 238, 0);
     border: none;
+
     &:hover {
       text-decoration: underline;
     }
@@ -86,6 +90,7 @@
     background: rgb(59, 59, 59);
     color: white;
     font-size: 2rem;
+
     &:hover {
       background: #222;
       color: rgb(235, 63, 63);

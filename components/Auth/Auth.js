@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Login from 'components/Auth/Login/Login';
-import Register from 'components/Auth/Register/Register';
 import { animated, useSpring, config } from 'react-spring';
-import './Auth.scss';
+import Register from './Register/Register';
+import Login from './Login/Login';
+import styles from './Auth.scss';
 
 const Auth = ({ closeAuth, login }) => {
   const [currentShow, setCurrentShow] = useState('login');
@@ -25,7 +25,7 @@ const Auth = ({ closeAuth, login }) => {
 
   return (
     <animated.div style={authAnimation}>
-      <div className='auth'>
+      <div className={styles.auth}>
         <div className='close-btn' onClick={closeAuth}></div>
         <animated.div style={loginAnimation}>
           <Login
