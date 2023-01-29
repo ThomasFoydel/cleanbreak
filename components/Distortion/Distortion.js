@@ -6,9 +6,11 @@ import styles from './Distortion.module.scss'
 const Distortion = () => {
   return (
     <div className={styles.distortion}>
-      <DistortionControl />
-      <DistortionSenders />
       <div className={styles.effectName}>distortion</div>
+      <div className='flex'>
+        <DistortionControl />
+        <DistortionSenders />
+      </div>
     </div>
   )
 }

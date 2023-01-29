@@ -4,7 +4,7 @@ import React, { useEffect, useContext } from 'react'
 import Distortion from '../components/Distortion/Distortion'
 // import PingPong from '../components/PingPong/PingPong'
 // import Reverb from '../components/Reverb/Reverb'
-// import Mixer from '../components/Mixer/Mixer'
+import Mixer from '../components/Mixer/Mixer'
 import styles from '../styles/Main.module.scss'
 import Auth from '../components/Auth/Auth'
 import { CTX } from '../context/Store'
@@ -92,7 +92,7 @@ function App() {
       <div className={styles.componentsContainer}>
         <div className={styles.space}></div>
         <div className={styles.effectsContainer}>
-          {/* <Mixer /> */}
+          <Mixer />
           <Distortion />
           {/* <PingPong /> */}
           {/* <Reverb /> */}

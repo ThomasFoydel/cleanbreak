@@ -17,30 +17,34 @@ const DistortionControl = () => {
     value /= 100
     updateState({ type: 'CHANGE_DISTORTION', payload: { type: id, value } })
   }
-  
+
   return (
     <div className={cn(styles.distortionControl, 'controller')}>
       <div className='inst'>
+        <div className='input-container'>
+          <input
+            type='range'
+            className='range-input'
+            id='wet'
+            step={10}
+            value={appState.distortion.wet * 100}
+            onChange={handleMix}
+          />
+        </div>
         <h2 className='name'>mix</h2>
-        <input
-          type='range'
-          className='range-input'
-          id='wet'
-          step={10}
-          value={appState.distortion.wet * 100}
-          onChange={handleMix}
-        />
       </div>
       <div className='inst'>
+        <div className='input-container'>
+          <input
+            type='range'
+            className='range-input'
+            id='distortion'
+            step={10}
+            value={appState.distortion.distortion * 100}
+            onChange={handleDrive}
+          />
+        </div>
         <h2 className='name'>drive</h2>
-        <input
-          type='range'
-          className='range-input'
-          id='distortion'
-          step={10}
-          value={appState.distortion.distortion * 100}
-          onChange={handleDrive}
-        />
       </div>
     </div>
   )

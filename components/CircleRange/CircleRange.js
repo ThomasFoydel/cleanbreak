@@ -1,16 +1,15 @@
-import React from 'react';
-import { CircleSlider } from 'react-circle-slider';
-import styles from './CircleRange.module.scss';
-
+import React from 'react'
+import { CircleSlider } from 'react-circle-slider'
+import styles from './CircleRange.module.scss'
 const CircleRange = ({ min, max, size, value, onChange, tag, step }) => {
-  size = 70;
+  size = 70
 
   const handleChange = (e) => {
-    onChange(e, tag);
-  };
+    onChange(e, tag)
+  }
 
   return (
-    <div className={styles.circleRange}>
+    <div className={styles.container}>
       <CircleSlider
         stepSize={step || 5}
         size={size}
@@ -24,9 +23,9 @@ const CircleRange = ({ min, max, size, value, onChange, tag, step }) => {
         progressColor='#333'
         circleColor='#ddd'
         knobColor='fff'
-      ></CircleSlider>
+      />
     </div>
-  );
-};
+  )
+}
 
-export default CircleRange;
+export default CircleRange

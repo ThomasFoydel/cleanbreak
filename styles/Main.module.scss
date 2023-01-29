@@ -26,12 +26,15 @@
   width: 125rem;
   max-width: 100vw;
   max-height: 100vh;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .effectsContainer {
-  min-width: 125rem;
-  position: relative;
+  // min-width: 125rem;
+  // position: relative;
+  // max-width: 100vw;
+  // overflow-x: hidden;
 }
 
 .openAuth {

@@ -1,50 +1,43 @@
 .mixer {
-  padding-top: 5rem;
-  min-height: 43.5rem;
-  transform: translateX(-50%);
-  margin-left: 50%;
-  max-width: 52.5rem;
   margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  position: relative;
+  width: 56rem;
+  backdrop-filter: invert(0.7);
+  background: rgba(52, 52, 52, 0.3);
+  padding: 0 0.2rem 1rem 0.2rem;
 
-  .pan-control {
-    z-index: 2;
-    margin-top: 4rem;
-    width: 8rem;
-    margin-left: 2px;
-    padding-left: 0.5rem;
-  }
-  .range-input {
-    padding-right: 14px;
-  }
-  .mixer-name {
-    transform: translateY(14.5rem) translateX(-50%) !important;
-  }
   .solo,
   .mute {
-    margin-left: 50%;
-    transform: translateY(3.6rem) translateX(-50%);
     transition: all 0.3s ease;
   }
-  .solo-active {
+
+  .soloActive {
     color: rgb(240, 213, 4);
     background: rgb(30, 30, 30);
   }
+
   .solo {
     padding: 0.1rem 0.8rem;
     margin-bottom: 0.1rem;
+
     &:hover {
       background: rgb(103, 103, 103);
     }
   }
+
   .mute:hover {
     color: rgb(172, 68, 68);
   }
-  .mute-active {
+
+  .muteActive {
     color: rgb(196, 14, 14);
   }
 
-  .effect-name {
-    position: absolute;
+  .effectName {
+    text-align: center;
     margin-left: 50%;
     transform: translateX(-50%);
     color: rgb(225, 225, 225);

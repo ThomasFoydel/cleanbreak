@@ -18,16 +18,18 @@ const DistortionSenders = () => {
         .sort()
         .map((inst, i) => (
           <div className='inst' key={i}>
+            <div className='input-container'>
+              <input
+                className='range-input'
+                type='range'
+                min={0}
+                max={50}
+                name={inst}
+                value={appState.distortionSends[inst] * -1}
+                onChange={handleChange}
+              />
+            </div>
             <h2 className='name'>{inst}</h2>
-            <input
-              className='range-input'
-              type='range'
-              min={0}
-              max={50}
-              name={inst}
-              value={appState.distortionSends[inst] * -1}
-              onChange={handleChange}
-            />
           </div>
         ))}
     </div>

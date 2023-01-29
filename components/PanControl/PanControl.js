@@ -1,14 +1,16 @@
-import React, { useContext } from 'react';
-import { CTX } from 'context/Store';
-import CircleRange from 'components/CircleRange/CircleRange';
+import React, { useContext } from 'react'
+import CircleRange from '../CircleRange/CircleRange'
+import styles from './PanControl.module.scss'
+import { CTX } from '../../context/Store'
+
 const PanControl = ({ name }) => {
-  const [appState, updateState] = useContext(CTX);
+  const [appState, updateState] = useContext(CTX)
 
   const handlePan = (e, tag) => {
-    updateState({ type: 'CHANGE_PAN', payload: { type: name, value: e } });
-  };
+    updateState({ type: 'CHANGE_PAN', payload: { type: name, value: e } })
+  }
   return (
-    <div className='pan-control'>
+    <div className={styles.panControl}>
       <CircleRange
         size='20'
         min={-1}
@@ -19,7 +21,7 @@ const PanControl = ({ name }) => {
         value={appState.panVolPans[name] * 100}
       />
     </div>
-  );
-};
+  )
+}
 
-export default PanControl;
+export default PanControl
