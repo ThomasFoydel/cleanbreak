@@ -8,7 +8,7 @@
   position: relative;
   text-align: center;
 
-  .close-btn {
+  .closeBtn {
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -70,13 +70,13 @@
     margin-top: 0.5rem;
   }
 
-  .default-user-login {
+  .defaultUserLogin {
     height: 5.6rem;
     background: rgba(255, 255, 255, 0.453);
   }
 
-  .signup-btn,
-  .signin-btn {
+  .signUpBtn,
+  .signInBtn {
     background: rgba(238, 238, 238, 0);
     border: none;
 
@@ -85,8 +85,8 @@
     }
   }
 
-  .login-btn,
-  .register-btn {
+  .loginBtn,
+  .registerBtn {
     background: rgb(59, 59, 59);
     color: white;
     font-size: 2rem;

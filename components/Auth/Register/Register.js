@@ -1,49 +1,51 @@
-import React, { useState, useEffect } from 'react';
-import Axios from 'axios';
+import Axios from 'axios'
+import cn from 'classnames'
+import React, { useState, useEffect } from 'react'
+import styles from '../Auth.module.scss'
+
 const Register = ({ setCurrentShow, currentShow }) => {
-  const [formValues, setFormValues] = useState({});
-  const [errorMessage, setErrorMessage] = useState('');
+  const [formValues, setFormValues] = useState({})
+  const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
     setTimeout(() => {
-      setErrorMessage('');
-    }, 3400);
-  }, [errorMessage]);
+      setErrorMessage('')
+    }, 3400)
+  }, [errorMessage])
 
   const handleChange = (e) => {
-    let { value, id } = e.target;
-    setFormValues({ ...formValues, [id]: value });
-  };
+    let { value, id } = e.target
+    setFormValues({ ...formValues, [id]: value })
+  }
 
   const handleSubmit = () => {
-    let { email, name, password, confirmpassword } = formValues;
+    let { email, name, password, confirmpassword } = formValues
     if (email && name && password && confirmpassword) {
       Axios.post('/auth/register', formValues)
         .then((result) => {
           if (result.data.err) {
-            setErrorMessage(result.data.err);
+            setErrorMessage(result.data.err)
           } else {
-            setCurrentShow('login');
+            setCurrentShow('login')
           }
         })
-        .catch((err) => console.log('registration error: ', err));
+        .catch((err) => console.log('registration error: ', err))
     } else {
-      setErrorMessage('all inputs required!');
+      setErrorMessage('all inputs required!')
     }
-  };
+  }
 
   const handleKeyDown = (e) => {
     if (e.charCode === 13) {
-      handleSubmit();
+      handleSubmit()
     }
-  };
+  }
 
   return (
     <div
-      className='register'
-      style={{ zIndex: currentShow === 'register' ? '20' : '10' }}
-    >
-      <div className='title'>register</div>
+      className={styles.register}
+      style={{ zIndex: currentShow === 'register' ? '20' : '10' }}>
+      <div className={styles.title}>register</div>
       <input
         onKeyPress={handleKeyDown}
         className='center'
@@ -80,18 +82,19 @@ const Register = ({ setCurrentShow, currentShow }) => {
         id='confirmpassword'
         dontbubble='true'
       />
-      <button className='center register-btn' onClick={handleSubmit}>
+      <button
+        className={cn(styles.registerBtn, 'center')}
+        onClick={handleSubmit}>
         submit
       </button>
       <button
-        className='center signin-btn'
-        onClick={() => setCurrentShow('login')}
-      >
+        className={cn(styles.signInBtn, 'center')}
+        onClick={() => setCurrentShow('login')}>
         i already have an account
       </button>
-      <div className='err-msg'>{errorMessage}</div>
+      <div className={styles.errMsg}>{errorMessage}</div>
     </div>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register

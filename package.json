@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^1.2.6",
     "bcrypt": "^5.1.0",
+    "classnames": "^2.3.2",
     "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
     "mongoose": "^6.9.0",

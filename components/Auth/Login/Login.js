@@ -1,56 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import Axios from 'axios';
+import Axios from 'axios'
+import cn from 'classnames'
+import React, { useState, useEffect } from 'react'
+import styles from '../Auth.module.scss'
 
 const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
-  const [formValues, setFormValues] = useState({});
-  const [errorMessage, setErrorMessage] = useState('');
+  const [formValues, setFormValues] = useState({})
+  const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
-    let subscribed = true;
+    let subscribed = true
     setTimeout(() => {
       if (subscribed) {
-        setErrorMessage('');
+        setErrorMessage('')
       }
-    }, 3400);
-    return () => (subscribed = false);
-  }, [errorMessage]);
+    }, 3400)
+    return () => (subscribed = false)
+  }, [errorMessage])
 
   const handleKeyDown = (e) => {
     if (e.charCode === 13) {
-      handleSubmit();
+      handleSubmit()
     }
-  };
+  }
 
   const handleChange = (e) => {
-    let { value } = e.target;
-    let id = e.target.getAttribute('name');
-    setFormValues({ ...formValues, [id]: value });
-  };
+    let { value } = e.target
+    let id = e.target.getAttribute('name')
+    setFormValues({ ...formValues, [id]: value })
+  }
   const handleSubmit = async () => {
-    let { email, password } = formValues;
+    let { email, password } = formValues
     if (email && password) {
       Axios.post('/auth/login', formValues).then((result) => {
         if (result.data.err) {
-          setErrorMessage(result.data.err);
+          setErrorMessage(result.data.err)
         } else {
-          login({ type: 'LOGIN', payload: result.data.data });
+          login({ type: 'LOGIN', payload: result.data.data })
           setTimeout(() => {
-            closeAuth();
-          }, 250);
+            closeAuth()
+          }, 250)
         }
-      });
+      })
     } else {
-      setErrorMessage('all fields required');
+      setErrorMessage('all fields required')
     }
-  };
+  }
 
   return (
     <div
-      className='login'
-      style={{ zIndex: currentShow === 'login' ? '20' : '10' }}
-    >
-      <div className='title'>sign in</div>
-      <div className='default-user-login'>
+      className={styles.login}
+      style={{ zIndex: currentShow === 'login' ? '20' : '10' }}>
+      <div className={styles.title}>sign in</div>
+      <div className={styles.defaultUserLogin}>
         for testing:
         <br />
         email: test@gmail.com
@@ -75,20 +76,19 @@ const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
         name='password'
         dontbubble='true'
       />
-      <div className='btns-container center'>
-        <button className='login-btn' onClick={handleSubmit}>
+      <div className={cn(styles.btnsContainer, 'center')}>
+        <button className={styles.loginBtn} onClick={handleSubmit}>
           sign in
         </button>
         <button
-          className='signup-btn'
-          onClick={() => setCurrentShow('register')}
-        >
+          className={styles.signupBtn}
+          onClick={() => setCurrentShow('register')}>
           sign up
         </button>
       </div>
-      <div className='login-err center'>{errorMessage}</div>
+      <div className={cn(styles.loginErr, 'center')}>{errorMessage}</div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

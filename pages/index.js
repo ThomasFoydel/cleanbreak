@@ -1,11 +1,11 @@
 import ReactDOM from 'react-dom'
 import React, { useEffect, useContext } from 'react'
-import StepSequencer from '../components/StepSequencer/StepSequencer'
-import Distortion from '../components/Distortion/Distortion'
-import PingPong from '../components/PingPong/PingPong'
-import Reverb from '../components/Reverb/Reverb'
+// import StepSequencer from '../components/StepSequencer/StepSequencer'
+// import Distortion from '../components/Distortion/Distortion'
+// import PingPong from '../components/PingPong/PingPong'
+// import Reverb from '../components/Reverb/Reverb'
+// import Mixer from '../components/Mixer/Mixer'
 import styles from '../styles/Main.module.scss'
-import Mixer from '../components/Mixer/Mixer'
 import Auth from '../components/Auth/Auth'
 import { CTX } from '../context/Store'
 
@@ -62,18 +62,18 @@ function App() {
     ReactDOM.render(<div />, document.getElementById('modal'))
   }
 
-  // const logout = () => {
-  //   updateState({ type: 'LOGOUT' })
-  // }
+  const logout = () => {
+    updateState({ type: 'LOGOUT' })
+  }
 
-  // const login = (e) => {
-  //   updateState(e)
-  // }
+  const login = (e) => {
+    updateState(e)
+  }
 
   const openAuth = () => {
     ReactDOM.render(
-      <div className="modal">
-        <div className="modal-container">
+      <div className='modal'>
+        <div className='modal-container'>
           <Auth CTX={CTX} closeAuth={closeAuth} login={login} />
         </div>
       </div>,
@@ -83,11 +83,11 @@ function App() {
 
   return (
     <div className={styles.App}>
-      {/* {!isLoggedIn && (
-        <button className="open-auth" onClick={openAuth}>
-          login / register
-        </button>
-      )} */}
+      {/* {!isLoggedIn && ( */}
+      <button className='open-auth' onClick={openAuth}>
+        login / register
+      </button>
+      {/* )} */}
       <div className={styles.background}></div>
       <div className={styles.componentsContainer}>
         <div className={styles.space}></div>
@@ -101,10 +101,10 @@ function App() {
           <StepSequencer openAuth={openAuth} />
         </div> */}
       </div>
+      <button className='logout-btn' onClick={logout}>
+        logout
+      </button>
       {/* {isLoggedIn && (
-        <button className="logout-btn" onClick={logout}>
-          logout
-        </button>
       )} */}
     </div>
   )
