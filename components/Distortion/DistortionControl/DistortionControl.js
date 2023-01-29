@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import styles from './DistortionControl.module.scss'
-import { CTX } from '../../context/Store'
+import { CTX } from '../../../context/Store'
 import cn from 'classnames'
 
 const DistortionControl = () => {

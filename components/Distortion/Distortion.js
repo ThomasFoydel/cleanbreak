@@ -1,6 +1,6 @@
 import React from 'react'
-import DistortionSenders from '../DistortionSenders/DistortionSenders'
-import DistortionControl from '../DistortionControl/DistortionControl'
+import DistortionSenders from './DistortionSenders/DistortionSenders'
+import DistortionControl from './DistortionControl/DistortionControl'
 import styles from './Distortion.module.scss'
 
 const Distortion = () => {

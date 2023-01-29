@@ -1,6 +1,6 @@
 import cn from 'classnames'
 import React, { useContext } from 'react'
-import { CTX } from '../../context/Store'
+import { CTX } from '../../../context/Store'
 import styles from './DistortionSenders.module.scss'
 
 const DistortionSenders = () => {
