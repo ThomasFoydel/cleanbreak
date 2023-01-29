@@ -1,4 +1,4 @@
-.preset-selector {
+.presetSelector {
   background: rgb(40, 40, 40);
   border-radius: 2px;
   width: 37.1rem;
@@ -25,16 +25,17 @@
     font-weight: bold;
     border-radius: 2px;
     cursor: pointer;
+
     &:hover {
       background: rgb(159, 159, 159);
     }
 
-    .presets-list {
+    .presetsList {
       overflow-y: scroll;
     }
   }
 
-  .current-preset {
+  .currentPreset {
     cursor: pointer;
     border-radius: 2px;
     display: flex;
@@ -43,7 +44,7 @@
     color: #222;
   }
 
-  .dropdown-container {
+  .dropdownContainer {
     position: absolute;
     border-radius: 2px;
     color: rgb(5, 5, 5);
