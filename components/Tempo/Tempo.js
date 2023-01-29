@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
-import { CTX } from 'context/Store';
+import React, { useContext } from 'react'
+import { CTX } from '../../context/Store'
+
 const Tempo = () => {
-  const [appState, updateState] = useContext(CTX);
+  const [appState, updateState] = useContext(CTX)
 
   const handleChange = (e) => {
-    updateState({ type: 'CHANGE_TEMPO', payload: e.target.value });
-  };
+    updateState({ type: 'CHANGE_TEMPO', payload: e.target.value })
+  }
   return (
     <div>
       <div className='name'>tempo</div>
@@ -17,7 +18,7 @@ const Tempo = () => {
         onChange={handleChange}
       />
     </div>
-  );
-};
+  )
+}
 
-export default Tempo;
+export default Tempo

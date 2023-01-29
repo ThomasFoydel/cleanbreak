@@ -40,7 +40,7 @@ const SampleDropDown = ({ name, samples }) => {
       className={styles.sampleDropdown}
       onClick={handleClick}
       onMouseLeave={() => setOpened(false)}>
-      <div className={styles.currentsampleName}>
+      <div className={styles.currentSampleName}>
         {appState.samples[index].sampleName}
       </div>
       <div

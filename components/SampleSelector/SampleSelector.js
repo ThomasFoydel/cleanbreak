@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import SampleDropDown from './SampleSelector/SampleDropDown'
+import SampleDropDown from './SampleDropDown'
 import styles from './SampleSelector.module.scss'
 import { CTX } from '../../context/Store'
 import samples from '../../assets/audio'

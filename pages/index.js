@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom'
 import React, { useEffect, useContext } from 'react'
-// import StepSequencer from '../components/StepSequencer/StepSequencer'
+import StepSequencer from '../components/StepSequencer/StepSequencer'
 import Distortion from '../components/Distortion/Distortion'
 import PingPong from '../components/PingPong/PingPong'
 import Reverb from '../components/Reverb/Reverb'
@@ -98,7 +98,7 @@ function App() {
           <Reverb />
         </div>
         <div className={styles.stepContainer}>
-          {/* <StepSequencer openAuth={openAuth} /> */}
+          <StepSequencer openAuth={openAuth} />
         </div>
       </div>
       <button className={styles.logOutBtn} onClick={logout}>

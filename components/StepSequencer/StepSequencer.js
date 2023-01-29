@@ -1,34 +1,32 @@
-import React, { useContext } from 'react';
-import Square from 'components/Square/Square';
-import SampleSelector from 'components/SampleSelector/SampleSelector';
-import StartStop from 'components/StartStop/StartStop';
-import Presets from 'components/Presets/Presets';
-import PresetSelector from 'components/PresetSelector/PresetSelector';
-import RevertButton from 'components/RevertButton/RevertButton';
-
-import { CTX } from 'context/Store';
-
-import './StepSequencer.scss';
+import React, { useContext } from 'react'
+import SampleSelector from '../SampleSelector/SampleSelector'
+import PresetSelector from '../PresetSelector/PresetSelector'
+import RevertButton from '../RevertButton/RevertButton'
+import styles from './StepSequencer.module.scss'
+import StartStop from '../StartStop/StartStop'
+import { CTX } from '../../context/Store'
+import Presets from '../Presets/Presets'
+import Square from '../Square/Square'
 
 const StepSequencer = ({ openAuth }) => {
-  const [appState, updateState] = useContext(CTX);
+  const [appState, updateState] = useContext(CTX)
 
   const handleStepClick = (e) => {
-    updateState({ type: 'CHANGE_SEQUENCE', payload: e });
-  };
+    updateState({ type: 'CHANGE_SEQUENCE', payload: e })
+  }
   const handleMouseEnter = (e) => {
     if (appState.clickActive) {
-      updateState({ type: 'CHANGE_SEQUENCE', payload: e });
+      updateState({ type: 'CHANGE_SEQUENCE', payload: e })
     }
-  };
+  }
 
   return (
-    <div className='sequencer-container'>
-      <div className='sequencer'>
+    <div className={styles.sequencerContainer}>
+      <div className={styles.sequencer}>
         {Object.keys(appState.sequencerGrid).map((inst, i) => (
-          <div key={i} className='instrument-container'>
-            <h2 className='instrument-name'>{inst}</h2>
-            <div className='square-row'>
+          <div key={i} className={styles.instrumentContainer}>
+            <h2 className={styles.instrumentName}>{inst}</h2>
+            <div className={styles.squareRow}>
               {appState.sequencerGrid[inst].map((step, i) => (
                 <Square
                   key={i}
@@ -42,9 +40,9 @@ const StepSequencer = ({ openAuth }) => {
             </div>
           </div>
         ))}
-        <div className='timeblocks'>
+        <div className={styles.timeblocks}>
           {appState.sequencerGrid.A.map((block, i) => (
-            <div className='timeblock' id={i} key={i}></div>
+            <div className={styles.timeblock} id={i} key={i}></div>
           ))}
         </div>
       </div>
@@ -54,7 +52,7 @@ const StepSequencer = ({ openAuth }) => {
       <PresetSelector openAuth={openAuth} />
       <RevertButton openAuth={openAuth} />
     </div>
-  );
-};
+  )
+}
 
-export default StepSequencer;
+export default StepSequencer

@@ -26,7 +26,7 @@ const StartStop = () => {
           <div
             className={cn(
               styles.pauseButton,
-              paused ? styles.pausedTrue : styles.pausedFalse
+              playing ? styles.pausedTrue : styles.pausedFalse
             )}
           />
         </div>
