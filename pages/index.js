@@ -91,15 +91,15 @@ function App() {
       <div className={styles.background}></div>
       <div className={styles.componentsContainer}>
         <div className={styles.space}></div>
-        {/* <div className={styles.effectsContainer}>
-          <Mixer />
-          <Distortion />
-          <PingPong />
-          <Reverb />
+        <div className={styles.effectsContainer}>
+          {/* <Mixer /> */}
+          {/* <Distortion /> */}
+          {/* <PingPong /> */}
+          {/* <Reverb /> */}
         </div>
         <div className={styles.stepContainer}>
-          <StepSequencer openAuth={openAuth} />
-        </div> */}
+          {/* <StepSequencer openAuth={openAuth} /> */}
+        </div>
       </div>
       <button className='logout-btn' onClick={logout}>
         logout

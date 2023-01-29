@@ -1,6 +1,6 @@
 import React from 'react';
 import { CircleSlider } from 'react-circle-slider';
-import './CircleRange.scss';
+import styles from './CircleRange.module.scss';
 
 const CircleRange = ({ min, max, size, value, onChange, tag, step }) => {
   size = 70;
@@ -10,7 +10,7 @@ const CircleRange = ({ min, max, size, value, onChange, tag, step }) => {
   };
 
   return (
-    <div className='circle-range'>
+    <div className={styles.circleRange}>
       <CircleSlider
         stepSize={step || 5}
         size={size}
