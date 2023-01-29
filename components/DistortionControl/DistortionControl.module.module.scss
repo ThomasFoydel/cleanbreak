@@ -1,9 +1,10 @@
-.distortion-control {
+.distortionControl {
   width: 14rem;
   position: relative;
   height: 33rem;
   display: flex;
-  .range-input {
+
+  .rangeInput {
     transform: rotate(-90deg);
   }
 }

@@ -84,7 +84,7 @@ function App() {
   return (
     <div className={styles.App}>
       {/* {!isLoggedIn && ( */}
-      <button className='open-auth' onClick={openAuth}>
+      <button className={styles.openAuth} onClick={openAuth}>
         login / register
       </button>
       {/* )} */}
@@ -101,7 +101,7 @@ function App() {
           {/* <StepSequencer openAuth={openAuth} /> */}
         </div>
       </div>
-      <button className='logout-btn' onClick={logout}>
+      <button className={styles.logOutBtn} onClick={logout}>
         logout
       </button>
       {/* {isLoggedIn && (

@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import '../styles/globals.css'
+import '../styles/globals.scss'
 
 const Store = dynamic(() => import('../context/Store'), { ssr: false })
 
