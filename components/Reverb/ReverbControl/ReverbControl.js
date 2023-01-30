@@ -7,26 +7,18 @@ import { CTX } from '../../../context/Store'
 const ReverbControl = () => {
   const [appState, updateState] = useContext(CTX)
 
-  const handleDecay = (e) => {
-    let { value, id } = e.target
-    value = +value
-    value /= 20
-    updateState({ type: 'CHANGE_REVERB', payload: { type: id, value } })
+  const updateReverb = (type, value) => {
+    updateState({
+      type: 'CHANGE_REVERB',
+      payload: { type, value }
+    })
   }
 
-  const handlePreDelay = (e) => {
-    let { value, id } = e.target
-    value = +value
-    value /= 100
-    updateState({ type: 'CHANGE_REVERB', payload: { type: id, value } })
-  }
+  const handleDecay = (e) => updateReverb(e.target.id, +e.target.value / 20)
 
-  const handleMix = (e) => {
-    let { value, id } = e.target
-    value = +value
-    value /= 100
-    updateState({ type: 'CHANGE_REVERB', payload: { type: id, value } })
-  }
+  const handlePreDelay = (e) => updateReverb(e.target.id, +e.target.value / 100)
+
+  const handleMix = (e) => updateReverb(e.target.id, +e.target.value / 100)
 
   const params = [
     {
