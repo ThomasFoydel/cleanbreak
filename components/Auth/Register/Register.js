@@ -3,6 +3,13 @@ import cn from 'classnames'
 import React, { useState, useEffect } from 'react'
 import styles from '../Auth.module.scss'
 
+const inputs = [
+  { name: 'name', id: 'name' },
+  { name: 'email', id: 'email' },
+  { name: 'password', id: 'password' },
+  { name: 'confirmPassword', id: 'confirmPassword' }
+]
+
 const Register = ({ setCurrentShow, currentShow }) => {
   const [formValues, setFormValues] = useState({})
   const [errorMessage, setErrorMessage] = useState('')
@@ -19,8 +26,8 @@ const Register = ({ setCurrentShow, currentShow }) => {
   }
 
   const handleSubmit = () => {
-    let { email, name, password, confirmpassword } = formValues
-    if (email && name && password && confirmpassword) {
+    let { email, name, password, confirmPassword } = formValues
+    if (email && name && password && confirmPassword) {
       Axios.post('/auth/register', formValues)
         .then((result) => {
           if (result.data.err) {
@@ -40,38 +47,16 @@ const Register = ({ setCurrentShow, currentShow }) => {
       className={styles.register}
       style={{ zIndex: currentShow === 'register' ? '20' : '10' }}>
       <div className={styles.title}>register</div>
-      <input
-        className='center'
-        type='text'
-        onChange={handleChange}
-        placeholder='name'
-        id='name'
-        dontbubble='true'
-      />
-      <input
-        className='center'
-        type='email'
-        onChange={handleChange}
-        placeholder='email'
-        id='email'
-        dontbubble='true'
-      />
-      <input
-        className='center'
-        type='password'
-        onChange={handleChange}
-        placeholder='password'
-        id='password'
-        dontbubble='true'
-      />
-      <input
-        className='center'
-        type='password'
-        onChange={handleChange}
-        placeholder='confirm password'
-        id='confirmpassword'
-        dontbubble='true'
-      />
+      {inputs.map(({ name, id }) => (
+        <input
+          className='center'
+          key={id}
+          type={id.toLowerCase().includes('password') ? 'password' : 'text'}
+          onChange={handleChange}
+          placeholder={name}
+          id={id}
+        />
+      ))}
       <button
         className={cn(styles.registerBtn, 'center')}
         onClick={handleSubmit}>
