@@ -61,7 +61,6 @@ const Register = ({ setCurrentShow, currentShow }) => {
         onClick={() => setCurrentShow('login')}>
         i already have an account
       </button>
-      <div className={styles.errMsg}>{errorMessage}</div>
     </form>
   )
 }
