@@ -1,5 +1,5 @@
-import * as Tone from 'tone'
 import React from 'react'
+import * as Tone from 'tone'
 import samples from '../assets/audio'
 
 let Store = () => <></>
@@ -33,7 +33,7 @@ if (Tone && typeof window !== 'undefined') {
   })
 
   const makeOneForEachInstrument = (C) =>
-    instrumentKeys.reduce((p, c) => ({ ...p, [c]: new C() }), {})
+    instrumentKeys.reduce((p, k) => ({ ...p, [k]: new C() }), {})
 
   const preEffectChannels = makeOneForEachInstrument(Tone.Channel)
 
@@ -158,7 +158,6 @@ if (Tone && typeof window !== 'undefined') {
         return { ...state, samples: [...stateCopy] }
 
       case 'CHANGE_MIXER':
-        value *= -1
         preEffectChannels[name].volume.value = value
         return {
           ...state,

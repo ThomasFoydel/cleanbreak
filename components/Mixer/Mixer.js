@@ -1,37 +1,27 @@
 import cn from 'classnames'
 import React, { useContext } from 'react'
+import RangeInput from '../RangeInput/RangeInput'
 import PanControl from './PanControl/PanControl'
 import { CTX } from '../../context/Store'
 import styles from './Mixer.module.scss'
-import RangeInput from '../RangeInput/RangeInput'
 
 const Mixer = () => {
   const [appState, updateState] = useContext(CTX)
 
-  const handleChange = (e) => {
-    const { value, name } = e.target
-    updateState({ type: 'CHANGE_MIXER', payload: { name, value } })
+  const updateMixer = (type, { target }) => {
+    const { name, value } = target
+    updateState({ type, payload: { name, value } })
   }
 
-  const handleSolo = (e) => {
-    const { name } = e.target
-    updateState({ type: 'SOLO_INST', payload: { name } })
-  }
+  const handleChange = (e) => updateMixer('CHANGE_MIXER', e)
 
-  const handleUnSolo = (e) => {
-    const { name } = e.target
-    updateState({ type: 'UNSOLO_INST', payload: { name } })
-  }
+  const handleSolo = (e) => updateMixer('SOLO_INST', e)
 
-  const handleMute = (e) => {
-    const { name } = e.target
-    updateState({ type: 'MUTE_INST', payload: { name } })
-  }
+  const handleUnSolo = (e) => updateMixer('UNSOLO_INST', e)
 
-  const handleUnMute = (e) => {
-    const { name } = e.target
-    updateState({ type: 'UNMUTE_INST', payload: { name } })
-  }
+  const handleMute = (e) => updateMixer('MUTE_INST', e)
+
+  const handleUnMute = (e) => updateMixer('UNMUTE_INST', e)
 
   return (
     <div className={cn(styles.mixer)}>
@@ -44,8 +34,9 @@ const Mixer = () => {
               <RangeInput
                 onChange={handleChange}
                 name={keyName}
-                max={50}
-                value={appState.panVols[keyName] * -1}
+                min={-50}
+                max={0}
+                value={appState.panVols[keyName]}
               />
               <h2 className={cn('name', styles.mixerName)}>{keyName}</h2>
               <PanControl name={keyName} />

@@ -6,10 +6,9 @@ import RangeInput from '../../RangeInput/RangeInput'
 
 const ReverbSenders = () => {
   const [appState, updateState] = useContext(CTX)
+  
   const handleChange = (e) => {
-    let { value, name } = e.target
-    value *= -1
-
+    const { value, name } = e.target
     updateState({
       type: 'CHANGE_REVERB_SENDS',
       payload: { name, value }
@@ -23,10 +22,10 @@ const ReverbSenders = () => {
         .map((inst, i) => (
           <div className='inst' key={i}>
             <RangeInput
-              min={0}
-              max={50}
+              min={-50}
+              max={0}
               name={inst}
-              value={appState.reverbSends[inst] * -1}
+              value={appState.reverbSends[inst]}
               onChange={handleChange}
             />
             <h2 className='name'>{inst}</h2>

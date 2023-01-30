@@ -8,8 +8,7 @@ const DistortionSenders = () => {
   const [appState, updateState] = useContext(CTX)
 
   const handleChange = (e) => {
-    let { value, name } = e.target
-    value *= -1
+    const { value, name } = e.target
     updateState({ type: 'CHANGE_DISTORTION_SENDS', payload: { name, value } })
   }
 
@@ -23,7 +22,7 @@ const DistortionSenders = () => {
               min={0}
               max={50}
               name={inst}
-              value={appState.distortionSends[inst] * -1}
+              value={appState.distortionSends[inst]}
               onChange={handleChange}
             />
             <h2 className='name'>{inst}</h2>

@@ -1,16 +1,24 @@
 import React from 'react'
 
-const RangeInput = ({ id, step, name, min, max, value, onChange }) => {
+const RangeInput = ({
+  id,
+  name,
+  step = 1,
+  min = 0,
+  max = 100,
+  value,
+  onChange
+}) => {
   return (
     <div className='input-container'>
       <input
         className='range-input'
         type='range'
         id={id}
-        step={step || 1}
         name={name}
-        min={min || 0}
-        max={max || 100}
+        step={step}
+        min={min}
+        max={max}
         value={value}
         onChange={onChange}
       />

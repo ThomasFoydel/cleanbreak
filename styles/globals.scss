@@ -162,7 +162,7 @@ input:focus {
 }
 
 .range-input {
-  transform: rotate(-270deg) translateX(10rem) translateY(10rem);
+  transform: rotate(-90deg) translateX(-10rem) translateY(-10rem);
   &,
   &::-webkit-slider-runnable-track,
   &::-webkit-slider-thumb {
