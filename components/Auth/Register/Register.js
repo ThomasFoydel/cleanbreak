@@ -35,19 +35,12 @@ const Register = ({ setCurrentShow, currentShow }) => {
     }
   }
 
-  const handleKeyDown = (e) => {
-    if (e.charCode === 13) {
-      handleSubmit()
-    }
-  }
-
   return (
     <div
       className={styles.register}
       style={{ zIndex: currentShow === 'register' ? '20' : '10' }}>
       <div className={styles.title}>register</div>
       <input
-        onKeyPress={handleKeyDown}
         className='center'
         type='text'
         onChange={handleChange}
@@ -56,7 +49,6 @@ const Register = ({ setCurrentShow, currentShow }) => {
         dontbubble='true'
       />
       <input
-        onKeyPress={handleKeyDown}
         className='center'
         type='email'
         onChange={handleChange}
@@ -65,7 +57,6 @@ const Register = ({ setCurrentShow, currentShow }) => {
         dontbubble='true'
       />
       <input
-        onKeyPress={handleKeyDown}
         className='center'
         type='password'
         onChange={handleChange}
@@ -74,7 +65,6 @@ const Register = ({ setCurrentShow, currentShow }) => {
         dontbubble='true'
       />
       <input
-        onKeyPress={handleKeyDown}
         className='center'
         type='password'
         onChange={handleChange}

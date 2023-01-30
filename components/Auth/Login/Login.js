@@ -17,12 +17,6 @@ const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
     return () => (subscribed = false)
   }, [errorMessage])
 
-  const handleKeyDown = (e) => {
-    if (e.charCode === 13) {
-      handleSubmit()
-    }
-  }
-
   const handleChange = (e) => {
     let { value } = e.target
     let id = e.target.getAttribute('name')
@@ -61,7 +55,6 @@ const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
       <input
         className='center'
         type='email'
-        onKeyPress={handleKeyDown}
         onChange={handleChange}
         placeholder='email'
         name='email'
@@ -70,7 +63,6 @@ const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
       <input
         className='center'
         type='password'
-        onKeyPress={handleKeyDown}
         placeholder='password'
         onChange={handleChange}
         name='password'
