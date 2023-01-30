@@ -18,30 +18,32 @@ const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
   }, [errorMessage])
 
   const handleChange = (e) => {
-    let { value } = e.target
-    let id = e.target.getAttribute('name')
+    const { value } = e.target
+    const id = e.target.getAttribute('name')
     setFormValues({ ...formValues, [id]: value })
   }
-  const handleSubmit = async () => {
-    let { email, password } = formValues
-    if (email && password) {
-      Axios.post('/auth/login', formValues).then((result) => {
-        if (result.data.err) {
-          setErrorMessage(result.data.err)
-        } else {
-          login({ type: 'LOGIN', payload: result.data.data })
-          setTimeout(() => {
-            closeAuth()
-          }, 250)
-        }
-      })
-    } else {
-      setErrorMessage('all fields required')
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const { email, password } = formValues
+    if (!(email && password)) {
+      return setErrorMessage('all fields required')
     }
+    Axios.post('/auth/login', formValues).then((result) => {
+      if (result.data.err) {
+        setErrorMessage(result.data.err)
+      } else {
+        login({ type: 'LOGIN', payload: result.data.data })
+        setTimeout(() => {
+          closeAuth()
+        }, 250)
+      }
+    })
   }
 
   return (
-    <div
+    <form
+      onSubmit={handleSubmit}
       className={styles.login}
       style={{ zIndex: currentShow === 'login' ? '20' : '10' }}>
       <div className={styles.title}>sign in</div>
@@ -58,7 +60,6 @@ const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
         onChange={handleChange}
         placeholder='email'
         name='email'
-        dontbubble='true'
       />
       <input
         className='center'
@@ -66,20 +67,20 @@ const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
         placeholder='password'
         onChange={handleChange}
         name='password'
-        dontbubble='true'
       />
       <div className={cn(styles.btnsContainer, 'center')}>
-        <button className={styles.loginBtn} onClick={handleSubmit}>
+        <button className={styles.loginBtn} type='submit'>
           sign in
         </button>
         <button
+          type='button'
           className={styles.signupBtn}
           onClick={() => setCurrentShow('register')}>
           sign up
         </button>
       </div>
       <div className={cn(styles.loginErr, 'center')}>{errorMessage}</div>
-    </div>
+    </form>
   )
 }
 
