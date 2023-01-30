@@ -110,7 +110,6 @@ const Presets = ({ openAuth }) => {
           closeAll()
           return toast.error(result.data.message)
         }
-
         updateState({
           type: 'UPDATE_PRESETS',
           payload: {

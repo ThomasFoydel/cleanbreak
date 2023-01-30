@@ -33,6 +33,7 @@ const ReverbControl = () => {
       label: 'decay',
       onChange: handleDecay,
       value: appState.reverb.decay * 20,
+      min: 0.1,
       step: 10
     },
     {
@@ -46,9 +47,15 @@ const ReverbControl = () => {
 
   return (
     <div className={cn(styles.reverbControl, 'controller')}>
-      {params.map(({ name, label, onChange, value, step }) => (
+      {params.map(({ min, name, label, onChange, value, step }) => (
         <div className='inst' key={name}>
-          <RangeInput id={name} step={step} value={value} onChange={onChange} />
+          <RangeInput
+            min={min}
+            id={name}
+            step={step}
+            value={value}
+            onChange={onChange}
+          />
           <h2 className='name'>{label}</h2>
         </div>
       ))}

@@ -77,7 +77,7 @@ if (Tone && typeof window !== 'undefined') {
     E: [2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1],
     F: [1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1]
   }
-  
+
   const gridKeys = Object.keys(grid)
 
   let index = 0
@@ -263,7 +263,6 @@ if (Tone && typeof window !== 'undefined') {
         } else {
           for (const reverb of Object.values(reverbs)) reverb[type] = value
         }
-        // reverb.generate()
         return {
           ...state,
           reverb: { ...state.reverb, [type]: value }
