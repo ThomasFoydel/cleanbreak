@@ -1,21 +1,10 @@
 import Axios from 'axios'
 import cn from 'classnames'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styles from '../Auth.module.scss'
 
 const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
   const [formValues, setFormValues] = useState({})
-  const [errorMessage, setErrorMessage] = useState('')
-
-  useEffect(() => {
-    let subscribed = true
-    setTimeout(() => {
-      if (subscribed) {
-        setErrorMessage('')
-      }
-    }, 3400)
-    return () => (subscribed = false)
-  }, [errorMessage])
 
   const handleChange = (e) => {
     const { value } = e.target
@@ -27,18 +16,19 @@ const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
     e.preventDefault()
     const { email, password } = formValues
     if (!(email && password)) {
-      return setErrorMessage('all fields required')
+      return toast.error('All fields required')
     }
-    Axios.post('/auth/login', formValues).then((result) => {
-      if (result.data.err) {
-        setErrorMessage(result.data.err)
-      } else {
-        login({ type: 'LOGIN', payload: result.data.data })
-        setTimeout(() => {
+    Axios.post('/auth/login', formValues)
+      .then((result) => {
+        if (result.data.status === 'error') {
+          return toast.error(result.data.message)
+        } else {
+          login({ type: 'LOGIN', payload: result.data.data })
+          toast.success(result.data.message)
           closeAuth()
-        }, 250)
-      }
-    })
+        }
+      })
+      .catch(() => toast.error('Login failed'))
   }
 
   return (
@@ -79,7 +69,6 @@ const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
           sign up
         </button>
       </div>
-      <div className={cn(styles.loginErr, 'center')}>{errorMessage}</div>
     </form>
   )
 }

@@ -20,6 +20,7 @@
     "react-circle-slider": "^1.6.2",
     "react-dom": "18.2.0",
     "react-spring": "^9.6.1",
+    "react-toastify": "^9.1.1",
     "sass": "^1.57.1",
     "tone": "^14.7.77"
   },

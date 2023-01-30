@@ -1,6 +1,7 @@
 import Axios from 'axios'
 import cn from 'classnames'
-import React, { useState, useEffect } from 'react'
+import toast from 'react-toastify'
+import React, { useState } from 'react'
 import styles from '../Auth.module.scss'
 
 const inputs = [
@@ -12,13 +13,6 @@ const inputs = [
 
 const Register = ({ setCurrentShow, currentShow }) => {
   const [formValues, setFormValues] = useState({})
-  const [errorMessage, setErrorMessage] = useState('')
-
-  useEffect(() => {
-    setTimeout(() => {
-      setErrorMessage('')
-    }, 3400)
-  }, [errorMessage])
 
   const handleChange = (e) => {
     const { value, id } = e.target
@@ -29,17 +23,17 @@ const Register = ({ setCurrentShow, currentShow }) => {
     e.preventDefault()
     const { email, name, password, confirmPassword } = formValues
     if (!(email && name && password && confirmPassword)) {
-      return setErrorMessage('all inputs required!')
+      return toast.error('All inputs required')
     }
     Axios.post('/auth/register', formValues)
       .then((result) => {
-        if (result.data.err) {
-          setErrorMessage(result.data.err)
-        } else {
-          setCurrentShow('login')
+        if (result.data.status === 'error') {
+          return toast.error(result.data.message)
         }
+        toast.success(result.data.message)
+        setCurrentShow('login')
       })
-      .catch((err) => console.log('registration error: ', err))
+      .catch(() => toast.error('Registration failed'))
   }
 
   return (
