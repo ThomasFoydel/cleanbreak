@@ -1,5 +1,5 @@
 import Axios from 'axios'
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState } from 'react'
 import styles from './Presets.module.scss'
 import { CTX } from '../../context/Store'
 import cn from 'classnames'
@@ -27,7 +27,6 @@ const filter = (state) => {
 const Presets = ({ openAuth }) => {
   const [appState, updateState] = useContext(CTX)
   const [display, setDisplay] = useState({})
-  const [errorMessage, setErrorMessage] = useState('')
   const [presetName, setPresetName] = useState('')
   const foundToken = localStorage.getItem('cleanbreak-token')
   let { isLoggedIn } = appState
@@ -42,7 +41,7 @@ const Presets = ({ openAuth }) => {
   const saveNew = async () => {
     if (!presetName) {
       closeAll()
-      return setErrorMessage('name value required')
+      return toast.error('Name value required')
     }
     const filteredState = filter(appState)
     Axios.post(
@@ -51,24 +50,23 @@ const Presets = ({ openAuth }) => {
       { headers: { 'x-auth-token': foundToken } }
     )
       .then((result) => {
-        if (result.data.err) {
+        if (result.data.status === 'error') {
           closeAll()
           setPresetName('')
-          setErrorMessage(result.data.err)
-        } else {
-          updateState({
-            type: 'UPDATE_PRESETS',
-            payload: {
-              presets: result.data.presets,
-              current: result.data.current
-            }
-          })
-          closeAll()
-          setErrorMessage('new preset saved!')
-          setPresetName('')
+          return toast.error(result.data.message)
         }
+        updateState({
+          type: 'UPDATE_PRESETS',
+          payload: {
+            presets: result.data.presets,
+            current: result.data.current
+          }
+        })
+        closeAll()
+        toast.success(result.data.message)
+        setPresetName('')
       })
-      .catch((err) => console.log('save preset error: ', err))
+      .catch(() => toast.error('Preset save failed'))
   }
 
   const saveOver = async () => {
@@ -83,61 +81,53 @@ const Presets = ({ openAuth }) => {
       { headers: { 'x-auth-token': foundToken } }
     )
       .then((result) => {
-        if (result.data.err) {
+        if (result.data.status === 'error') {
           closeAll()
-          setErrorMessage(result.data.err)
-        } else {
-          updateState({
-            type: 'UPDATE_PRESETS',
-            payload: {
-              presets: result.data.presets,
-              current: result.data.current
-            }
-          })
-          closeAll()
-          setErrorMessage('preset saved!')
+          return toast.error(result.data.message)
         }
+
+        updateState({
+          type: 'UPDATE_PRESETS',
+          payload: {
+            presets: result.data.presets,
+            current: result.data.current
+          }
+        })
+        closeAll()
+        toast.success(result.data.message)
       })
-      .catch((err) => console.log('save preset error: ', err))
+      .catch(() => toast.error('Preset save failed'))
   }
 
-  const deletePreset = (data) => {
+  const deletePreset = () => {
     Axios.post(
       '/presets/delete',
       { name: appState.currentPreset, username: appState.user.name },
       { headers: { 'x-auth-token': foundToken } }
     )
       .then((result) => {
-        if (result.data.err) {
+        if (result.data.status === 'error') {
           closeAll()
-          setErrorMessage(result.data.err)
-        } else {
-          updateState({
-            type: 'UPDATE_PRESETS',
-            payload: {
-              presets: result.data.presets,
-              current: result.data.current
-            }
-          })
-          updateState({
-            type: 'LOAD_PRESET',
-            text: result.data.current,
-            payload: result.data.presets[result.data.newCurrentIndex]
-          })
-          closeAll()
-          setErrorMessage('preset deleted!')
+          return toast.error(result.data.message)
         }
-      })
-      .catch((err) => {
-        console.log('save preset error: ', err)
-      })
-  }
 
-  useEffect(() => {
-    setTimeout(() => {
-      setErrorMessage('')
-    }, 1900)
-  }, [errorMessage])
+        updateState({
+          type: 'UPDATE_PRESETS',
+          payload: {
+            presets: result.data.presets,
+            current: result.data.current
+          }
+        })
+        updateState({
+          type: 'LOAD_PRESET',
+          text: result.data.current,
+          payload: result.data.presets[result.data.newCurrentIndex]
+        })
+        closeAll()
+        toast.success(result.data.message)
+      })
+      .catch(() => toast.error('Preset delete failed'))
+  }
 
   const handleTextInput = (e) => {
     setPresetName(e.target.value)
@@ -192,8 +182,6 @@ const Presets = ({ openAuth }) => {
           </button>
         </div>
       )}
-
-      <div className={styles.errMsg}>{errorMessage}</div>
     </div>
   )
 }

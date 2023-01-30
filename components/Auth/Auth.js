@@ -7,7 +7,7 @@ import Login from './Login/Login'
 const Auth = ({ closeAuth, login }) => {
   const [currentShow, setCurrentShow] = useState('login')
   const [loaded, setLoaded] = useState(false)
-  
+
   useEffect(() => setLoaded(true), [setLoaded])
 
   const loginAnimation = useSpring({ opacity: currentShow === 'login' ? 1 : 0 })
