@@ -27,36 +27,39 @@ const ReverbControl = () => {
     value /= 100
     updateState({ type: 'CHANGE_REVERB', payload: { type: id, value } })
   }
-  
+
+  const params = [
+    {
+      name: 'wet',
+      label: 'mix',
+      onChange: handleMix,
+      value: appState.reverb.wet * 100,
+      step: 5
+    },
+    {
+      name: 'decay',
+      label: 'decay',
+      onChange: handleDecay,
+      value: appState.reverb.decay * 20,
+      step: 10
+    },
+    {
+      name: 'preDelay',
+      label: 'pre-delay',
+      onChange: handlePreDelay,
+      value: appState.reverb.preDelay * 100,
+      step: 5
+    }
+  ]
+
   return (
     <div className={cn(styles.reverbControl, 'controller')}>
-      <div className='inst'>
-        <RangeInput
-          id='decay'
-          step={10}
-          value={appState.reverb.decay * 20}
-          onChange={handleDecay}
-        />
-        <h2 className='name'>decay</h2>
-      </div>
-      <div className='inst'>
-        <RangeInput
-          id='preDelay'
-          step={5}
-          value={appState.reverb.preDelay * 100}
-          onChange={handlePreDelay}
-        />
-        <h2 className='name'>pre-delay</h2>
-      </div>
-      <div className='inst'>
-        <RangeInput
-          id='wet'
-          step={5}
-          value={appState.reverb.wet * 100}
-          onChange={handleMix}
-        />
-        <h2 className='name'>mix</h2>
-      </div>
+      {params.map(({ name, label, onChange, value, step }) => (
+        <div className='inst' key={name}>
+          <RangeInput id={name} step={step} value={value} onChange={onChange} />
+          <h2 className='name'>{label}</h2>
+        </div>
+      ))}
     </div>
   )
 }
