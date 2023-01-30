@@ -15,13 +15,14 @@ if (Tone && typeof window !== 'undefined') {
   console.log(typeof window)
   console.log(Tone.Transport)
   Tone.Transport.bpm.value = 85
+  // Tone.Transport.bpm.value = 8
 
   Tone.Transport.scheduleRepeat(repeat, '16n')
 
   const masterVol = new Tone.Volume(-5)
   const limiter = new Tone.Limiter(-8).toDestination()
 
-  let panVols = {
+  const panVols = {
     A: new Tone.PanVol(),
     B: new Tone.PanVol(),
     C: new Tone.PanVol(),
@@ -29,7 +30,7 @@ if (Tone && typeof window !== 'undefined') {
     E: new Tone.PanVol(),
     F: new Tone.PanVol()
   }
-  let solos = {
+  const solos = {
     A: new Tone.Solo(),
     B: new Tone.Solo(),
     C: new Tone.Solo(),
@@ -37,7 +38,7 @@ if (Tone && typeof window !== 'undefined') {
     E: new Tone.Solo(),
     F: new Tone.Solo()
   }
-  let mutes = {
+  const mutes = {
     A: actx.createGain(),
     B: actx.createGain(),
     C: actx.createGain(),
@@ -45,7 +46,7 @@ if (Tone && typeof window !== 'undefined') {
     E: actx.createGain(),
     F: actx.createGain()
   }
-  let instruments = {
+  const instruments = {
     A: new Tone.Player(samples[29].sample),
     B: new Tone.Player(samples[13].sample),
     C: new Tone.Player(samples[63].sample),
@@ -54,15 +55,22 @@ if (Tone && typeof window !== 'undefined') {
     F: new Tone.Player(samples[57].sample)
   }
 
-  let pingPongSends = {}
+  Object.keys(instruments).forEach((key) => {
+    instruments[key].volume.value = 0
+    setTimeout(() => {
+      instruments[key].start(0, 0, 0)
+    }, 500)
+  })
+
+  const pingPongSends = {}
   Object.keys(instruments).forEach((key) => {
     // pingPongSends[key] = solos[key].send('pingpong', -Infinity)
   })
-  let reverbSends = {}
+  const reverbSends = {}
   Object.keys(instruments).forEach((key) => {
     // reverbSends[key] = solos[key].send('reverb', -Infinity)
   })
-  let distortionSends = {}
+  const distortionSends = {}
   Object.keys(instruments).forEach((key) => {
     // distortionSends[key] = solos[key].send('distortion', -Infinity)
   })
@@ -84,37 +92,45 @@ if (Tone && typeof window !== 'undefined') {
   masterVol.connect(limiter)
 
   /* connect instruments to mixer */
-  let instrumentKeys = Object.keys(instruments)
+  const instrumentKeys = Object.keys(instruments)
   instrumentKeys.forEach((key) => {
     Tone.connect(instruments[key], panVols[key])
     instruments[key].sync()
   })
 
   /* connect mixer to master */
-  let panVolKeys = Object.keys(panVols)
+  const panVolKeys = Object.keys(panVols)
   panVolKeys.forEach((key) => Tone.connect(panVols[key], mutes[key]))
 
   Object.keys(mutes).forEach((key) => Tone.connect(mutes[key], solos[key]))
   Object.keys(solos).forEach((key) => Tone.connect(solos[key], masterVol))
 
+  // let grid = {
+  //   A: [2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0],
+  //   B: [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
+  //   C: [0, 0, 0, 0, 2, 0, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0],
+  //   D: [0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
+  //   E: [2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1],
+  //   F: [1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1]
+  // }
+
   let grid = {
-    A: [2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0],
-    B: [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
-    C: [0, 0, 0, 0, 2, 0, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0],
-    D: [0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
-    E: [2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1],
-    F: [1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1]
+    A: [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0],
+    B: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
+    C: [0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0],
+    D: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
+    E: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1],
+    F: [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1]
   }
-  let gridKeys = Object.keys(grid)
+
+  const gridKeys = Object.keys(grid)
   let index = 0
 
   function repeat(time) {
     const step = index % 16
-    // console.log('repeat! ', time, index, step)
     Tone.Draw.schedule(function () {
       const blocks = document.querySelectorAll('.timeblock')
       blocks.forEach((block) => {
-        console.log('block.id, step: ', Number(block.id) === step)
         if (Number(block.id) === step) {
           block.classList.add('active')
         } else {
@@ -125,7 +141,7 @@ if (Tone && typeof window !== 'undefined') {
 
     for (let i = 0; i < gridKeys.length; i++) {
       if (grid[gridKeys[i]][step]) {
-        let val = 3 - grid[gridKeys[i]][step]
+        const val = 3 - grid[gridKeys[i]][step]
         instruments[gridKeys[i]].volume.value = -8 * val
         instruments[gridKeys[i]].restart(time)
       }
@@ -134,12 +150,12 @@ if (Tone && typeof window !== 'undefined') {
   }
 
   function reducer(state, action) {
-    let { payload } = action
+    const { payload } = action
     let { name, value, type } = payload ? payload : {}
 
     switch (action.type) {
       case 'LOGIN':
-        let { user, token } = payload
+        const { user, token } = payload
         localStorage.setItem('cleanbreak-token', token)
         const presetsArray = []
         if (user.presets) {
@@ -177,9 +193,9 @@ if (Tone && typeof window !== 'undefined') {
         return { ...state, swing: payload }
       case 'CHANGE_SAMPLE':
         instruments[name].load(payload.newSampleUrl)
-        let stateCopy = [...state.samples]
+        const stateCopy = [...state.samples]
         let currentIndex = stateCopy.findIndex((inst) => inst.name === name)
-        let currentInst = stateCopy[currentIndex]
+        const currentInst = stateCopy[currentIndex]
         currentInst.sample = payload.newSampleUrl
         currentInst.sampleName = payload.newSampleName
         return {
@@ -219,14 +235,16 @@ if (Tone && typeof window !== 'undefined') {
           mutes: { ...state.mutes, [name]: false }
         }
       case 'CLEAR_GRID_INST':
-        let clearSection = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        const clearSection = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         grid[name] = [...clearSection]
         return {
           ...state,
           sequencerGrid: { ...state.sequencerGrid, [name]: [...clearSection] }
         }
       case 'CHANGE_SEQUENCE':
-        let currentInstrumentGrid = [...state.sequencerGrid[payload.instrument]]
+        const currentInstrumentGrid = [
+          ...state.sequencerGrid[payload.instrument]
+        ]
         if (payload.value < 2) {
           currentInstrumentGrid[payload.step]++
         } else {
@@ -270,6 +288,11 @@ if (Tone && typeof window !== 'undefined') {
         if (!started) {
           started = true
           Tone.start()
+          // Object.keys(instruments).forEach((key) => {
+          //   instruments[key].volume.value = 0
+          //   instruments[key].start()
+          //   instruments[key].stop()
+          // })
         }
 
         Tone.Transport.start()
@@ -433,14 +456,15 @@ if (Tone && typeof window !== 'undefined') {
         { name: 'E', sample: samples[10].sample, sampleName: samples[10].name },
         { name: 'F', sample: samples[57].sample, sampleName: samples[57].name }
       ],
-      sequencerGrid: {
-        A: [2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0],
-        B: [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
-        C: [0, 0, 0, 0, 2, 0, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0],
-        D: [0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
-        E: [2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1],
-        F: [1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1]
-      }
+      sequencerGrid: grid
+      // {
+      //   A: [2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0],
+      //   B: [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
+      //   C: [0, 0, 0, 0, 2, 0, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0],
+      //   D: [0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
+      //   E: [2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1],
+      //   F: [1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1]
+      // }
     })
     return <CTX.Provider value={stateHook}>{props.children}</CTX.Provider>
   }
