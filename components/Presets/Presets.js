@@ -1,9 +1,9 @@
 import Axios from 'axios'
+import toast from 'react-toastify'
 import React, { useContext, useState } from 'react'
 import styles from './Presets.module.scss'
 import { CTX } from '../../context/Store'
 import cn from 'classnames'
-
 const filterOut = [
   'presets',
   'clickActive',

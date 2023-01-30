@@ -1,4 +1,5 @@
 import Axios from 'axios'
+import toast from 'react-toastify'
 import React, { useContext } from 'react'
 import styles from './RevertButton.module.scss'
 import { CTX } from '../../context/Store'
@@ -17,21 +18,19 @@ const RevertButton = ({ openAuth }) => {
       headers: { 'x-auth-token': foundToken }
     })
       .then((result) => {
-        if (result.data.err) {
-          console.error('err: ', result.data.err)
-        } else {
-          const { presetFromDb } = result.data
-          const { name, params } = presetFromDb
-          updateState({
-            type: 'LOAD_PRESET',
-            payload: { value: params },
-            current: name
-          })
+        if (result.data.status === 'error') {
+          return toast.error(result.data.message)
         }
+        const { presetFromDb } = result.data
+        const { name, params } = presetFromDb
+        updateState({
+          type: 'LOAD_PRESET',
+          payload: { value: params },
+          current: name
+        })
+        toast.success(result.data.message)
       })
-      .catch((err) => {
-        console.log('revert error: ', err)
-      })
+      .catch(() => toast.error('Revert failed'))
   }
   return (
     <button className={styles.revertBtn} onClick={revert}>
