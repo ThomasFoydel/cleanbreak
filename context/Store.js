@@ -1,6 +1,7 @@
 import React from 'react'
 import * as Tone from 'tone'
 import samples from '../assets/audio'
+import initialValues from './initialValues'
 
 let Store = () => <></>
 let CTX
@@ -9,6 +10,7 @@ if (Tone && typeof window !== 'undefined') {
   let started = false
 
   CTX = React.createContext()
+
   Tone.Transport.bpm.value = 85
 
   Tone.Transport.scheduleRepeat(repeat, '16n')
@@ -69,14 +71,7 @@ if (Tone && typeof window !== 'undefined') {
 
   masterVol.connect(limiter)
 
-  let grid = {
-    A: [2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0],
-    B: [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
-    C: [0, 0, 0, 0, 2, 0, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0],
-    D: [0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
-    E: [2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1],
-    F: [1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1]
-  }
+  let grid = initialValues.sequencerGrid
 
   const gridKeys = Object.keys(grid)
 
@@ -104,6 +99,81 @@ if (Tone && typeof window !== 'undefined') {
     }
     index++
   }
+
+  const applyPreset = ({
+    bpm,
+    swing,
+    reverb,
+    distortion,
+    pingPong,
+    reverbSends,
+    distortionSends,
+    pingPongSends,
+    mutes,
+    solos,
+    panVols,
+    panVolPans,
+    samples,
+    sequencerGrid
+  }) => {
+    Tone.Transport.bpm.value = bpm
+    Tone.Transport.swing = swing
+    for (const r of Object.values(reverbs)) {
+      r.preDelay = reverb.preDelay
+      r.decay = reverb.decay
+      r.wet.value = reverb.wet
+    }
+    for (const d of Object.values(distortions)) {
+      d.distortion = distortion.distortion
+      d.wet.value = distortion.wet
+    }
+    for (const p of Object.values(pingPongs)) {
+      p.delayTime.value = pingPong.delayTime
+      p.feedback.value = pingPong.feedback
+      p.wet.value = pingPong.wet
+    }
+
+    for (const key in distortionSends) {
+      distortionChannels[key].volume.value = distortionSends[key]
+    }
+
+    for (const key in pingPongSends) {
+      pingPongChannels[key].volume.value = pingPongSends[key]
+    }
+
+    for (const key in reverbSends) {
+      reverbChannels[key].volume.value = reverbSends[key]
+    }
+
+    for (const key in mutes) {
+      preEffectChannels[key].mute = mutes[key]
+    }
+
+    for (const key in solos) {
+      preEffectChannels[key].solo = solos[key]
+      postEffectChannels[key].solo = solos[key]
+      reverbChannels[key].solo = solos[key]
+      distortionChannels[key].solo = solos[key]
+      pingPongChannels[key].solo = solos[key]
+    }
+
+    for (const key in panVols) {
+      preEffectChannels[key].volume.value = panVols[key]
+    }
+
+    for (const key in panVolPans) {
+      preEffectChannels[key].pan.value = panVolPans[key]
+      postEffectChannels[key].pan.value = panVolPans[key]
+    }
+
+    for (const sample of samples) {
+      instruments[sample.name].load(sample.sample)
+    }
+
+    grid = sequencerGrid
+  }
+
+  applyPreset(initialValues)
 
   function reducer(state, action) {
     const { payload } = action
@@ -151,7 +221,7 @@ if (Tone && typeof window !== 'undefined') {
       case 'CHANGE_SAMPLE':
         instruments[name].load(payload.newSampleUrl)
         const stateCopy = [...state.samples]
-        let currentIndex = stateCopy.findIndex((inst) => inst.name === name)
+        const currentIndex = stateCopy.findIndex((inst) => inst.name === name)
         const currentInst = stateCopy[currentIndex]
         currentInst.sample = payload.newSampleUrl
         currentInst.sampleName = payload.newSampleName
@@ -199,6 +269,11 @@ if (Tone && typeof window !== 'undefined') {
           ...state,
           mutes: { ...state.mutes, [name]: false }
         }
+
+      case 'CHANGE_PAN':
+        preEffectChannels[type].pan.value = value
+        postEffectChannels[type].pan.value = value
+        return { ...state, panVolPans: { ...state.panVolPans, [type]: value } }
 
       case 'CLEAR_GRID_INST':
         const clearSection = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -250,6 +325,18 @@ if (Tone && typeof window !== 'undefined') {
           pingPongSends: { ...state.pingPongSends, [name]: value }
         }
 
+      case 'CHANGE_DISTORTION':
+        if (type === 'distortion') {
+          for (const distortion of Object.values(distortions)) {
+            distortion.distortion = value
+          }
+        } else {
+          for (const distortion of Object.values(distortions)) {
+            distortion[type].value = value
+          }
+        }
+        return { ...state, distortion: { ...state.distortion, [type]: value } }
+
       case 'CHANGE_PINGPONG':
         for (const pingPong of Object.values(pingPongs)) {
           pingPong[type].value = value
@@ -267,23 +354,6 @@ if (Tone && typeof window !== 'undefined') {
           reverb: { ...state.reverb, [type]: value }
         }
 
-      case 'CHANGE_PAN':
-        preEffectChannels[type].pan.value = value
-        postEffectChannels[type].pan.value = value
-        return { ...state, panVolPans: { ...state.panVolPans, [type]: value } }
-
-      case 'CHANGE_DISTORTION':
-        if (type === 'distortion') {
-          for (const distortion of Object.values(distortions)) {
-            distortion.distortion = value
-          }
-        } else {
-          for (const distortion of Object.values(distortions)) {
-            distortion[type].value = value
-          }
-        }
-        return { ...state, distortion: { ...state.distortion, [type]: value } }
-
       case 'START':
         if (!started) {
           started = true
@@ -297,36 +367,7 @@ if (Tone && typeof window !== 'undefined') {
         return { ...state, playing: false }
 
       case 'LOAD_PRESET':
-        Tone.Transport.bpm.value = value.bpm
-        // distortion.distortion = value.distortion.distortion
-        // distortion.wet.value = value.distortion.wet
-        // pingPong.wet.value = value.pingPong.wet
-        // pingPong.delayTime.value = value.pingPong.delayTime
-        // pingPong.feedback.value = value.pingPong.feedback
-        // reverb.preDelay = value.reverb.preDelay
-        // reverb.decay = value.reverb.decay
-        // reverb.wet.value = value.reverb.wet
-        grid = value.sequencerGrid
-        Tone.Transport.swing = value.swing
-
-        value.samples.forEach((sample, i) => {
-          instruments[sample.name].load(value.samples[i].sample)
-        })
-
-        gridKeys.forEach((key) => {
-          // distortionSends[key].gain.value = value.distortionSends[key]
-          // reverbSends[key].gain.value = value.reverbSends[key]
-          // pingPongSends[key].gain.value = value.pingPongSends[key]
-          // if (value.mutes[key]) {
-          //   mutes[key].gain.linearRampToValueAtTime(0, now + 0.01)
-          // } else {
-          //   mutes[key].gain.linearRampToValueAtTime(1, now + 0.01)
-          // }
-          // panVols[key].volume.value = value.panVols[key]
-          // panVols[key].pan.value = value.panVolPans[key]
-          // solos[key].solo = value.solos[key]
-        })
-
+        applyPreset(value)
         return { ...state, ...value, currentPreset: action.current }
 
       case 'UPDATE_PRESETS':
@@ -343,128 +384,7 @@ if (Tone && typeof window !== 'undefined') {
   }
 
   Store = function (props) {
-    const stateHook = React.useReducer(reducer, {
-      currentPreset: 'default',
-      isLoggedIn: false,
-      clickActive: false,
-      playing: false,
-      presets: [],
-      bpm: Tone.Transport.bpm.value,
-      swing: Tone.Transport.swing,
-      reverb: {
-        // preDelay: reverb.preDelay,
-        // decay: reverb.decay,
-        // wet: reverb.wet.value
-        preDelay: 0,
-        decay: 0,
-        wet: 0
-      },
-      pingPong: {
-        // wet: pingPong.wet.value,
-        // delayTime: pingPong.delayTime.value,
-        // feedback: pingPong.feedback.value
-        wet: 0,
-        delayTime: 0,
-        feedback: 0
-      },
-      distortion: {
-        // distortion: distortion.distortion,
-        // wet: distortion.wet.value
-        distortion: 0,
-        wet: 0
-      },
-      reverbSends: {
-        A: -50,
-        B: -50,
-        C: -50,
-        F: -50,
-        D: -50,
-        E: -50
-      },
-      distortionSends: {
-        A: -5,
-        B: -50,
-        C: -50,
-        F: -50,
-        D: -50,
-        E: -50
-      },
-      pingPongSends: {
-        A: -50,
-        B: -50,
-        C: -50,
-        F: -50,
-        D: -50,
-        E: -50
-      },
-      mutes: {
-        A: false,
-        B: false,
-        C: false,
-        F: false,
-        D: false,
-        E: false
-      },
-      solos: {
-        // A: solos.A.solo,
-        // B: solos.B.solo,
-        // C: solos.C.solo,
-        // F: solos.F.solo,
-        // D: solos.D.solo,
-        // E: solos.E.solo
-        A: 0,
-        B: 0,
-        C: 0,
-        F: 0,
-        D: 0,
-        E: 0
-      },
-      panVols: {
-        // A: panVols.A.volume.value,
-        // B: panVols.B.volume.value,
-        // C: panVols.C.volume.value,
-        // F: panVols.F.volume.value,
-        // D: panVols.D.volume.value,
-        // E: panVols.E.volume.value
-        A: 0,
-        B: 0,
-        C: 0,
-        F: 0,
-        D: 0,
-        E: 0
-      },
-      panVolPans: {
-        // A: panVols.A.pan.value,
-        // B: panVols.B.pan.value,
-        // C: panVols.C.pan.value,
-        // F: panVols.F.pan.value,
-        // D: panVols.D.pan.value,
-        // E: panVols.E.pan.value
-        A: 0,
-        B: 0,
-        C: 0,
-        F: 0,
-        D: 0,
-        E: 0
-      },
-      samples: [
-        { name: 'A', sample: samples[29].sample, sampleName: samples[29].name },
-        { name: 'B', sample: samples[13].sample, sampleName: samples[13].name },
-        { name: 'C', sample: samples[63].sample, sampleName: samples[63].name },
-        { name: 'D', sample: samples[51].sample, sampleName: samples[51].name },
-        { name: 'E', sample: samples[10].sample, sampleName: samples[10].name },
-        { name: 'F', sample: samples[57].sample, sampleName: samples[57].name }
-      ],
-      sequencerGrid: grid
-      // {
-      //   A: [2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0],
-      //   B: [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
-      //   C: [0, 0, 0, 0, 2, 0, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0],
-      //   D: [0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
-      //   E: [2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1],
-      //   F: [1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1]
-      // }
-    })
+    const stateHook = React.useReducer(reducer, initialValues)
     return <CTX.Provider value={stateHook}>{props.children}</CTX.Provider>
   }
 }
