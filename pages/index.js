@@ -91,7 +91,7 @@ function App() {
       <div className={styles.background}></div>
       <div className={styles.componentsContainer}>
         <div className={styles.space}></div>
-        <div className={styles.effectsContainer}>
+        <div>
           <Mixer />
           <Distortion />
           <PingPong />

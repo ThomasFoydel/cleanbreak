@@ -7,6 +7,7 @@ const Tempo = () => {
   const handleChange = (e) => {
     updateState({ type: 'CHANGE_TEMPO', payload: e.target.value })
   }
+  
   return (
     <div>
       <div className='name'>tempo</div>

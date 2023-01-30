@@ -7,24 +7,29 @@ import RangeInput from '../RangeInput/RangeInput'
 
 const Mixer = () => {
   const [appState, updateState] = useContext(CTX)
+
   const handleChange = (e) => {
-    let { value, name } = e.target
+    const { value, name } = e.target
     updateState({ type: 'CHANGE_MIXER', payload: { name, value } })
   }
+
   const handleSolo = (e) => {
-    let { name } = e.target
+    const { name } = e.target
     updateState({ type: 'SOLO_INST', payload: { name } })
   }
+
   const handleUnSolo = (e) => {
-    let { name } = e.target
+    const { name } = e.target
     updateState({ type: 'UNSOLO_INST', payload: { name } })
   }
+
   const handleMute = (e) => {
-    let { name } = e.target
+    const { name } = e.target
     updateState({ type: 'MUTE_INST', payload: { name } })
   }
+
   const handleUnMute = (e) => {
-    let { name } = e.target
+    const { name } = e.target
     updateState({ type: 'UNMUTE_INST', payload: { name } })
   }
 
@@ -39,10 +44,9 @@ const Mixer = () => {
               <RangeInput
                 onChange={handleChange}
                 name={keyName}
-                max={30}
+                max={50}
                 value={appState.panVols[keyName] * -1}
               />
-
               <h2 className={cn('name', styles.mixerName)}>{keyName}</h2>
               <PanControl name={keyName} />
               <button

@@ -6,46 +6,16 @@ let Store = () => <></>
 let CTX
 
 if (Tone && typeof window !== 'undefined') {
-  const actx = Tone.context
-  const now = actx.currentTime
   let started = false
 
   CTX = React.createContext()
-
-  console.log(typeof window)
-  console.log(Tone.Transport)
   Tone.Transport.bpm.value = 85
-  // Tone.Transport.bpm.value = 8
 
   Tone.Transport.scheduleRepeat(repeat, '16n')
 
   const masterVol = new Tone.Volume(-5)
   const limiter = new Tone.Limiter(-8).toDestination()
 
-  const panVols = {
-    A: new Tone.PanVol(),
-    B: new Tone.PanVol(),
-    C: new Tone.PanVol(),
-    D: new Tone.PanVol(),
-    E: new Tone.PanVol(),
-    F: new Tone.PanVol()
-  }
-  const solos = {
-    A: new Tone.Solo(),
-    B: new Tone.Solo(),
-    C: new Tone.Solo(),
-    D: new Tone.Solo(),
-    E: new Tone.Solo(),
-    F: new Tone.Solo()
-  }
-  const mutes = {
-    A: actx.createGain(),
-    B: actx.createGain(),
-    C: actx.createGain(),
-    D: actx.createGain(),
-    E: actx.createGain(),
-    F: actx.createGain()
-  }
   const instruments = {
     A: new Tone.Player(samples[29].sample),
     B: new Tone.Player(samples[13].sample),
@@ -55,75 +25,61 @@ if (Tone && typeof window !== 'undefined') {
     F: new Tone.Player(samples[57].sample)
   }
 
-  Object.keys(instruments).forEach((key) => {
-    instruments[key].volume.value = 0
-    setTimeout(() => {
-      instruments[key].start(0, 0, 0)
-    }, 500)
-  })
-
-  const pingPongSends = {}
-  Object.keys(instruments).forEach((key) => {
-    // pingPongSends[key] = solos[key].send('pingpong', -Infinity)
-  })
-  const reverbSends = {}
-  Object.keys(instruments).forEach((key) => {
-    // reverbSends[key] = solos[key].send('reverb', -Infinity)
-  })
-  const distortionSends = {}
-  Object.keys(instruments).forEach((key) => {
-    // distortionSends[key] = solos[key].send('distortion', -Infinity)
-  })
-
-  // distortionSends.A.gain.value = -5
-
-  // const distortion = new Tone.Distortion(0.4).receive('distortion')
-  // const reverb = new Tone.Reverb(2.4).receive('reverb')
-  // const pingPong = new Tone.PingPongDelay().receive('pingpong')
-  const distortion = new Tone.Distortion(0.4)
-  const reverb = new Tone.Reverb(2.4)
-  const pingPong = new Tone.PingPongDelay()
-  reverb.generate()
-
-  reverb.wet.value = 0.3
-  distortion.connect(limiter)
-  reverb.connect(limiter)
-  pingPong.connect(limiter)
-  masterVol.connect(limiter)
-
-  /* connect instruments to mixer */
   const instrumentKeys = Object.keys(instruments)
+
   instrumentKeys.forEach((key) => {
-    Tone.connect(instruments[key], panVols[key])
+    instruments[key].volume.value = 0
+    setTimeout(() => instruments[key].start(0, 0, 0), 500)
+  })
+
+  const makeOneForEachInstrument = (C) =>
+    instrumentKeys.reduce((p, c) => ({ ...p, [c]: new C() }), {})
+
+  const preEffectChannels = makeOneForEachInstrument(Tone.Channel)
+
+  const reverbChannels = makeOneForEachInstrument(Tone.Channel)
+  const distortionChannels = makeOneForEachInstrument(Tone.Channel)
+  const pingPongChannels = makeOneForEachInstrument(Tone.Channel)
+
+  const distortions = makeOneForEachInstrument(Tone.Distortion)
+  const reverbs = makeOneForEachInstrument(Tone.Reverb)
+  const pingPongs = makeOneForEachInstrument(Tone.PingPongDelay)
+
+  const postEffectChannels = makeOneForEachInstrument(Tone.Channel)
+
+  instrumentKeys.forEach((key) => {
+    Tone.connect(instruments[key], preEffectChannels[key])
+
+    Tone.connect(preEffectChannels[key], reverbChannels[key])
+    Tone.connect(preEffectChannels[key], distortionChannels[key])
+    Tone.connect(preEffectChannels[key], pingPongChannels[key])
+    Tone.connect(preEffectChannels[key], masterVol)
+
+    Tone.connect(reverbChannels[key], reverbs[key])
+    Tone.connect(distortionChannels[key], distortions[key])
+    Tone.connect(pingPongChannels[key], pingPongs[key])
+
+    Tone.connect(reverbs[key], postEffectChannels[key])
+    Tone.connect(distortions[key], postEffectChannels[key])
+    Tone.connect(pingPongs[key], postEffectChannels[key])
+
+    Tone.connect(postEffectChannels[key], masterVol)
     instruments[key].sync()
   })
 
-  /* connect mixer to master */
-  const panVolKeys = Object.keys(panVols)
-  panVolKeys.forEach((key) => Tone.connect(panVols[key], mutes[key]))
-
-  Object.keys(mutes).forEach((key) => Tone.connect(mutes[key], solos[key]))
-  Object.keys(solos).forEach((key) => Tone.connect(solos[key], masterVol))
-
-  // let grid = {
-  //   A: [2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0],
-  //   B: [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
-  //   C: [0, 0, 0, 0, 2, 0, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0],
-  //   D: [0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
-  //   E: [2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1],
-  //   F: [1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1]
-  // }
+  masterVol.connect(limiter)
 
   let grid = {
-    A: [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0],
-    B: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
-    C: [0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0],
-    D: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
-    E: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1],
-    F: [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1]
+    A: [2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0],
+    B: [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
+    C: [0, 0, 0, 0, 2, 0, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0],
+    D: [0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
+    E: [2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1],
+    F: [1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1]
   }
-
+  
   const gridKeys = Object.keys(grid)
+
   let index = 0
 
   function repeat(time) {
@@ -179,18 +135,19 @@ if (Tone && typeof window !== 'undefined') {
         return { ...state, isLoggedIn: false }
 
       case 'REVERT':
-        return {
-          ...state
-        }
+        return { ...state }
 
       case 'CHANGE_CLICK_ACTIVE':
         return { ...state, clickActive: payload }
+
       case 'CHANGE_TEMPO':
         Tone.Transport.bpm.value = payload
         return { ...state, bpm: payload }
+
       case 'CHANGE_SWING':
         Tone.Transport.swing = payload
         return { ...state, swing: payload }
+
       case 'CHANGE_SAMPLE':
         instruments[name].load(payload.newSampleUrl)
         const stateCopy = [...state.samples]
@@ -198,42 +155,52 @@ if (Tone && typeof window !== 'undefined') {
         const currentInst = stateCopy[currentIndex]
         currentInst.sample = payload.newSampleUrl
         currentInst.sampleName = payload.newSampleName
-        return {
-          ...state,
-          samples: [...stateCopy]
-        }
+        return { ...state, samples: [...stateCopy] }
+
       case 'CHANGE_MIXER':
         value *= -1
-        panVols[payload.name].volume.value = value
-
+        preEffectChannels[name].volume.value = value
         return {
           ...state,
           panVols: { ...state.panVols, [name]: value }
         }
+
       case 'SOLO_INST':
-        solos[name].solo = true
+        preEffectChannels[name].solo = true
+        postEffectChannels[name].solo = true
+        reverbChannels[name].solo = true
+        distortionChannels[name].solo = true
+        pingPongChannels[name].solo = true
         return {
           ...state,
           solos: { ...state.solos, [name]: true }
         }
+
       case 'UNSOLO_INST':
-        solos[name].solo = false
+        preEffectChannels[name].solo = false
+        postEffectChannels[name].solo = false
+        reverbChannels[name].solo = false
+        distortionChannels[name].solo = false
+        pingPongChannels[name].solo = false
         return {
           ...state,
           solos: { ...state.solos, [name]: false }
         }
+
       case 'MUTE_INST':
-        mutes[name].gain.linearRampToValueAtTime(0, now + 0.01)
+        preEffectChannels[name].mute = true
         return {
           ...state,
           mutes: { ...state.mutes, [name]: true }
         }
+
       case 'UNMUTE_INST':
-        mutes[name].gain.linearRampToValueAtTime(1, now + 0.01)
+        preEffectChannels[name].mute = false
         return {
           ...state,
           mutes: { ...state.mutes, [name]: false }
         }
+
       case 'CLEAR_GRID_INST':
         const clearSection = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         grid[name] = [...clearSection]
@@ -241,6 +208,7 @@ if (Tone && typeof window !== 'undefined') {
           ...state,
           sequencerGrid: { ...state.sequencerGrid, [name]: [...clearSection] }
         }
+
       case 'CHANGE_SEQUENCE':
         const currentInstrumentGrid = [
           ...state.sequencerGrid[payload.instrument]
@@ -261,77 +229,85 @@ if (Tone && typeof window !== 'undefined') {
             [payload.instrument]: [...currentInstrumentGrid]
           }
         }
+
       case 'CHANGE_REVERB_SENDS':
-        reverbSends[name].gain.value = value
+        reverbChannels[name].volume.value = value
         return {
           ...state,
           reverbSends: { ...state.reverbSends, [name]: value }
         }
+
       case 'CHANGE_DISTORTION_SENDS':
-        distortionSends[name].gain.value = value
+        distortionChannels[name].volume.value = value
         return {
           ...state,
           distortionSends: { ...state.distortionSends, [name]: value }
         }
+
       case 'CHANGE_PINGPONG_SENDS':
-        pingPongSends[name].gain.value = value
+        pingPongChannels[name].volume.value = value
         return {
           ...state,
           pingPongSends: { ...state.pingPongSends, [name]: value }
         }
 
       case 'CHANGE_PINGPONG':
-        pingPong[type].value = value
+        for (const pingPong of Object.values(pingPongs)) {
+          pingPong[type].value = value
+        }
         return { ...state, pingPong: { ...state.pingPong, [type]: value } }
+
+      case 'CHANGE_REVERB':
+        if (type === 'wet') {
+          for (const reverb of Object.values(reverbs)) reverb.wet.value = value
+        } else {
+          for (const reverb of Object.values(reverbs)) reverb[type] = value
+        }
+        // reverb.generate()
+        return {
+          ...state,
+          reverb: { ...state.reverb, [type]: value }
+        }
+
+      case 'CHANGE_PAN':
+        preEffectChannels[type].pan.value = value
+        postEffectChannels[type].pan.value = value
+        return { ...state, panVolPans: { ...state.panVolPans, [type]: value } }
+
+      case 'CHANGE_DISTORTION':
+        if (type === 'distortion') {
+          for (const distortion of Object.values(distortions)) {
+            distortion.distortion = value
+          }
+        } else {
+          for (const distortion of Object.values(distortions)) {
+            distortion[type].value = value
+          }
+        }
+        return { ...state, distortion: { ...state.distortion, [type]: value } }
 
       case 'START':
         if (!started) {
           started = true
           Tone.start()
-          // Object.keys(instruments).forEach((key) => {
-          //   instruments[key].volume.value = 0
-          //   instruments[key].start()
-          //   instruments[key].stop()
-          // })
         }
-
         Tone.Transport.start()
         return { ...state, playing: true }
+
       case 'STOP':
         Tone.Transport.pause()
         return { ...state, playing: false }
-      case 'CHANGE_REVERB':
-        if (type === 'wet') {
-          reverb.wet.value = value
-        } else {
-          reverb[type] = value
-        }
-        reverb.generate()
-        return {
-          ...state,
-          reverb: { ...state.reverb, [type]: value }
-        }
-      case 'CHANGE_PAN':
-        panVols[type].pan.value = value
-        return { ...state, panVolPans: { ...state.panVolPans, [type]: value } }
-      case 'CHANGE_DISTORTION':
-        if (type === 'distortion') {
-          distortion.distortion = value
-        } else {
-          distortion[type].value = value
-        }
-        return { ...state, distortion: { ...state.distortion, [type]: value } }
 
       case 'LOAD_PRESET':
         Tone.Transport.bpm.value = value.bpm
-        distortion.distortion = value.distortion.distortion
-        distortion.wet.value = value.distortion.wet
-        pingPong.wet.value = value.pingPong.wet
-        pingPong.delayTime.value = value.pingPong.delayTime
-        pingPong.feedback.value = value.pingPong.feedback
-        reverb.preDelay = value.reverb.preDelay
-        reverb.decay = value.reverb.decay
-        reverb.wet.value = value.reverb.wet
+        // distortion.distortion = value.distortion.distortion
+        // distortion.wet.value = value.distortion.wet
+        // pingPong.wet.value = value.pingPong.wet
+        // pingPong.delayTime.value = value.pingPong.delayTime
+        // pingPong.feedback.value = value.pingPong.feedback
+        // reverb.preDelay = value.reverb.preDelay
+        // reverb.decay = value.reverb.decay
+        // reverb.wet.value = value.reverb.wet
         grid = value.sequencerGrid
         Tone.Transport.swing = value.swing
 
@@ -340,17 +316,17 @@ if (Tone && typeof window !== 'undefined') {
         })
 
         gridKeys.forEach((key) => {
-          distortionSends[key].gain.value = value.distortionSends[key]
-          reverbSends[key].gain.value = value.reverbSends[key]
-          pingPongSends[key].gain.value = value.pingPongSends[key]
-          if (value.mutes[key]) {
-            mutes[key].gain.linearRampToValueAtTime(0, now + 0.01)
-          } else {
-            mutes[key].gain.linearRampToValueAtTime(1, now + 0.01)
-          }
-          panVols[key].volume.value = value.panVols[key]
-          panVols[key].pan.value = value.panVolPans[key]
-          solos[key].solo = value.solos[key]
+          // distortionSends[key].gain.value = value.distortionSends[key]
+          // reverbSends[key].gain.value = value.reverbSends[key]
+          // pingPongSends[key].gain.value = value.pingPongSends[key]
+          // if (value.mutes[key]) {
+          //   mutes[key].gain.linearRampToValueAtTime(0, now + 0.01)
+          // } else {
+          //   mutes[key].gain.linearRampToValueAtTime(1, now + 0.01)
+          // }
+          // panVols[key].volume.value = value.panVols[key]
+          // panVols[key].pan.value = value.panVolPans[key]
+          // solos[key].solo = value.solos[key]
         })
 
         return { ...state, ...value, currentPreset: action.current }
@@ -375,22 +351,29 @@ if (Tone && typeof window !== 'undefined') {
       clickActive: false,
       playing: false,
       presets: [],
-
       bpm: Tone.Transport.bpm.value,
       swing: Tone.Transport.swing,
       reverb: {
-        preDelay: reverb.preDelay,
-        decay: reverb.decay,
-        wet: reverb.wet.value
+        // preDelay: reverb.preDelay,
+        // decay: reverb.decay,
+        // wet: reverb.wet.value
+        preDelay: 0,
+        decay: 0,
+        wet: 0
       },
       pingPong: {
-        wet: pingPong.wet.value,
-        delayTime: pingPong.delayTime.value,
-        feedback: pingPong.feedback.value
+        // wet: pingPong.wet.value,
+        // delayTime: pingPong.delayTime.value,
+        // feedback: pingPong.feedback.value
+        wet: 0,
+        delayTime: 0,
+        feedback: 0
       },
       distortion: {
-        distortion: distortion.distortion,
-        wet: distortion.wet.value
+        // distortion: distortion.distortion,
+        // wet: distortion.wet.value
+        distortion: 0,
+        wet: 0
       },
       reverbSends: {
         A: -50,
@@ -425,28 +408,46 @@ if (Tone && typeof window !== 'undefined') {
         E: false
       },
       solos: {
-        A: solos.A.solo,
-        B: solos.B.solo,
-        C: solos.C.solo,
-        F: solos.F.solo,
-        D: solos.D.solo,
-        E: solos.E.solo
+        // A: solos.A.solo,
+        // B: solos.B.solo,
+        // C: solos.C.solo,
+        // F: solos.F.solo,
+        // D: solos.D.solo,
+        // E: solos.E.solo
+        A: 0,
+        B: 0,
+        C: 0,
+        F: 0,
+        D: 0,
+        E: 0
       },
       panVols: {
-        A: panVols.A.volume.value,
-        B: panVols.B.volume.value,
-        C: panVols.C.volume.value,
-        F: panVols.F.volume.value,
-        D: panVols.D.volume.value,
-        E: panVols.E.volume.value
+        // A: panVols.A.volume.value,
+        // B: panVols.B.volume.value,
+        // C: panVols.C.volume.value,
+        // F: panVols.F.volume.value,
+        // D: panVols.D.volume.value,
+        // E: panVols.E.volume.value
+        A: 0,
+        B: 0,
+        C: 0,
+        F: 0,
+        D: 0,
+        E: 0
       },
       panVolPans: {
-        A: panVols.A.pan.value,
-        B: panVols.B.pan.value,
-        C: panVols.C.pan.value,
-        F: panVols.F.pan.value,
-        D: panVols.D.pan.value,
-        E: panVols.E.pan.value
+        // A: panVols.A.pan.value,
+        // B: panVols.B.pan.value,
+        // C: panVols.C.pan.value,
+        // F: panVols.F.pan.value,
+        // D: panVols.D.pan.value,
+        // E: panVols.E.pan.value
+        A: 0,
+        B: 0,
+        C: 0,
+        F: 0,
+        D: 0,
+        E: 0
       },
       samples: [
         { name: 'A', sample: samples[29].sample, sampleName: samples[29].name },
