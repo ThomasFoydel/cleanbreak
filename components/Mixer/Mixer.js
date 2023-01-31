@@ -28,8 +28,8 @@ const Mixer = () => {
       <div className='controller'>
         {Object.keys(appState.panVols)
           .sort()
-          .map((keyName, i) => (
-            <div className='inst' key={i}>
+          .map((keyName) => (
+            <div className='inst' key={keyName}>
               <RangeInput
                 onChange={handleChange}
                 name={keyName}
