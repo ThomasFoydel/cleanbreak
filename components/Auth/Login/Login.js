@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import styles from '../Auth.module.scss'
 
-const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
+const Login = ({ setCurrentShow, currentShow, closeAuth }) => {
   const [formValues, setFormValues] = useState({})
 
   const handleChange = (e) => {
@@ -15,9 +15,8 @@ const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     const { email, password } = formValues
-    if (!(email && password)) {
-      return toast.error('All fields required')
-    }
+    if (!(email && password)) return toast.error('All fields required')
+
     try {
       const options = { redirect: false, email, password, callbackUrl: '/' }
       await signIn('credentials', options)
@@ -28,6 +27,8 @@ const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
     }
   }
 
+  const fields = ['email', 'password']
+  
   return (
     <form
       onSubmit={handleSubmit}
@@ -41,20 +42,17 @@ const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
         <br />
         password: password
       </div>
-      <input
-        className='center'
-        type='email'
-        onChange={handleChange}
-        placeholder='email'
-        name='email'
-      />
-      <input
-        className='center'
-        type='password'
-        placeholder='password'
-        onChange={handleChange}
-        name='password'
-      />
+      {fields.map((field) => (
+        <input
+          key={field}
+          className='center'
+          type={field}
+          onChange={handleChange}
+          placeholder={field}
+          name={field}
+        />
+      ))}
+
       <div className={cn(styles.btnsContainer, 'center')}>
         <button className={styles.loginBtn} type='submit'>
           sign in

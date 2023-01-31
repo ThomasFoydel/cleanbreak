@@ -1,5 +1,5 @@
 import Axios from 'axios'
-import toast from 'react-toastify'
+import { toast } from 'react-toastify'
 import React, { useContext } from 'react'
 import styles from './RevertButton.module.scss'
 import { CTX } from '../../context/Store'
@@ -13,7 +13,7 @@ const RevertButton = ({ openAuth }) => {
     }
     const { currentPreset } = appState
 
-    Axios.get(`/api/presets/revert/${currentPreset}`)
+    Axios.get(`/api/presets/${currentPreset}`)
       .then((result) => {
         if (result.data.status === 'error') {
           return toast.error(result.data.message)

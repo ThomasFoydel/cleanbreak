@@ -1,6 +1,6 @@
 import Axios from 'axios'
 import cn from 'classnames'
-import toast from 'react-toastify'
+import { toast } from 'react-toastify'
 import React, { useContext, useState } from 'react'
 import styles from './Presets.module.scss'
 import { CTX } from '../../context/Store'

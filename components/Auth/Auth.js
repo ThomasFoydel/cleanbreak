@@ -4,7 +4,7 @@ import Register from './Register/Register'
 import styles from './Auth.module.scss'
 import Login from './Login/Login'
 
-const Auth = ({ closeAuth, login }) => {
+const Auth = ({ closeAuth }) => {
   const [currentShow, setCurrentShow] = useState('login')
   const [loaded, setLoaded] = useState(false)
 
@@ -29,7 +29,6 @@ const Auth = ({ closeAuth, login }) => {
           <Login
             currentShow={currentShow}
             setCurrentShow={setCurrentShow}
-            login={login}
             closeAuth={closeAuth}
           />
         </animated.div>
