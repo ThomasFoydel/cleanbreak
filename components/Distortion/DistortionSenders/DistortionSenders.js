@@ -7,8 +7,7 @@ import styles from './DistortionSenders.module.scss'
 const DistortionSenders = () => {
   const [appState, updateState] = useContext(CTX)
 
-  const handleChange = (e) => {
-    const { value, name } = e.target
+  const handleChange = ({ value, name }) => {
     updateState({ type: 'CHANGE_DISTORTION_SENDS', payload: { name, value } })
   }
 

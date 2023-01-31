@@ -10,12 +10,11 @@ const DistortionControl = () => {
   const updateDistortion = (type, value) =>
     updateState({ type: 'CHANGE_DISTORTION', payload: { type, value } })
 
-  const handleMix = (e) => {
-    const { value, id } = e.target
+  const handleMix = ({ id, value }) => {
     updateDistortion(id, value < 0.1 ? 0 : value)
   }
 
-  const handleDrive = (e) => updateDistortion(e.target.id, e.target.value)
+  const handleDrive = ({ id, value }) => updateDistortion(id, value)
 
   return (
     <div className={cn(styles.distortionControl, 'controller')}>

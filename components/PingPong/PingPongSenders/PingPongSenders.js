@@ -7,8 +7,7 @@ import cn from 'classnames'
 const PingPongSenders = () => {
   const [appState, updateState] = useContext(CTX)
 
-  const handleChange = (e) => {
-    const { value, name } = e.target
+  const handleChange = ({ value, name }) => {
     updateState({
       type: 'CHANGE_PINGPONG_SENDS',
       payload: { name, value }

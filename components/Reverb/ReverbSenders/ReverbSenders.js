@@ -6,9 +6,8 @@ import RangeInput from '../../RangeInput/RangeInput'
 
 const ReverbSenders = () => {
   const [appState, updateState] = useContext(CTX)
-  
-  const handleChange = (e) => {
-    const { value, name } = e.target
+
+  const handleChange = ({ value, name }) => {
     updateState({
       type: 'CHANGE_REVERB_SENDS',
       payload: { name, value }

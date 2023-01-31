@@ -8,8 +8,7 @@ import styles from './Mixer.module.scss'
 const Mixer = () => {
   const [appState, updateState] = useContext(CTX)
 
-  const updateMixer = (type, { target }) => {
-    const { name, value } = target
+  const updateMixer = (type, { name, value }) => {
     updateState({ type, payload: { name, value } })
   }
 

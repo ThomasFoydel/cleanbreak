@@ -9,6 +9,11 @@ const RangeInput = ({
   value,
   onChange
 }) => {
+  const handleChange = ({ target }) => {
+    const { id, value, name } = target
+    onChange({ id, value, name })
+  }
+
   return (
     <div className='input-container'>
       <input
@@ -20,7 +25,7 @@ const RangeInput = ({
         min={min}
         max={max}
         value={value}
-        onChange={onChange}
+        onChange={handleChange}
       />
     </div>
   )

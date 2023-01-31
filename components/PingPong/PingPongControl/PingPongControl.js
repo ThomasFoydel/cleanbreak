@@ -7,54 +7,30 @@ import RangeInput from '../../RangeInput/RangeInput'
 const PingPongControl = () => {
   const [appState, updateState] = useContext(CTX)
 
-  const handleMix = (e) => {
-    let { value, id } = e.target
-    value /= 100
+  const handleChange = ({ id, value }) => {
     updateState({ type: 'CHANGE_PINGPONG', payload: { type: id, value } })
   }
 
-  const handleDelayTime = (e) => {
-    let { value, id } = e.target
-    value /= 50
-    updateState({ type: 'CHANGE_PINGPONG', payload: { type: id, value } })
-  }
-
-  const handleFeedback = (e) => {
-    let { value, id } = e.target
-    value /= 100
-    updateState({ type: 'CHANGE_PINGPONG', payload: { type: id, value } })
-  }
+  const inputs = [
+    { name: 'wet', label: 'mix', step: 0.01, max: 1 },
+    { name: 'delayTime', label: 'time', step: 0.04, max: 4 },
+    { name: 'feedback', label: 'feedback', step: 0.01, max: 1 }
+  ]
 
   return (
     <div className={cn(styles.pingPongControl, 'controller')}>
-      <div className='inst'>
-        <RangeInput
-          id='wet'
-          step={10}
-          value={appState.pingPong.wet * 100}
-          onChange={handleMix}
-        />
-        <h2 className='name'>mix</h2>
-      </div>
-      <div className='inst'>
-        <RangeInput
-          id='delayTime'
-          step={10}
-          value={appState.pingPong.delayTime * 50}
-          onChange={handleDelayTime}
-        />
-
-        <h2 className='name'>time</h2>
-      </div>
-      <div className='inst'>
-        <RangeInput
-          id='feedback'
-          step={10}
-          value={appState.pingPong.feedback * 100}
-          onChange={handleFeedback}
-        />
-        <h2 className='name'>feedback</h2>
-      </div>
+      {inputs.map(({ name, label, step, max }) => (
+        <div className='inst' key={name}>
+          <RangeInput
+            id={name}
+            step={step}
+            max={max}
+            value={appState.pingPong[name]}
+            onChange={handleChange}
+          />
+          <h2 className='name'>{label}</h2>
+        </div>
+      ))}
     </div>
   )
 }
