@@ -30,7 +30,7 @@ const initialValues = {
     E: -50
   },
   distortionSends: {
-    A: -5,
+    A: -50,
     B: -50,
     C: -50,
     F: -50,
