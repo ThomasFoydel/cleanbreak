@@ -25,7 +25,7 @@ const Register = ({ setCurrentShow, currentShow }) => {
     if (!(email && name && password && confirmPassword)) {
       return toast.error('All inputs required')
     }
-    Axios.post('/auth/register', formValues)
+    Axios.post('/api/auth/register', formValues)
       .then((result) => {
         if (result.data.status === 'error') {
           return toast.error(result.data.message)
