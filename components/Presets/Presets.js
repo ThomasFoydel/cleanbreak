@@ -1,20 +1,12 @@
 import Axios from 'axios'
 import cn from 'classnames'
 import { toast } from 'react-toastify'
+import { useSession } from 'next-auth/react'
 import React, { useContext, useState } from 'react'
 import styles from './Presets.module.scss'
 import { CTX } from '../../context/Store'
 
-const filterOut = [
-  'presets',
-  'clickActive',
-  'currentTransform',
-  'isLoggedIn',
-  'playing',
-  'user',
-  'currentPreset',
-  'keyboardOctaveOffset'
-]
+const filterOut = ['user', 'presets', 'playing', 'clickActive', 'currentPreset']
 
 const filter = (state) => {
   return Object.keys(state)
@@ -29,20 +21,19 @@ const Presets = ({ openAuth }) => {
   const [appState, updateState] = useContext(CTX)
   const [display, setDisplay] = useState({})
   const [presetName, setPresetName] = useState('')
-  const { isLoggedIn } = appState
+  const { status } = useSession()
+  const loggedIn = status === 'authenticated'
 
-  const open = (id) => {
-    setDisplay({ [id]: true })
-  }
-  const closeAll = () => {
-    setDisplay({})
-  }
+  const open = (id) => setDisplay({ [id]: true })
+
+  const closeAll = () => setDisplay({})
 
   const saveNew = async () => {
     if (!presetName) {
       closeAll()
       return toast.error('Name value required')
     }
+
     const filteredState = filter(appState)
     Axios.post('api/presets', {
       name: presetName,
@@ -126,13 +117,13 @@ const Presets = ({ openAuth }) => {
 
   return (
     <div className={styles.presets}>
-      <button onClick={() => (isLoggedIn ? open('saveNew') : openAuth())}>
+      <button onClick={() => (loggedIn ? open('saveNew') : openAuth())}>
         save as
       </button>
-      <button onClick={() => (isLoggedIn ? open('saveOver') : openAuth())}>
+      <button onClick={() => (loggedIn ? open('saveOver') : openAuth())}>
         save
       </button>
-      <button onClick={() => (isLoggedIn ? open('delete') : openAuth())}>
+      <button onClick={() => (loggedIn ? open('delete') : openAuth())}>
         delete
       </button>
 

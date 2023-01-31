@@ -1,6 +1,7 @@
 import React from 'react'
 import * as Tone from 'tone'
 import samples from '../assets/audio'
+import { findWithAttr } from '../utils'
 import initialValues from './initialValues'
 
 let Store = () => <></>

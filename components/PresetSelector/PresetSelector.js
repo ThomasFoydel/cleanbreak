@@ -1,64 +1,48 @@
+import { useSession } from 'next-auth/react'
 import React, { useContext, useState } from 'react'
 import PresetDropDown from './PresetDropDown/PresetDropDown'
 import styles from './PresetSelector.module.scss'
+import { findWithAttr } from '../../utils'
 import { CTX } from '../../context/Store'
 
 const PresetSelector = ({ openAuth }) => {
   const [appState, updateState] = useContext(CTX)
   const [dropDown, setDropDown] = useState(false)
+  const { status } = useSession()
+  const loggedIn = status === 'authenticated'
 
-  let { presets, currentPreset } = appState
+  const { presets, currentPreset } = appState
 
-  function findWithAttr(array, attr, val) {
-    for (var i = 0; i < array.length; i += 1) {
-      if (array[i][attr] === val) {
-        return i
-      }
-    }
-    return -1
-  }
-  const currentIndex = findWithAttr(presets, 'text', currentPreset)
+  const current = findWithAttr(presets, 'text', currentPreset)
+
   const handleSelector = (e) => {
     const { id } = e.target
-    if (presets.length > 0) {
-      let newCurrent
-      if (id === 'left') {
-        if (currentIndex > 0) {
-          newCurrent = presets[currentIndex - 1]
-        } else {
-          /* user has hit zero, go to end of list */
-          newCurrent = presets[presets.length - 1]
-        }
-      } else if (id === 'right') {
-        if (currentIndex < presets.length - 1) {
-          newCurrent = presets[currentIndex + 1]
-        } else {
-          /* user has hit end of list, go back to zero */
-          newCurrent = presets[0]
-        }
-      }
+    if (!loggedIn) return openAuth()
+    if (presets.length === 0) return
 
-      updateState({
-        type: 'LOAD_PRESET',
-        payload: { value: newCurrent.value },
-        current: newCurrent.text
-      })
-    } else {
-      openAuth()
+    let newCurrent
+    if (id === 'left') {
+      if (current > 0) newCurrent = presets[current - 1]
+      else newCurrent = presets[presets.length - 1]
     }
+    if (id === 'right') {
+      if (current < presets.length - 1) newCurrent = presets[current + 1]
+      else newCurrent = presets[0]
+    }
+
+    updateState({
+      type: 'LOAD_PRESET',
+      payload: { value: newCurrent.value },
+      current: newCurrent.text
+    })
   }
 
   const toggleDropDown = () => {
-    if (appState.isLoggedIn) {
-      setDropDown(!dropDown)
-    } else {
-      openAuth()
-    }
+    if (loggedIn) setDropDown(!dropDown)
+    else openAuth()
   }
 
-  const closeDropDown = () => {
-    setDropDown(false)
-  }
+  const closeDropDown = () => setDropDown(false)
 
   return (
     <div className={styles.presetSelector}>
