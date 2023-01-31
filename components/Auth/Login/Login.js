@@ -1,4 +1,5 @@
 import cn from 'classnames'
+import { toast } from 'react-toastify'
 import React, { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import styles from '../Auth.module.scss'
@@ -20,10 +21,10 @@ const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
     try {
       const options = { redirect: false, email, password, callbackUrl: '/' }
       await signIn('credentials', options)
-      toast.success(result.data.message)
+      toast.success('Login successful')
       closeAuth()
     } catch (err) {
-      toast.error(result.data.message)
+      toast.error('Login failed')
     }
   }
 
