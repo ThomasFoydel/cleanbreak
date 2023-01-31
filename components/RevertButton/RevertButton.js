@@ -11,12 +11,9 @@ const RevertButton = ({ openAuth }) => {
     if (!appState.isLoggedIn) {
       return openAuth()
     }
-    const foundToken = localStorage.getItem('cleanbreak-token')
     const { currentPreset } = appState
 
-    Axios.get(`/presets/revert/${currentPreset}`, {
-      headers: { 'x-auth-token': foundToken }
-    })
+    Axios.get(`/api/presets/revert/${currentPreset}`)
       .then((result) => {
         if (result.data.status === 'error') {
           return toast.error(result.data.message)

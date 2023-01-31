@@ -21,43 +21,6 @@ function App() {
     })
   }, [])
 
-  // useEffect(() => {
-  //   let subscribed = true
-  //   if (subscribed) {
-  //     const foundToken = localStorage.getItem('cleanbreak-token')
-  //     if (!foundToken) {
-  //       updateState({
-  //         type: 'LOGOUT',
-  //       })
-  //     } else {
-  //       const setAuthInfo = async () => {
-  //         Axios.get('/auth/user', {
-  //           headers: { 'x-auth-token': foundToken },
-  //         })
-  //           .then((result) => {
-  //             if (result.data.err) {
-  //               console.log('err: ', result.data.err)
-  //             } else {
-  //               updateState({
-  //                 type: 'LOGIN',
-  //                 payload: { user: result.data, token: foundToken },
-  //               })
-  //             }
-  //           })
-  //           .catch((err) => {
-  //             updateState({
-  //               type: 'LOGOUT',
-  //             })
-  //           })
-  //       }
-  //       setAuthInfo()
-  //     }
-  //   }
-  //   return () => {
-  //     subscribed = false
-  //   }
-  // }, [updateState])
-
   const closeAuth = () => {
     ReactDOM.render(<div />, document.getElementById('modal'))
   }

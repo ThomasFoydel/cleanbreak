@@ -183,33 +183,6 @@ if (Tone && typeof window !== 'undefined') {
     let { name, value, type } = payload ? payload : {}
 
     switch (action.type) {
-      case 'LOGIN':
-        const { user, token } = payload
-        localStorage.setItem('cleanbreak-token', token)
-        const presetsArray = []
-        if (user.presets) {
-          user.presets.forEach((preset, i) => {
-            const presetObj = {
-              text: preset.name,
-              value: preset.params
-            }
-            presetsArray.push(presetObj)
-          })
-        }
-        return {
-          ...state,
-          isLoggedIn: true,
-          user: { name: user.name, email: user.email },
-          presets: presetsArray
-        }
-
-      case 'LOGOUT':
-        localStorage.removeItem('cleanbreak-token')
-        return { ...state, isLoggedIn: false }
-
-      case 'REVERT':
-        return { ...state }
-
       case 'CHANGE_CLICK_ACTIVE':
         return { ...state, clickActive: payload }
 
@@ -381,16 +354,59 @@ if (Tone && typeof window !== 'undefined') {
         Tone.Transport.pause()
         return { ...state, playing: false }
 
-      case 'LOAD_PRESET':
-        applyPreset(value)
-        return { ...state, ...value, currentPreset: action.current }
-
-      case 'UPDATE_PRESETS':
+      case 'LOAD_PRESETS': {
+        if (payload[0]) applyPreset(payload[0].state)
         return {
           ...state,
-          presets: [...payload.presets],
-          currentPreset: payload.current
+          ...payload[0].state,
+          presets: payload,
+          currentPreset: payload[0] || null
         }
+      }
+
+      case 'REVERT':
+        return { ...state }
+
+      case 'LOAD_PRESET':
+        const presetIndex = findWithAttr(state.presets, 'name', payload.name)
+        applyPreset(state.presets[presetIndex].state)
+        return { ...state, ...payload.state, currentPreset: payload }
+
+      case 'REMOVE_PRESET':
+        const removedIndex = state.presets.findIndex((p) => p._id === payload)
+        const newCurrentIndex = removedIndex === 0 ? 0 : removedIndex - 1
+        const filteredPresets = state.presets.filter((p) => p._id !== payload)
+        if (filteredPresets.length === 0) {
+          return {
+            ...state,
+            presets: filteredPresets,
+            currentPreset: null
+          }
+        }
+        const newCurrentPreset = filteredPresets[newCurrentIndex]
+        applyPreset(newCurrentPreset.state)
+        return {
+          ...state,
+          ...newCurrentPreset.state,
+          presets: filteredPresets,
+          currentPreset: newCurrentPreset
+        }
+
+      case 'ADD_PRESET':
+        applyPreset(payload.state)
+        return {
+          ...state,
+          ...payload.state,
+          presets: [...state.presets, payload],
+          currentPreset: payload
+        }
+
+      case 'UPDATE_PRESET':
+        const updatedPresets = state.presets.map((p) =>
+          p._id === payload._id ? payload : p
+        )
+        applyPreset(payload.state)
+        return { ...state, presets: updatedPresets }
 
       default:
         console.error('REDUCER ERROR: action: ', action)
