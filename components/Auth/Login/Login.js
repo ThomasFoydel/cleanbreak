@@ -1,15 +1,14 @@
-import Axios from 'axios'
 import cn from 'classnames'
 import React, { useState } from 'react'
+import { signIn } from 'next-auth/react'
 import styles from '../Auth.module.scss'
 
 const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
   const [formValues, setFormValues] = useState({})
 
   const handleChange = (e) => {
-    const { value } = e.target
-    const id = e.target.getAttribute('name')
-    setFormValues({ ...formValues, [id]: value })
+    const { value, name } = e.target
+    setFormValues({ ...formValues, [name]: value })
   }
 
   const handleSubmit = async (e) => {
@@ -18,17 +17,14 @@ const Login = ({ setCurrentShow, currentShow, closeAuth, login }) => {
     if (!(email && password)) {
       return toast.error('All fields required')
     }
-    Axios.post('/auth/login', formValues)
-      .then((result) => {
-        if (result.data.status === 'error') {
-          return toast.error(result.data.message)
-        } else {
-          login({ type: 'LOGIN', payload: result.data.data })
-          toast.success(result.data.message)
-          closeAuth()
-        }
-      })
-      .catch(() => toast.error('Login failed'))
+    try {
+      const options = { redirect: false, email, password, callbackUrl: '/' }
+      await signIn('credentials', options)
+      toast.success(result.data.message)
+      closeAuth()
+    } catch (err) {
+      toast.error(result.data.message)
+    }
   }
 
   return (
