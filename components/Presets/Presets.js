@@ -1,9 +1,10 @@
 import Axios from 'axios'
+import cn from 'classnames'
 import toast from 'react-toastify'
 import React, { useContext, useState } from 'react'
 import styles from './Presets.module.scss'
 import { CTX } from '../../context/Store'
-import cn from 'classnames'
+
 const filterOut = [
   'presets',
   'clickActive',
@@ -28,8 +29,7 @@ const Presets = ({ openAuth }) => {
   const [appState, updateState] = useContext(CTX)
   const [display, setDisplay] = useState({})
   const [presetName, setPresetName] = useState('')
-  const foundToken = localStorage.getItem('cleanbreak-token')
-  let { isLoggedIn } = appState
+  const { isLoggedIn } = appState
 
   const open = (id) => {
     setDisplay({ [id]: true })
@@ -44,11 +44,11 @@ const Presets = ({ openAuth }) => {
       return toast.error('Name value required')
     }
     const filteredState = filter(appState)
-    Axios.post(
-      '/presets/newsave',
-      { name: presetName, state: filteredState, username: appState.user.name },
-      { headers: { 'x-auth-token': foundToken } }
-    )
+    Axios.post('api/presets', {
+      name: presetName,
+      state: filteredState,
+      username: appState.user.name
+    })
       .then((result) => {
         if (result.data.status === 'error') {
           closeAll()
@@ -71,15 +71,10 @@ const Presets = ({ openAuth }) => {
 
   const saveOver = async () => {
     const filteredState = filter(appState)
-    Axios.post(
-      '/presets/save',
-      {
-        name: appState.currentPreset,
-        state: filteredState,
-        username: appState.user.name
-      },
-      { headers: { 'x-auth-token': foundToken } }
-    )
+    Axios.put(`/presets/${appState.currentPreset._id}`, {
+      name: appState.currentPreset,
+      state: filteredState
+    })
       .then((result) => {
         if (result.data.status === 'error') {
           closeAll()
@@ -100,11 +95,10 @@ const Presets = ({ openAuth }) => {
   }
 
   const deletePreset = () => {
-    Axios.post(
-      '/presets/delete',
-      { name: appState.currentPreset, username: appState.user.name },
-      { headers: { 'x-auth-token': foundToken } }
-    )
+    Axios.delete(`/api/presets/${appState.currentPreset.id}`, {
+      name: appState.currentPreset.name,
+      username: appState.user.name
+    })
       .then((result) => {
         if (result.data.status === 'error') {
           closeAll()
@@ -128,9 +122,7 @@ const Presets = ({ openAuth }) => {
       .catch(() => toast.error('Preset delete failed'))
   }
 
-  const handleTextInput = (e) => {
-    setPresetName(e.target.value)
-  }
+  const handleTextInput = (e) => setPresetName(e.target.value)
 
   return (
     <div className={styles.presets}>
