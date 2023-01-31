@@ -118,15 +118,18 @@ if (Tone && typeof window !== 'undefined') {
   }) => {
     Tone.Transport.bpm.value = bpm
     Tone.Transport.swing = swing
+
     for (const r of Object.values(reverbs)) {
       r.preDelay = reverb.preDelay
       r.decay = reverb.decay
       r.wet.value = reverb.wet
     }
+
     for (const d of Object.values(distortions)) {
       d.distortion = distortion.distortion
       d.wet.value = distortion.wet
     }
+
     for (const p of Object.values(pingPongs)) {
       p.delayTime.value = pingPong.delayTime
       p.feedback.value = pingPong.feedback
@@ -330,9 +333,13 @@ if (Tone && typeof window !== 'undefined') {
           for (const distortion of Object.values(distortions)) {
             distortion.distortion = value
           }
-        } else {
+        }
+        if (type === 'wet') {
           for (const distortion of Object.values(distortions)) {
             distortion[type].value = value
+          }
+          for (const channel of Object.values(distortionChannels)) {
+            channel.volume.value = value
           }
         }
         return { ...state, distortion: { ...state.distortion, [type]: value } }
@@ -341,11 +348,19 @@ if (Tone && typeof window !== 'undefined') {
         for (const pingPong of Object.values(pingPongs)) {
           pingPong[type].value = value
         }
+        if (type === 'wet') {
+          for (const channel of Object.values(pingPongChannels)) {
+            channel.volume.value = value
+          }
+        }
         return { ...state, pingPong: { ...state.pingPong, [type]: value } }
 
       case 'CHANGE_REVERB':
         if (type === 'wet') {
           for (const reverb of Object.values(reverbs)) reverb.wet.value = value
+          for (const channel of Object.values(reverbChannels)) {
+            channel.volume.value = value
+          }
         } else {
           for (const reverb of Object.values(reverbs)) reverb[type] = value
         }

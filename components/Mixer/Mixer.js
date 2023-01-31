@@ -34,7 +34,7 @@ const Mixer = () => {
               <RangeInput
                 onChange={handleChange}
                 name={keyName}
-                min={-50}
+                min={-70}
                 max={0}
                 value={appState.panVols[keyName]}
               />
