@@ -5,7 +5,7 @@ import { CTX } from '../../../context/Store'
 import RangeInput from '../../RangeInput/RangeInput'
 
 const ReverbSenders = () => {
-  const [appState, updateState] = useContext(CTX)
+  const [{ reverbSends }, updateState] = useContext(CTX)
 
   const handleChange = ({ value, name }) => {
     updateState({
@@ -16,15 +16,15 @@ const ReverbSenders = () => {
 
   return (
     <div className={cn(styles.reverbSenders, 'controller')}>
-      {Object.keys(appState.reverbSends)
+      {Object.keys(reverbSends)
         .sort()
-        .map((inst, i) => (
-          <div className='inst' key={i}>
+        .map((inst) => (
+          <div className='inst' key={inst}>
             <RangeInput
               min={-50}
               max={0}
               name={inst}
-              value={appState.reverbSends[inst]}
+              value={reverbSends[inst]}
               onChange={handleChange}
             />
             <h2 className='name'>{inst}</h2>

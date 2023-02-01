@@ -39,7 +39,7 @@ const SampleSelector = () => {
         <div
           style={{ zIndex: (6 - i) * 2 + 2 }}
           className={styles.sampleSelector}
-          key={i}>
+          key={inst}>
           <button
             id={inst}
             name={name}

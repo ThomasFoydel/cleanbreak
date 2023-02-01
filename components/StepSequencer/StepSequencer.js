@@ -10,25 +10,24 @@ import Presets from '../Presets/Presets'
 import Square from '../Square/Square'
 
 const StepSequencer = ({ openAuth }) => {
-  const [appState, updateState] = useContext(CTX)
+  const [{ sequencerGrid, clickActive }, updateState] = useContext(CTX)
 
   const handleStepClick = (e) => {
     updateState({ type: 'CHANGE_SEQUENCE', payload: e })
   }
+
   const handleMouseEnter = (e) => {
-    if (appState.clickActive) {
-      updateState({ type: 'CHANGE_SEQUENCE', payload: e })
-    }
+    if (clickActive) updateState({ type: 'CHANGE_SEQUENCE', payload: e })
   }
 
   return (
     <div className={styles.sequencerContainer}>
       <div className={styles.sequencer}>
-        {Object.keys(appState.sequencerGrid).map((inst, i) => (
-          <div key={i} className={styles.instrumentContainer}>
+        {Object.keys(sequencerGrid).map((inst) => (
+          <div key={inst} className={styles.instrumentContainer}>
             <h2 className={styles.instrumentName}>{inst}</h2>
             <div className={styles.squareRow}>
-              {appState.sequencerGrid[inst].map((step, i) => (
+              {sequencerGrid[inst].map((step, i) => (
                 <Square
                   key={i}
                   step={i}
@@ -42,11 +41,8 @@ const StepSequencer = ({ openAuth }) => {
           </div>
         ))}
         <div className={styles.timeblocks}>
-          {appState.sequencerGrid.A.map((block, i) => (
-            <div
-              className={cn(styles.timeblock, 'timeblock')}
-              id={i}
-              key={i}></div>
+          {sequencerGrid.A.map((_, i) => (
+            <div className={cn(styles.timeblock, 'timeblock')} id={i} key={i} />
           ))}
         </div>
       </div>
