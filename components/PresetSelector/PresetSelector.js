@@ -15,7 +15,7 @@ const PresetSelector = ({ openAuth }) => {
     const { id } = e.target
     if (!loggedIn) return openAuth()
     if (presets.length <= 1) return
-    const current = findWithAttr(presets, 'name', currentPreset.name)
+    const current = findWithAttr(presets, 'name', currentPreset?.name)
 
     let newCurrent
     if (id === 'left') {
@@ -52,7 +52,7 @@ const PresetSelector = ({ openAuth }) => {
               ? '2px solid rgb(175, 24, 24)'
               : '2px solid rgb(100, 100, 100)'
           }}>
-          {currentPreset.name || 'no presets saved yet'}
+          {currentPreset?.name || 'no presets saved yet'}
         </div>
         <PresetDropDown open={dropDown} onClose={closeDropDown} />
       </div>

@@ -23,16 +23,17 @@ const filter = (state) => {
 const Presets = ({ openAuth }) => {
   const [appState, updateState] = useContext(CTX)
   const { currentPreset } = appState
-  const [display, setDisplay] = useState({})
+  const [display, setDisplay] = useState(null)
   const [presetName, setPresetName] = useState('')
   const { status } = useSession()
   const loggedIn = status === 'authenticated'
 
-  const open = (id) => setDisplay({ [id]: true })
+  const open = (e) => (loggedIn ? setDisplay(e.target.id) : openAuth())
 
-  const closeAll = () => setDisplay({})
+  const closeAll = () => setDisplay(null)
 
-  const saveNew = async () => {
+  const saveNew = async (e) => {
+    e.preventDefault()
     if (!presetName) {
       closeAll()
       return toast.error('Name value required')
@@ -42,43 +43,41 @@ const Presets = ({ openAuth }) => {
 
     Axios.post('api/presets', { name: presetName, state: filteredState })
       .then((result) => {
+        closeAll()
+        setPresetName('')
         if (result.data.status === 'error') {
-          closeAll()
-          setPresetName('')
           return toast.error(result.data.message)
         }
         updateState({ type: 'ADD_PRESET', payload: result.data.preset })
-        closeAll()
         toast.success(result.data.message)
-        setPresetName('')
       })
       .catch(() => toast.error('Preset save failed'))
   }
 
-  const saveOver = async () => {
+  const saveOver = async (e) => {
+    e.preventDefault()
     const filteredState = filter(appState)
     Axios.put(`/api/presets/${currentPreset._id}`, { state: filteredState })
       .then((result) => {
+        closeAll()
         if (result.data.status === 'error') {
-          closeAll()
           return toast.error(result.data.message)
         }
         updateState({ type: 'UPDATE_PRESET', payload: result?.data?.preset })
-        closeAll()
         toast.success(result.data.message)
       })
       .catch(() => toast.error('Preset save failed'))
   }
 
-  const deletePreset = () => {
+  const deletePreset = (e) => {
+    e.preventDefault()
     Axios.delete(`/api/presets/${currentPreset._id}`)
       .then((result) => {
+        closeAll()
         if (result.data.status === 'error') {
-          closeAll()
           return toast.error(result.data.message)
         }
         updateState({ type: 'REMOVE_PRESET', payload: result?.data?.presetId })
-        closeAll()
         toast.success(result.data.message)
       })
       .catch(() => toast.error('Preset delete failed'))
@@ -88,52 +87,69 @@ const Presets = ({ openAuth }) => {
 
   return (
     <div className={styles.presets}>
-      <button onClick={() => (loggedIn ? open('saveNew') : openAuth())}>
-        save as
-      </button>
-      <button onClick={() => (loggedIn ? open('saveOver') : openAuth())}>
-        save
-      </button>
-      <button onClick={() => (loggedIn ? open('delete') : openAuth())}>
-        delete
-      </button>
+      <div className={styles.openingButtons}>
+        <button
+          id='saveAs'
+          onClick={open}
+          className={display === 'saveAs' && styles.current}>
+          save as
+        </button>
+        <button
+          id='save'
+          onClick={open}
+          className={display === 'save' && styles.current}>
+          save
+        </button>
+        <button
+          id='delete'
+          onClick={open}
+          className={display === 'delete' && styles.current}>
+          delete
+        </button>
+      </div>
 
-      {display.saveNew && (
-        <div className={cn(styles.presetOpOpen, styles.saveNew)}>
+      {display === 'saveAs' && (
+        <form
+          onSubmit={saveNew}
+          className={cn(styles.presetOpOpen, styles.saveNew)}>
           <input
             type='text'
             onChange={handleTextInput}
             placeholder='preset name'
           />
-          <button className={styles.confirm} onClick={saveNew}>
-            save
+          <button className={styles.confirm} type='submit'>
+            submit
           </button>
-          <button className={styles.cancel} onClick={closeAll}>
+          <button className={styles.cancel} onClick={closeAll} type='button'>
             cancel
           </button>
-        </div>
+        </form>
       )}
 
-      {display.saveOver && (
-        <div className={cn(styles.presetOpOpen, styles.saveOver)}>
-          <button className={styles.confirm} onClick={saveOver}>
-            confirm save
+      {display === 'save' && (
+        <form
+          onSubmit={saveOver}
+          className={cn(styles.presetOpOpen, styles.saveOver)}>
+          <button className={styles.confirm} type='submit'>
+            submit
           </button>
-          <button className={styles.cancel} onClick={closeAll}>
+          <button className={styles.cancel} onClick={closeAll} type='button'>
             cancel
           </button>
-        </div>
+        </form>
       )}
 
-      {display.delete && (
-        <div className={cn(styles.presetOpOpen, styles.delete)}>
-          <button className={styles.confirm} onClick={deletePreset}>
+      {display === 'delete' && (
+        <form
+          onSubmit={deletePreset}
+          className={cn(styles.presetOpOpen, styles.delete)}>
+          <button className={styles.confirm} type='submit'>
             confirm delete
           </button>
-          <button className={styles.cancel} onClick={closeAll}>
+          <button className={styles.cancel} onClick={closeAll} type='button'>
             cancel
           </button>
-        </div>
+        </form>
       )}
     </div>
   )
