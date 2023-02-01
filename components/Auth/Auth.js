@@ -24,7 +24,10 @@ const Auth = ({ closeAuth }) => {
   return (
     <animated.div style={authAnimation}>
       <div className={styles.auth}>
-        <div className={styles.closeBtn} onClick={closeAuth}></div>
+        <button className={styles.closeBtn} onClick={closeAuth}>
+          <div className={styles.closeBtnX} />
+        </button>
+
         <animated.div style={loginAnimation}>
           <Login
             currentShow={currentShow}

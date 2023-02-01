@@ -18,8 +18,8 @@ const DistortionSenders = () => {
         .map((inst) => (
           <div className='inst' key={inst}>
             <RangeInput
-              min={0}
-              max={50}
+              min={-50}
+              max={30}
               name={inst}
               value={distortionSends[inst]}
               onChange={handleChange}

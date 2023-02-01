@@ -22,7 +22,7 @@ const PingPongSenders = () => {
           <div className='inst' key={inst}>
             <RangeInput
               min={-50}
-              max={0}
+              max={30}
               name={inst}
               value={pingPongSends[inst]}
               onChange={handleChange}

@@ -52,7 +52,7 @@ const PresetSelector = ({ openAuth }) => {
               ? '2px solid rgb(175, 24, 24)'
               : '2px solid rgb(100, 100, 100)'
           }}>
-          {currentPreset?.name || 'no presets saved yet'}
+          <p>{currentPreset?.name || 'no presets saved yet'}</p>
         </div>
         <PresetDropDown open={dropDown} onClose={closeDropDown} />
       </div>

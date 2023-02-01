@@ -42,6 +42,13 @@
     position: relative;
     width: 24rem;
     height: 5rem;
+
+    p {
+      max-width: 22rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
+    }
   }
 
   .dropdownContainer {

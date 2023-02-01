@@ -1,4 +1,5 @@
 import Axios from 'axios'
+import { toast } from 'react-toastify'
 import { signOut } from 'next-auth/react'
 import { useSession } from 'next-auth/react'
 import { createRoot } from 'react-dom/client'
@@ -26,7 +27,9 @@ function App() {
     window.addEventListener('mouseup', function () {
       updateState({ type: 'CHANGE_CLICK_ACTIVE', payload: false })
     })
-    modalRoot.current = createRoot(document.getElementById('modal'))
+    if (!modalRoot.current) {
+      modalRoot.current = createRoot(document.getElementById('modal'))
+    }
   }, [])
 
   const fetchUserPresets = () => {
@@ -59,13 +62,13 @@ function App() {
     <div className={styles.App}>
       {!loggedIn && (
         <button className={styles.openAuth} onClick={openAuth}>
-          login / register
+          LOGIN / REGISTER
         </button>
       )}
       <div className={styles.background}></div>
       <div className={styles.componentsContainer}>
         <div className={styles.space}></div>
-        <div>
+        <div className={styles.effectsContainer}>
           <Mixer />
           <Distortion />
           <PingPong />

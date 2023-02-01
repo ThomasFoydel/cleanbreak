@@ -51,7 +51,7 @@ const Presets = ({ openAuth }) => {
         updateState({ type: 'ADD_PRESET', payload: result.data.preset })
         toast.success(result.data.message)
       })
-      .catch(() => toast.error('Preset save failed'))
+      .catch((err) => toast.error(err.response.data.message))
   }
 
   const saveOver = async (e) => {
@@ -91,19 +91,19 @@ const Presets = ({ openAuth }) => {
         <button
           id='saveAs'
           onClick={open}
-          className={display === 'saveAs' && styles.current}>
+          className={display === 'saveAs' ? styles.current : ''}>
           save as
         </button>
         <button
           id='save'
           onClick={open}
-          className={display === 'save' && styles.current}>
+          className={display === 'save' ? styles.current : ''}>
           save
         </button>
         <button
           id='delete'
           onClick={open}
-          className={display === 'delete' && styles.current}>
+          className={display === 'delete' ? styles.current : ''}>
           delete
         </button>
       </div>
@@ -116,6 +116,7 @@ const Presets = ({ openAuth }) => {
             type='text'
             onChange={handleTextInput}
             placeholder='preset name'
+            maxLength={14}
           />
           <button className={styles.confirm} type='submit'>
             submit

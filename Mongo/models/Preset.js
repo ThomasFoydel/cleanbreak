@@ -91,7 +91,14 @@ const presetData = new Schema({
 
 const presetSchema = new Schema(
   {
-    name: { type: String, required: true },
+    name: {
+      type: String,
+      required: true,
+      validate: {
+        validator: (str) => str.length <= 14,
+        message: 'Preset name cannot exceed characters'
+      }
+    },
     author: { type: Types.ObjectId, required: true, ref: 'User' },
     state: { type: presetData, required: true }
   },

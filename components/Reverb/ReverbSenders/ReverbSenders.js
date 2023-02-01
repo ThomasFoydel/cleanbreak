@@ -22,7 +22,7 @@ const ReverbSenders = () => {
           <div className='inst' key={inst}>
             <RangeInput
               min={-50}
-              max={0}
+              max={30}
               name={inst}
               value={reverbSends[inst]}
               onChange={handleChange}
