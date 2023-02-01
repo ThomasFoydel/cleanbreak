@@ -5,7 +5,7 @@ import RangeInput from '../../RangeInput/RangeInput'
 import styles from './DistortionSenders.module.scss'
 
 const DistortionSenders = () => {
-  const [appState, updateState] = useContext(CTX)
+  const [{ distortionSends }, updateState] = useContext(CTX)
 
   const handleChange = ({ value, name }) => {
     updateState({ type: 'CHANGE_DISTORTION_SENDS', payload: { name, value } })
@@ -13,15 +13,15 @@ const DistortionSenders = () => {
 
   return (
     <div className={cn(styles.distortionSenders, 'controller')}>
-      {Object.keys(appState.distortionSends)
+      {Object.keys(distortionSends)
         .sort()
-        .map((inst, i) => (
-          <div className='inst' key={i}>
+        .map((inst) => (
+          <div className='inst' key={inst}>
             <RangeInput
               min={0}
               max={50}
               name={inst}
-              value={appState.distortionSends[inst]}
+              value={distortionSends[inst]}
               onChange={handleChange}
             />
             <h2 className='name'>{inst}</h2>
