@@ -57,7 +57,7 @@ const SampleSelector = () => {
             className={styles.selectorBtn}>
             {'>'}
           </button>
-          <button name={name} onClick={handleClear} className={styles.clearBtn}>
+          <button name={inst} onClick={handleClear} className={styles.clearBtn}>
             clear
           </button>
         </div>
