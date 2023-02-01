@@ -29,7 +29,7 @@ const PresetDropDown = ({ open, onClose }) => {
           <div
             className={cn(
               styles.presetName,
-              preset.name === currentPreset.name && styles.currentActivePreset
+              preset._id === currentPreset._id && styles.currentActivePreset
             )}
             key={preset.name}
             id={preset.name}

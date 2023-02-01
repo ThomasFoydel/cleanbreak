@@ -21,7 +21,7 @@ const filter = (state) => {
 }
 
 const Presets = ({ openAuth }) => {
-  const [appState, updateState] = useContext(CTX)
+  const [{ currentPreset }, updateState] = useContext(CTX)
   const [display, setDisplay] = useState({})
   const [presetName, setPresetName] = useState('')
   const { status } = useSession()
@@ -56,10 +56,7 @@ const Presets = ({ openAuth }) => {
 
   const saveOver = async () => {
     const filteredState = filter(appState)
-    Axios.put(`/presets/${appState.currentPreset._id}`, {
-      name: appState.currentPreset,
-      state: filteredState
-    })
+    Axios.put(`/presets/${currentPreset._id}`, { state: filteredState })
       .then((result) => {
         if (result.data.status === 'error') {
           closeAll()
@@ -80,9 +77,7 @@ const Presets = ({ openAuth }) => {
   }
 
   const deletePreset = () => {
-    Axios.delete(`/api/presets/${appState.currentPreset._id}`, {
-      name: appState.currentPreset.name
-    })
+    Axios.delete(`/api/presets/${currentPreset._id}`)
       .then((result) => {
         if (result.data.status === 'error') {
           closeAll()

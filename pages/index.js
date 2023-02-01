@@ -41,10 +41,6 @@ function App() {
 
   useEffect(fetchUserPresets, [status])
 
-  const closeAuth = () => {
-    modalRoot.current.render(<></>)
-  }
-
   const openAuth = () => {
     modalRoot.current.render(
       <div className='modal'>
@@ -54,6 +50,8 @@ function App() {
       </div>
     )
   }
+
+  const closeAuth = () => modalRoot.current.render(<></>)
 
   const logout = () => signOut({ redirect: false })
 
