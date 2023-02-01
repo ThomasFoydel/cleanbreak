@@ -3,7 +3,7 @@
 <div align="center"><h5>A drum machine for the browser <a href="https://cleanbreak.vercel.app/">live demo here</a></h5></div>
 
 <a href="https://cleanbreak.vercel.app/">
-<img src="/client/public/imgs/preview.jpg" width="100%" >
+<img src="./public/preview.jpg" width="100%" >
 </a>
 
 Its a Web Audio API step sequencer. I made this because drums are cool and people should be able to experiment with music production without having to install anything beyond their browser.
