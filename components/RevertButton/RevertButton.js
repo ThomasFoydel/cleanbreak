@@ -6,15 +6,13 @@ import styles from './RevertButton.module.scss'
 import { CTX } from '../../context/Store'
 
 const RevertButton = ({ openAuth }) => {
-  const [appState, updateState] = useContext(CTX)
+  const [{currentPreset}, updateState] = useContext(CTX)
   const { status } = useSession()
   const loggedIn = status === 'authenticated'
 
   const revert = () => {
     if (!loggedIn) return openAuth()
-
-    const { currentPreset } = appState
-
+    
     Axios.get(`/api/presets/${currentPreset}`)
       .then((result) => {
         if (result.data.status === 'error') {

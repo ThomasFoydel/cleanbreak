@@ -5,7 +5,7 @@ import { CTX } from '../../../context/Store'
 import RangeInput from '../../RangeInput/RangeInput'
 
 const PingPongControl = () => {
-  const [appState, updateState] = useContext(CTX)
+  const [{ pingPong }, updateState] = useContext(CTX)
 
   const handleChange = ({ id, value }) => {
     updateState({ type: 'CHANGE_PINGPONG', payload: { type: id, value } })
@@ -13,7 +13,7 @@ const PingPongControl = () => {
 
   const inputs = [
     { name: 'wet', label: 'mix', step: 0.01, max: 1 },
-    { name: 'delayTime', label: 'time', step: 0.04, max: 4 },
+    { name: 'delayTime', label: 'time', step: 0.02, max: 2 },
     { name: 'feedback', label: 'feedback', step: 0.01, max: 1 }
   ]
 
@@ -25,7 +25,7 @@ const PingPongControl = () => {
             id={name}
             step={step}
             max={max}
-            value={appState.pingPong[name]}
+            value={pingPong[name]}
             onChange={handleChange}
           />
           <h2 className='name'>{label}</h2>

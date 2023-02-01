@@ -6,7 +6,7 @@ import { CTX } from '../../context/Store'
 import styles from './Mixer.module.scss'
 
 const Mixer = () => {
-  const [appState, updateState] = useContext(CTX)
+  const [{ panVols, solos, mutes }, updateState] = useContext(CTX)
 
   const updateMixer = (type, { name, value }) => {
     updateState({ type, payload: { name, value } })
@@ -26,7 +26,7 @@ const Mixer = () => {
     <div className={cn(styles.mixer)}>
       <div className={styles.effectName}>mixer</div>
       <div className='controller'>
-        {Object.keys(appState.panVols)
+        {Object.keys(panVols)
           .sort()
           .map((keyName) => (
             <div className='inst' key={keyName}>
@@ -35,25 +35,25 @@ const Mixer = () => {
                 name={keyName}
                 min={-70}
                 max={0}
-                value={appState.panVols[keyName]}
+                value={panVols[keyName]}
               />
               <h2 className={cn('name', styles.mixerName)}>{keyName}</h2>
               <PanControl name={keyName} />
               <button
-                onClick={appState.solos[keyName] ? handleUnSolo : handleSolo}
+                onClick={solos[keyName] ? handleUnSolo : handleSolo}
                 name={keyName}
                 className={cn(
                   styles.solo,
-                  appState.solos[keyName] && styles.soloActive
+                  solos[keyName] && styles.soloActive
                 )}>
                 solo
               </button>
               <button
-                onClick={appState.mutes[keyName] ? handleUnMute : handleMute}
+                onClick={mutes[keyName] ? handleUnMute : handleMute}
                 name={keyName}
                 className={cn(
                   styles.mute,
-                  appState.mutes[keyName] && styles.muteActive
+                  mutes[keyName] && styles.muteActive
                 )}>
                 mute
               </button>

@@ -4,12 +4,12 @@ import { CTX } from '../../../context/Store'
 import styles from './PanControl.module.scss'
 
 const PanControl = ({ name }) => {
-  const [appState, updateState] = useContext(CTX)
+  const [{ panVolPans }, updateState] = useContext(CTX)
 
   const handlePan = (e, tag) => {
     updateState({ type: 'CHANGE_PAN', payload: { type: name, value: e } })
   }
-  
+
   return (
     <div className={styles.panControl}>
       <CircleRange
@@ -19,7 +19,7 @@ const PanControl = ({ name }) => {
         step={0.5}
         type='range'
         onChange={handlePan}
-        value={appState.panVolPans[name] * 100}
+        value={panVolPans[name] * 100}
       />
     </div>
   )

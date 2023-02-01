@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { CTX } from '../../context/Store'
 
 const Swing = () => {
-  const [appState, updateState] = useContext(CTX)
+  const [{swing}, updateState] = useContext(CTX)
   
   const handleChange = (e) => {
     let { value } = e.target
@@ -16,7 +16,7 @@ const Swing = () => {
       <input
         type='range'
         max={25}
-        value={appState.swing * 100}
+        value={swing * 100}
         onChange={handleChange}
       />
     </div>

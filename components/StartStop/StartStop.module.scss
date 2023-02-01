@@ -142,7 +142,7 @@
     .playTriangle {
       background: rgb(169, 14, 14);
     }
-    
+
     .pauseButton {
       background: rgb(169, 14, 14);
     }
@@ -181,9 +181,9 @@
 }
 
 .pausedTrue {
-  background: rgba(14, 14, 14, 0.214) !important;
+  background: rgb(220, 19, 19);
 }
 
 .pausedFalse {
-  background: rgb(220, 19, 19);
+  background: rgba(14, 14, 14, 0.214) !important;
 }

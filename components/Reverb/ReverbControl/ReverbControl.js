@@ -5,7 +5,7 @@ import styles from './ReverbControl.module.scss'
 import { CTX } from '../../../context/Store'
 
 const ReverbControl = () => {
-  const [appState, updateState] = useContext(CTX)
+  const [{ reverb }, updateState] = useContext(CTX)
 
   const updateReverb = (type, value) => {
     updateState({
@@ -20,14 +20,14 @@ const ReverbControl = () => {
     {
       name: 'wet',
       label: 'mix',
-      value: appState.reverb.wet,
+      value: reverb.wet,
       max: 1,
       step: 0.01
     },
     {
       name: 'decay',
       label: 'decay',
-      value: appState.reverb.decay,
+      value: reverb.decay,
       min: 0.1,
       max: 5,
       step: 0.1
@@ -35,9 +35,9 @@ const ReverbControl = () => {
     {
       name: 'preDelay',
       label: 'pre-delay',
-      value: appState.reverb.preDelay,
-      max: 5,
-      step: 0.1
+      value: reverb.preDelay,
+      max: 0.5,
+      step: 0.01
     }
   ]
 

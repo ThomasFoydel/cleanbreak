@@ -2,12 +2,12 @@ import React, { useContext } from 'react'
 import { CTX } from '../../context/Store'
 
 const Tempo = () => {
-  const [appState, updateState] = useContext(CTX)
+  const [{ bpm }, updateState] = useContext(CTX)
 
   const handleChange = (e) => {
     updateState({ type: 'CHANGE_TEMPO', payload: e.target.value })
   }
-  
+
   return (
     <div>
       <div className='name'>tempo</div>
@@ -15,7 +15,7 @@ const Tempo = () => {
         type='range'
         min='65'
         max='200'
-        value={appState.bpm}
+        value={bpm}
         onChange={handleChange}
       />
     </div>
