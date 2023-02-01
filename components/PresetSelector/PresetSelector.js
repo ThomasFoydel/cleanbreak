@@ -26,11 +26,8 @@ const PresetSelector = ({ openAuth }) => {
       if (current < presets.length - 1) newCurrent = presets[current + 1]
       else newCurrent = presets[0]
     }
-    updateState({
-      type: 'LOAD_PRESET',
-      payload: { value: newCurrent.value },
-      current: newCurrent
-    })
+
+    updateState({ type: 'LOAD_PRESET', payload: newCurrent })
   }
 
   const toggleDropDown = () => {
@@ -53,7 +50,7 @@ const PresetSelector = ({ openAuth }) => {
             background: dropDown ? 'rgb(100, 100, 100)' : ' #d1d1d1',
             border: dropDown
               ? '2px solid rgb(175, 24, 24)'
-              : '2px solid rgb(100, 100, 100)',
+              : '2px solid rgb(100, 100, 100)'
           }}>
           {currentPreset.name || 'no presets saved yet'}
         </div>
