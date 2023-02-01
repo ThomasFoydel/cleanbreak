@@ -8,18 +8,18 @@ const initialValues = {
   bpm: 85,
   swing: 0,
   reverb: {
-    preDelay: 0,
-    decay: 0.01,
-    wet: 0
+    wet: 1,
+    preDelay: 2.2,
+    decay: 0.33
   },
   pingPong: {
-    wet: 0,
-    delayTime: 0,
-    feedback: 0
+    wet: 1,
+    delayTime: 0.52,
+    feedback: 0.13
   },
   distortion: {
-    distortion: 0,
-    wet: 0
+    wet: 1,
+    distortion: 0.36
   },
   reverbSends: {
     A: -50,
@@ -30,17 +30,17 @@ const initialValues = {
     E: -50
   },
   distortionSends: {
-    A: -50,
+    A: 11,
     B: -50,
-    C: -50,
-    F: -50,
+    C: -0,
+    F: 1,
     D: -50,
     E: -50
   },
   pingPongSends: {
     A: -50,
     B: -50,
-    C: -50,
+    C: 0,
     F: -50,
     D: -50,
     E: -50
@@ -64,8 +64,8 @@ const initialValues = {
   panVols: {
     A: 0,
     B: 0,
-    C: 0,
-    F: 0,
+    C: -4,
+    F: -3,
     D: 0,
     E: 0
   },
