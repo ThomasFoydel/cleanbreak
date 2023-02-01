@@ -62,7 +62,6 @@ const Presets = ({ openAuth }) => {
           closeAll()
           return toast.error(result.data.message)
         }
-
         updateState({
           type: 'UPDATE_PRESETS',
           payload: {
@@ -83,18 +82,7 @@ const Presets = ({ openAuth }) => {
           closeAll()
           return toast.error(result.data.message)
         }
-        updateState({
-          type: 'UPDATE_PRESETS',
-          payload: {
-            presets: result.data.presets,
-            current: result.data.current
-          }
-        })
-        updateState({
-          type: 'LOAD_PRESET',
-          text: result.data.current,
-          payload: result.data.presets[result.data.newCurrentIndex]
-        })
+        updateState({ type: 'REMOVE_PRESET', payload: result?.data?.presetId })
         closeAll()
         toast.success(result.data.message)
       })

@@ -29,6 +29,11 @@ export default async (req, res) => {
     foundPreset = await Preset.findOne({ _id: presetId })
   } catch (err) {
     return res
+      .status(500)
+      .json({ status: 'error', message: 'Database connection error' })
+  }
+  if (!foundPreset) {
+    return res
       .status(400)
       .json({ status: 'error', message: 'Preset not found' })
   }
