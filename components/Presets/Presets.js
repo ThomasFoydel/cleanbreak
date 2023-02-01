@@ -116,7 +116,7 @@ const Presets = ({ openAuth }) => {
             type='text'
             onChange={handleTextInput}
             placeholder='preset name'
-            // maxLength={14}
+            maxLength={14}
           />
           <button className={styles.confirm} type='submit'>
             submit
