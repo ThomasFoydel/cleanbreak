@@ -6,30 +6,27 @@ import styles from './RevertButton.module.scss'
 import { CTX } from '../../context/Store'
 
 const RevertButton = ({ openAuth }) => {
-  const [{currentPreset}, updateState] = useContext(CTX)
+  const [{ currentPreset }, updateState] = useContext(CTX)
   const { status } = useSession()
   const loggedIn = status === 'authenticated'
 
   const revert = () => {
     if (!loggedIn) return openAuth()
-    
-    Axios.get(`/api/presets/${currentPreset}`)
+
+    Axios.get(`/api/presets/${currentPreset._id}`)
       .then((result) => {
         if (result.data.status === 'error') {
           return toast.error(result.data.message)
         }
-        const { presetFromDb } = result.data
-        const { name, params } = presetFromDb
         updateState({
           type: 'LOAD_PRESET',
-          payload: { value: params },
-          current: name
+          payload: result.data.preset
         })
-        toast.success(result.data.message)
+        toast.success('Preset reverted')
       })
       .catch(() => toast.error('Revert failed'))
   }
-  
+
   return (
     <button className={styles.revertBtn} onClick={revert}>
       revert

@@ -15,6 +15,7 @@ export default async (req, res) => {
       .status(401)
       .json({ status: 'error', message: 'Not authenticated' })
   }
+
   await connection()
 
   let foundUser
@@ -40,6 +41,12 @@ export default async (req, res) => {
 
   if (foundPreset.author.toString() !== foundUser._id.toString()) {
     return res.status(401).json({ status: 'error', message: 'Not authorized' })
+  }
+
+  if (method === 'GET') {
+    return res
+      .status(200)
+      .json({ status: 'success', message: 'Preset found', preset: foundPreset })
   }
 
   if (method === 'DELETE') {
