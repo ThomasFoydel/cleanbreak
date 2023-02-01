@@ -36,7 +36,7 @@ function App() {
           updateState({ type: 'LOAD_PRESETS', payload: res?.data?.presets })
         )
         .catch(() => toast.error('Preset fetch error'))
-    }
+    } else updateState({ type: 'LOAD_PRESETS', payload: [] })
   }
 
   useEffect(fetchUserPresets, [status])
