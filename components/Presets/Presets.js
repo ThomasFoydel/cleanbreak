@@ -91,19 +91,19 @@ const Presets = ({ openAuth }) => {
         <button
           id='saveAs'
           onClick={open}
-          className={display === 'saveAs' && styles.current}>
+          className={display === 'saveAs' ? styles.current : ''}>
           save as
         </button>
         <button
           id='save'
           onClick={open}
-          className={display === 'save' && styles.current}>
+          className={display === 'save' ? styles.current : ''}>
           save
         </button>
         <button
           id='delete'
           onClick={open}
-          className={display === 'delete' && styles.current}>
+          className={display === 'delete' ? styles.current : ''}>
           delete
         </button>
       </div>

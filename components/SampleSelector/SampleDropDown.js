@@ -26,7 +26,7 @@ const SampleDropDown = ({ sampleName, inst, i }) => {
         style={{ zIndex: (6 - i) * 2 + 1 }}
         className={cn(
           styles.currentSampleName,
-          opened && styles.currentSampleNameListOpen
+          opened ? styles.currentSampleNameListOpen : ''
         )}>
         <p>{sampleName}</p>
       </div>
@@ -45,7 +45,7 @@ const SampleDropDown = ({ sampleName, inst, i }) => {
             type='sample-name'
             className={cn(
               styles.sampleName,
-              name === sampleName && styles.currentActiveSample
+              name === sampleName ? styles.currentActiveSample : ''
             )}
             name={name}
             onClick={() => handleSelect(name)}

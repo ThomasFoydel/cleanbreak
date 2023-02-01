@@ -26,7 +26,9 @@ function App() {
     window.addEventListener('mouseup', function () {
       updateState({ type: 'CHANGE_CLICK_ACTIVE', payload: false })
     })
-    modalRoot.current = createRoot(document.getElementById('modal'))
+    if (!modalRoot.current) {
+      modalRoot.current = createRoot(document.getElementById('modal'))
+    }
   }, [])
 
   const fetchUserPresets = () => {

@@ -44,7 +44,7 @@ const Mixer = () => {
                 name={keyName}
                 className={cn(
                   styles.solo,
-                  solos[keyName] && styles.soloActive
+                  solos[keyName] ? styles.soloActive : ''
                 )}>
                 solo
               </button>
@@ -53,7 +53,7 @@ const Mixer = () => {
                 name={keyName}
                 className={cn(
                   styles.mute,
-                  mutes[keyName] && styles.muteActive
+                  mutes[keyName] ? styles.muteActive : ''
                 )}>
                 mute
               </button>
