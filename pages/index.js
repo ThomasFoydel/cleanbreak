@@ -1,3 +1,4 @@
+import Axios from 'axios'
 import { signOut } from 'next-auth/react'
 import { useSession } from 'next-auth/react'
 import { createRoot } from 'react-dom/client'
@@ -27,6 +28,18 @@ function App() {
     })
     modalRoot.current = createRoot(document.getElementById('modal'))
   }, [])
+
+  const fetchUserPresets = () => {
+    if (status === 'authenticated') {
+      Axios('/api/presets')
+        .then((res) =>
+          updateState({ type: 'LOAD_PRESETS', payload: res?.data?.presets })
+        )
+        .catch(() => toast.error('Preset fetch error'))
+    }
+  }
+
+  useEffect(fetchUserPresets, [status])
 
   const closeAuth = () => {
     modalRoot.current.render(<></>)

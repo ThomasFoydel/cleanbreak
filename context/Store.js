@@ -341,7 +341,7 @@ if (Tone && typeof window !== 'undefined') {
         return {
           ...state,
           ...payload[0].state,
-          presets: payload,
+          presets: payload || [],
           currentPreset: payload[0] || null
         }
       }
