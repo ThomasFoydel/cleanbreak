@@ -1,9 +1,9 @@
+import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import 'react-toastify/dist/ReactToastify.css'
 import { SessionProvider } from 'next-auth/react'
 import { ToastContainer } from 'react-toastify'
 import '../styles/globals.scss'
-import Head from 'next/head'
 
 const Store = dynamic(() => import('../context/Store'), { ssr: false })
 

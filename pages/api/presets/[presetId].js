@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth/next'
-import { authOptions } from '../auth/[...nextauth]'
 import connection from '../../../Mongo/connection'
 import Preset from '../../../Mongo/models/Preset'
+import authOptions from '../auth/[...nextauth]'
 import User from '../../../Mongo/models/User'
 
 export default async (req, res) => {
