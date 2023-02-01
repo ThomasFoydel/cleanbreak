@@ -14,13 +14,13 @@ const Mixer = () => {
 
   const handleChange = (e) => updateMixer('CHANGE_MIXER', e)
 
-  const handleSolo = (e) => updateMixer('SOLO_INST', e)
+  const handleSolo = (e) => updateMixer('SOLO_INST', e.target)
 
-  const handleUnSolo = (e) => updateMixer('UNSOLO_INST', e)
+  const handleUnSolo = (e) => updateMixer('UNSOLO_INST', e.target)
 
-  const handleMute = (e) => updateMixer('MUTE_INST', e)
+  const handleMute = (e) => updateMixer('MUTE_INST', e.target)
 
-  const handleUnMute = (e) => updateMixer('UNMUTE_INST', e)
+  const handleUnMute = (e) => updateMixer('UNMUTE_INST', e.target)
 
   return (
     <div className={cn(styles.mixer)}>
