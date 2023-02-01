@@ -1,0 +1,52 @@
+.sequencerContainer {
+  display: flex;
+  background-color: rgba(212, 212, 212, 0.349);
+  backdrop-filter: invert(1) blur(2px);
+  color: white;
+  width: 125rem;
+  border-radius: 2px;
+  padding: 2rem 0;
+}
+
+.sequencer {
+  .squareRow {
+    display: flex;
+    width: 100rem;
+    z-index: 2;
+    color: rgb(182, 18, 18);
+    color: rgb(182, 182, 182);
+    color: rgb(33, 33, 33);
+  }
+
+  .instrumentContainer {
+    height: 5rem;
+    display: flex;
+    width: 84rem;
+    background: rgb(40, 40, 40);
+    border-radius: 2px;
+    margin-left: 1.3rem;
+
+    .instrumentName {
+      max-width: 2rem;
+      min-width: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-right: 1rem;
+    }
+  }
+
+  .timeblocks {
+    margin-left: 4.3rem;
+    display: flex;
+    width: 96rem;
+
+    .timeblock {
+      width: 4.2rem;
+      height: 4.2rem;
+      margin: 0.42rem;
+      border-radius: 2px;
+      background: #8080807a;
+    }
+  }
+}

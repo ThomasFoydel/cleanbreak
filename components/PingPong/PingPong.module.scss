@@ -1,0 +1,23 @@
+.pingPong {
+  width: 63rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  background: rgba(52, 52, 52, 0.3);
+  position: relative;
+  backdrop-filter: invert(0.7);
+  padding: 0 0.2rem 1rem 0.2rem;
+
+  .effectName {
+    text-align: center;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    color: rgb(225, 225, 225);
+    background: rgba(0, 0, 0, 0.6);
+    padding: 0 0.6rem;
+    top: -2rem;
+    font-size: 3rem;
+    font-weight: bold;
+  }
+}

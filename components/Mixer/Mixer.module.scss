@@ -1,0 +1,51 @@
+.mixer {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  position: relative;
+  width: 56rem;
+  backdrop-filter: invert(0.7);
+  background: rgba(52, 52, 52, 0.3);
+  padding: 0 0.2rem 1rem 0.2rem;
+
+  .solo,
+  .mute {
+    padding: 0.3rem 0;
+    transition: all 0.3s ease;
+    width: 6rem;
+    border: none !important;
+    border-radius: 2px;
+    font-size: 1.6rem;
+
+    &:hover {
+      color: rgb(172, 68, 68);
+    }
+  }
+
+  .muteActive,
+  .soloActive {
+    color: rgb(196, 14, 14);
+    background: rgb(30, 30, 30);
+
+    &:hover {
+      background: rgb(103, 103, 103);
+    }
+  }
+
+  .solo {
+    margin-bottom: 0.2rem;
+  }
+
+  .effectName {
+    text-align: center;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    color: rgb(225, 225, 225);
+    background: rgba(0, 0, 0, 0.6);
+    padding: 0 0.6rem;
+    font-size: 3rem;
+    font-weight: bold;
+    top: 0;
+  }
+}

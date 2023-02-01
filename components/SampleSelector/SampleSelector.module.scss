@@ -1,0 +1,99 @@
+.sampleSelectorContainer {
+  margin-left: -14.4rem;
+  background: rgb(40, 40, 40);
+  height: 30rem;
+  border-radius: 2px;
+}
+
+.sampleSelector {
+  display: flex;
+  height: 5rem;
+  align-items: center;
+
+  .selectorBtn {
+    font-weight: bold;
+    padding-top: 0.4rem;
+  }
+
+  .selectorBtn,
+  .clearBtn {
+    width: 4.2rem;
+    height: 4.2rem;
+    margin: 0.42rem;
+    font-size: 1.8rem;
+    border: none;
+    border-radius: 2px;
+
+    &:hover {
+      background: rgb(159, 159, 159);
+    }
+  }
+
+  .clearBtn {
+    width: 6rem;
+  }
+}
+
+.sampleDropDown {
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+
+  .currentSampleName {
+    position: relative;
+    background: rgb(209, 209, 209);
+    height: 4.2rem;
+    border: 2px solid transparent;
+    border-radius: 2px;
+    color: rgb(5, 5, 5);
+    width: 7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .currentSampleNameListOpen {
+    background: rgb(100, 100, 100);
+    border: 2px solid rgb(175, 24, 24);
+  }
+
+  .currentSampleName,
+  .sampleName {
+    cursor: pointer;
+  }
+
+  .sampleName {
+    border-radius: 2px;
+    background: rgb(194, 194, 194);
+    transition: all 0.4s ease;
+    padding: 0.2rem 0;
+    border: 1px solid lightgrey;
+
+    &:hover {
+      background: rgb(59, 59, 59);
+      color: rgb(235, 63, 63);
+      border: 1px solid rgb(59, 59, 59);
+    }
+  }
+
+  .hoverOpen {
+    // z-index: 2;
+    height: 11rem;
+    overflow-y: scroll;
+    position: absolute;
+    background: rgb(175, 24, 24);
+    width: 7rem;
+    left: 50%;
+    top: 4rem;
+    transform: translateX(-50%);
+    border-radius: 2px;
+    border: 2px solid rgb(175, 24, 24);
+    border-top: none;
+    transition: all ease 0.4s;
+  }
+
+  .currentActiveSample {
+    background: rgb(59, 59, 59);
+    color: #ddd;
+  }
+}
