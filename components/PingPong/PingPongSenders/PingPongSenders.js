@@ -5,7 +5,7 @@ import { CTX } from '../../../context/Store'
 import cn from 'classnames'
 
 const PingPongSenders = () => {
-  const [appState, updateState] = useContext(CTX)
+  const [{ pingPongSends }, updateState] = useContext(CTX)
 
   const handleChange = ({ value, name }) => {
     updateState({
@@ -16,15 +16,15 @@ const PingPongSenders = () => {
 
   return (
     <div className={cn(styles.pingPongSenders, 'controller')}>
-      {Object.keys(appState.pingPongSends)
+      {Object.keys(pingPongSends)
         .sort()
-        .map((inst, i) => (
-          <div className='inst' key={i}>
+        .map((inst) => (
+          <div className='inst' key={inst}>
             <RangeInput
               min={-50}
               max={0}
               name={inst}
-              value={appState.pingPongSends[inst]}
+              value={pingPongSends[inst]}
               onChange={handleChange}
             />
             <h2 className='name'>{inst}</h2>
