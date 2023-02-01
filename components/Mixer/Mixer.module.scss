@@ -11,29 +11,30 @@
 
   .solo,
   .mute {
+    padding: 0.3rem 0;
     transition: all 0.3s ease;
+    width: 6rem;
+    border: none !important;
+    border-radius: 2px;
+    font-size: 1.6rem;
+
+    &:hover {
+      color: rgb(172, 68, 68);
+    }
   }
 
+  .muteActive,
   .soloActive {
-    color: rgb(240, 213, 4);
+    color: rgb(196, 14, 14);
     background: rgb(30, 30, 30);
-  }
-
-  .solo {
-    padding: 0.1rem 0.8rem;
-    margin-bottom: 0.1rem;
 
     &:hover {
       background: rgb(103, 103, 103);
     }
   }
 
-  .mute:hover {
-    color: rgb(172, 68, 68);
-  }
-
-  .muteActive {
-    color: rgb(196, 14, 14);
+  .solo {
+    margin-bottom: 0.2rem;
   }
 
   .effectName {
