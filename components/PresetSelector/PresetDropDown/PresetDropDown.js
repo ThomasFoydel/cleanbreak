@@ -4,18 +4,19 @@ import styles from './PresetDropDown.module.scss'
 import { findWithAttr } from '../../../utils'
 import { CTX } from '../../../context/Store'
 
-const PresetDropDown = ({ open }) => {
+const PresetDropDown = ({ open, onClose }) => {
   const [{ presets, currentPreset }, updateState] = useContext(CTX)
 
-  const handleSelect = (e) => {
-    const selectedPresetIndex = findWithAttr(presets, 'name', id)
+  const handleSelect = ({ target }) => {
+    const selectedPresetIndex = findWithAttr(presets, 'name', target.id)
     const selectedPreset = presets[selectedPresetIndex]
     updateState({ type: 'LOAD_PRESET', payload: selectedPreset })
+    onClose()
   }
 
   return (
     <div
-      className={styles.presetDropdown}
+      className={styles.presetDropDown}
       style={{
         zIndex: open ? '3' : '-1',
         opacity: open ? '1' : '0',

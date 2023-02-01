@@ -1,7 +1,7 @@
 .presetSelector {
   background: rgb(40, 40, 40);
   border-radius: 2px;
-  width: 37.1rem;
+  width: 38.1rem;
   height: 6rem;
   position: absolute;
   right: 1rem;
@@ -29,10 +29,6 @@
     &:hover {
       background: rgb(159, 159, 159);
     }
-
-    .presetsList {
-      overflow-y: scroll;
-    }
   }
 
   .currentPreset {
@@ -42,6 +38,10 @@
     justify-content: center;
     align-items: center;
     color: #222;
+    z-index: 4;
+    position: relative;
+    width: 24rem;
+    height: 5rem;
   }
 
   .dropdownContainer {

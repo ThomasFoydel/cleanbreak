@@ -5,7 +5,7 @@ import Preset from '../../../Mongo/models/Preset'
 import User from '../../../Mongo/models/User'
 
 export default async (req, res) => {
-  const { user } = await getServerSession(req, res, authOptions))
+  const { user } = await getServerSession(req, res, authOptions)
   const { email } = user
   const { method, body } = req
 

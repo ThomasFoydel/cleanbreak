@@ -6,17 +6,15 @@ import { findWithAttr } from '../../utils'
 import { CTX } from '../../context/Store'
 
 const PresetSelector = ({ openAuth }) => {
-  const [appState, updateState] = useContext(CTX)
+  const [{ presets, currentPreset }, updateState] = useContext(CTX)
   const [dropDown, setDropDown] = useState(false)
   const { status } = useSession()
   const loggedIn = status === 'authenticated'
 
-  const { presets, currentPreset } = appState
-
   const handleSelector = (e) => {
     const { id } = e.target
     if (!loggedIn) return openAuth()
-    if (presets.length === 0) return
+    if (presets.length <= 1) return
     const current = findWithAttr(presets, 'name', currentPreset.name)
 
     let newCurrent
@@ -28,7 +26,6 @@ const PresetSelector = ({ openAuth }) => {
       if (current < presets.length - 1) newCurrent = presets[current + 1]
       else newCurrent = presets[0]
     }
-
     updateState({
       type: 'LOAD_PRESET',
       payload: { value: newCurrent.value },
@@ -37,8 +34,8 @@ const PresetSelector = ({ openAuth }) => {
   }
 
   const toggleDropDown = () => {
-    if (loggedIn) setDropDown(!dropDown)
-    else openAuth()
+    if (!loggedIn) openAuth()
+    else if (presets.length > 0) setDropDown(!dropDown)
   }
 
   const closeDropDown = () => setDropDown(false)
@@ -54,13 +51,13 @@ const PresetSelector = ({ openAuth }) => {
           onClick={toggleDropDown}
           style={{
             background: dropDown ? 'rgb(100, 100, 100)' : ' #d1d1d1',
-            border: dropDown ? '2px solid rgb(175, 24, 24)' : 'none',
-            width: dropDown ? '23.6rem' : '24rem',
-            height: dropDown ? '4.6rem' : '5rem'
+            border: dropDown
+              ? '2px solid rgb(175, 24, 24)'
+              : '2px solid rgb(100, 100, 100)',
           }}>
-          {appState.currentPreset.name}
+          {currentPreset.name || 'no presets saved yet'}
         </div>
-        <PresetDropDown open={dropDown} />
+        <PresetDropDown open={dropDown} onClose={closeDropDown} />
       </div>
       <div onClick={handleSelector} id='right' className={styles.increment}>
         {'>'}

@@ -1,5 +1,10 @@
 import { Schema, model, models, Types } from 'mongoose'
 
+const sampleSchema = new Schema({
+  name: { type: String, required: true },
+  inst: { type: String, required: true }
+})
+
 const presetData = new Schema({
   bpm: { type: Number },
   swing: { type: Number },
@@ -73,7 +78,7 @@ const presetData = new Schema({
     D: { type: Number },
     E: { type: Number }
   },
-  samples: [{ name: { type: String }, inst: { type: String } }],
+  samples: { type: [sampleSchema], _id: false },
   sequencerGrid: {
     A: { type: [Number] },
     B: { type: [Number] },

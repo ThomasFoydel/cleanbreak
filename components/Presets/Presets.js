@@ -7,13 +7,14 @@ import styles from './Presets.module.scss'
 import { CTX } from '../../context/Store'
 
 const filterOut = ['user', 'presets', 'playing', 'clickActive', 'currentPreset']
-const sampleFilter = ({ name, sampleName }) => ({ name, sampleName })
+
+const sampleFilter = (s) => s.map(({ name, inst }) => ({ name, inst }))
 
 const filter = (state) => {
   return Object.keys(state)
     .filter((key) => !filterOut.includes(key))
     .reduce((obj, key) => {
-      if (key === 'samples') obj[key] = sampleFilter(state[key])
+      if (key === 'samples') obj[key] = sampleFilter(state.samples)
       else obj[key] = state[key]
       return obj
     }, {})
