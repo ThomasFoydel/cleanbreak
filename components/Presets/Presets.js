@@ -21,7 +21,8 @@ const filter = (state) => {
 }
 
 const Presets = ({ openAuth }) => {
-  const [{ currentPreset }, updateState] = useContext(CTX)
+  const [appState, updateState] = useContext(CTX)
+  const { currentPreset } = appState
   const [display, setDisplay] = useState({})
   const [presetName, setPresetName] = useState('')
   const { status } = useSession()
@@ -56,19 +57,13 @@ const Presets = ({ openAuth }) => {
 
   const saveOver = async () => {
     const filteredState = filter(appState)
-    Axios.put(`/presets/${currentPreset._id}`, { state: filteredState })
+    Axios.put(`/api/presets/${currentPreset._id}`, { state: filteredState })
       .then((result) => {
         if (result.data.status === 'error') {
           closeAll()
           return toast.error(result.data.message)
         }
-        updateState({
-          type: 'UPDATE_PRESETS',
-          payload: {
-            presets: result.data.presets,
-            current: result.data.current
-          }
-        })
+        updateState({ type: 'UPDATE_PRESET', payload: result?.data?.preset })
         closeAll()
         toast.success(result.data.message)
       })

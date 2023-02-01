@@ -38,13 +38,12 @@ export default async (req, res) => {
       .json({ status: 'error', message: 'Preset not found' })
   }
 
+  if (foundPreset.author.toString() !== foundUser._id.toString()) {
+    return res.status(401).json({ status: 'error', message: 'Not authorized' })
+  }
+
   if (method === 'DELETE') {
     try {
-      if (foundPreset.author.toString() !== foundUser._id.toString()) {
-        return res
-          .status(401)
-          .json({ status: 'error', message: 'Not authorized' })
-      }
       const result = await Preset.deleteOne({ _id: presetId })
 
       if (!result.acknowledged || result.deletedCount !== 1) {
@@ -65,13 +64,12 @@ export default async (req, res) => {
 
   if (method === 'PUT') {
     const { state } = body
+
     try {
       const result = await Preset.findOneAndUpdate(
         { _id: presetId },
         { state },
-        {
-          new: true
-        }
+        { new: true }
       )
 
       return res.status(200).json({

@@ -31,7 +31,7 @@ const PresetDropDown = ({ open, onClose }) => {
               styles.presetName,
               preset._id === currentPreset._id && styles.currentActivePreset
             )}
-            key={preset.name}
+            key={preset._id}
             id={preset.name}
             onClick={handleSelect}>
             {preset.name}
