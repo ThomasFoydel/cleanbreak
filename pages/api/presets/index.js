@@ -41,6 +41,12 @@ export default async (req, res) => {
   if (method === 'POST') {
     try {
       const { name, state } = body
+      if (name.length > 14) {
+        return res.status(400).json({
+          status: 'error',
+          message: 'Preset name cannot exceed 14 characters'
+        })
+      }
       const newPreset = new Preset({ name, state, author: foundUser.id })
       const result = await newPreset.save()
       return res.status(200).json({
@@ -49,9 +55,10 @@ export default async (req, res) => {
         preset: result
       })
     } catch (err) {
-      return res
-        .status(400)
-        .json({ status: 'error', message: 'Preset creation failed' })
+      return res.status(400).json({
+        status: 'error',
+        message: 'Preset creation failed'
+      })
     }
   }
 
