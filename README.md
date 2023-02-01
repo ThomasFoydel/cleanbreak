@@ -1,6 +1,8 @@
 <div align="center"><h1>Clean Break</h1></div>
 
-<div align="center"><h5>A drum machine for the browser <a href="https://cleanbreak.vercel.app/">live demo here</a></h5></div>
+<div align="center"><h5>A drum machine for the browser</h5></div>
+
+<div align="center"><h5><a href="https://cleanbreak.vercel.app/">live demo here</a></h5></div>
 
 <a href="https://cleanbreak.vercel.app/">
 <img src="./public/preview.jpg" width="100%" >
@@ -12,6 +14,8 @@ Beats are programmable using the sequencer grid. Little grey squares make no sou
 
 Presets can be saved, edited, or deleted if a user signs in.
 
+Originally built in MERN stack and deployed to Heroku. Refactored in 2023 into a NextJS project and deployed to Vercel.
+
 This project uses:
 
 - React
@@ -22,3 +26,7 @@ This project uses:
 - NextAuth
 - MongoDB / Mongoose
 - ToneJS
+
+See the rest of my portfolio at <a href="https://thomasfoydel.com/">https://thomasfoydel.com/</a>
+
+See my other project repositories at <a href="https://github.com/thomasFoydel">https://github.com/thomasFoydel</a>
