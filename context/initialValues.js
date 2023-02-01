@@ -78,7 +78,7 @@ const initialValues = {
     E: 0
   },
   samples: [
-    { inst: 'A', name: samples[29].name },
+    { inst: 'A', name: samples[31].name },
     { inst: 'B', name: samples[13].name },
     { inst: 'C', name: samples[63].name },
     { inst: 'D', name: samples[51].name },
