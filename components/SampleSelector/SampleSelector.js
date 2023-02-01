@@ -36,7 +36,10 @@ const SampleSelector = () => {
   return (
     <div className={styles.sampleSelectorContainer}>
       {samples.map(({ inst, name }, i) => (
-        <div className={styles.sampleSelector} key={i}>
+        <div
+          style={{ zIndex: (6 - i) * 2 + 2 }}
+          className={styles.sampleSelector}
+          key={i}>
           <button
             id={inst}
             name={name}
@@ -45,7 +48,7 @@ const SampleSelector = () => {
             className={styles.selectorBtn}>
             {'<'}
           </button>
-          <SampleDropDown sampleName={name} inst={inst} />
+          <SampleDropDown sampleName={name} inst={inst} i={i} />
           <button
             id={inst}
             name={name}

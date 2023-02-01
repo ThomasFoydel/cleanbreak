@@ -4,7 +4,7 @@ import styles from './SampleSelector.module.scss'
 import sampleList from '../../assets/audio'
 import { CTX } from '../../context/Store'
 
-const SampleDropDown = ({ sampleName, inst }) => {
+const SampleDropDown = ({ sampleName, inst, i }) => {
   const [, updateState] = useContext(CTX)
   const [opened, setOpened] = useState(false)
 
@@ -15,20 +15,26 @@ const SampleDropDown = ({ sampleName, inst }) => {
     updateState({ type: 'CHANGE_SAMPLE', payload })
   }
 
-  const toggleOpen = () => setOpened(!opened)
+  const toggleOpen = () => setOpened((o) => !o)
 
   return (
     <div
       className={styles.sampleDropDown}
       onClick={toggleOpen}
       onMouseLeave={() => setOpened(false)}>
-      <div className={styles.currentSampleName}>
+      <div
+        style={{ zIndex: (6 - i) * 2 + 1 }}
+        className={cn(
+          styles.currentSampleName,
+          opened && styles.currentSampleNameListOpen
+        )}>
         <p>{sampleName}</p>
       </div>
       <div
         className={styles.hoverOpen}
         style={{
-          zIndex: opened ? '3' : '-1',
+          pointerEvents: opened ? 'auto' : 'none',
+          zIndex: (6 - i) * 2,
           opacity: opened ? '1' : '0',
           transform: opened
             ? 'translateX(-50%) translateY(0)'
