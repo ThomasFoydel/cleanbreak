@@ -52,7 +52,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       <Store>
         <Component {...pageProps} />
         <div id='modal' />
-        <ToastContainer position='bottom-right' autoClose={false} />
+        <ToastContainer position='bottom-right' />
       </Store>
     </SessionProvider>
   )
