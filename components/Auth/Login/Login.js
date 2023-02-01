@@ -19,7 +19,8 @@ const Login = ({ setCurrentShow, currentShow, closeAuth }) => {
 
     try {
       const options = { redirect: false, email, password, callbackUrl: '/' }
-      await signIn('credentials', options)
+      const res = await signIn('credentials', options)
+      if (res.error) return toast.error(res.error)
       toast.success('Login successful')
       closeAuth()
     } catch (err) {
@@ -28,19 +29,17 @@ const Login = ({ setCurrentShow, currentShow, closeAuth }) => {
   }
 
   const fields = ['email', 'password']
-  
+
   return (
     <form
       onSubmit={handleSubmit}
       className={styles.login}
       style={{ zIndex: currentShow === 'login' ? '20' : '10' }}>
-      <div className={styles.title}>sign in</div>
+      <div className={styles.title}>LOG IN</div>
       <div className={styles.defaultUserLogin}>
-        for testing:
-        <br />
-        email: test@gmail.com
-        <br />
-        password: password
+        <p>for testing:</p>
+        <p>email: test@gmail.com</p>
+        <p>password: password</p>
       </div>
       {fields.map((field) => (
         <input
@@ -54,12 +53,12 @@ const Login = ({ setCurrentShow, currentShow, closeAuth }) => {
       ))}
 
       <div className={cn(styles.btnsContainer, 'center')}>
-        <button className={styles.loginBtn} type='submit'>
-          sign in
+        <button className={styles.logInBtn} type='submit'>
+          log in
         </button>
         <button
           type='button'
-          className={styles.signupBtn}
+          className={styles.signUpBtn}
           onClick={() => setCurrentShow('register')}>
           sign up
         </button>

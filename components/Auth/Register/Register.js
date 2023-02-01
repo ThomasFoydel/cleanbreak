@@ -41,7 +41,7 @@ const Register = ({ setCurrentShow, currentShow }) => {
       onSubmit={handleSubmit}
       className={styles.register}
       style={{ zIndex: currentShow === 'register' ? '20' : '10' }}>
-      <div className={styles.title}>register</div>
+      <div className={styles.title}>REGISTER</div>
       {inputs.map(({ name, id }) => (
         <input
           className='center'
@@ -57,7 +57,7 @@ const Register = ({ setCurrentShow, currentShow }) => {
       </button>
       <button
         type='button'
-        className={cn(styles.signInBtn, 'center')}
+        className={cn(styles.alreadyHaveAccountBtn, 'center')}
         onClick={() => setCurrentShow('login')}>
         i already have an account
       </button>
