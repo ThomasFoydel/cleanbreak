@@ -13,12 +13,11 @@ const PresetSelector = ({ openAuth }) => {
 
   const { presets, currentPreset } = appState
 
-  const current = findWithAttr(presets, 'text', currentPreset)
-
   const handleSelector = (e) => {
     const { id } = e.target
     if (!loggedIn) return openAuth()
     if (presets.length === 0) return
+    const current = findWithAttr(presets, 'name', currentPreset.name)
 
     let newCurrent
     if (id === 'left') {
@@ -33,7 +32,7 @@ const PresetSelector = ({ openAuth }) => {
     updateState({
       type: 'LOAD_PRESET',
       payload: { value: newCurrent.value },
-      current: newCurrent.text
+      current: newCurrent
     })
   }
 
@@ -59,7 +58,7 @@ const PresetSelector = ({ openAuth }) => {
             width: dropDown ? '23.6rem' : '24rem',
             height: dropDown ? '4.6rem' : '5rem'
           }}>
-          {appState.currentPreset}
+          {appState.currentPreset.name}
         </div>
         <PresetDropDown open={dropDown} />
       </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import * as Tone from 'tone'
-import samples from '../assets/audio'
 import { findWithAttr } from '../utils'
+import sampleList from '../assets/audio'
 import initialValues from './initialValues'
 
 let Store = () => <></>
@@ -20,12 +20,12 @@ if (Tone && typeof window !== 'undefined') {
   const limiter = new Tone.Limiter(-8).toDestination()
 
   const instruments = {
-    A: new Tone.Player(samples[29].sample),
-    B: new Tone.Player(samples[13].sample),
-    C: new Tone.Player(samples[63].sample),
-    D: new Tone.Player(samples[51].sample),
-    E: new Tone.Player(samples[10].sample),
-    F: new Tone.Player(samples[57].sample)
+    A: new Tone.Player(sampleList[29].audio),
+    B: new Tone.Player(sampleList[13].audio),
+    C: new Tone.Player(sampleList[63].audio),
+    D: new Tone.Player(sampleList[51].audio),
+    E: new Tone.Player(sampleList[10].audio),
+    F: new Tone.Player(sampleList[57].audio)
   }
 
   const instrumentKeys = Object.keys(instruments)
@@ -170,8 +170,10 @@ if (Tone && typeof window !== 'undefined') {
       postEffectChannels[key].pan.value = panVolPans[key]
     }
 
-    for (const sample of samples) {
-      instruments[sample.name].load(sample.sample)
+    for (const s of samples) {
+      const sampleIndex = findWithAttr(sampleList, 'name', s.name)
+      const sample = sampleList[sampleIndex]
+      instruments[s.inst].load(sample.audio)
     }
 
     grid = sequencerGrid
@@ -196,13 +198,13 @@ if (Tone && typeof window !== 'undefined') {
         return { ...state, swing: payload }
 
       case 'CHANGE_SAMPLE':
-        instruments[name].load(payload.newSampleUrl)
-        const stateCopy = [...state.samples]
-        const currentIndex = stateCopy.findIndex((inst) => inst.name === name)
-        const currentInst = stateCopy[currentIndex]
-        currentInst.sample = payload.newSampleUrl
-        currentInst.sampleName = payload.newSampleName
-        return { ...state, samples: [...stateCopy] }
+        const { sample, inst } = payload
+        const sampleData = { name: sample.name, inst }
+        instruments[inst].load(sample.audio)
+        const updated = state.samples.map((s) =>
+          s.inst === inst ? sampleData : s
+        )
+        return { ...state, samples: updated }
 
       case 'CHANGE_MIXER':
         preEffectChannels[name].volume.value = value
@@ -303,18 +305,9 @@ if (Tone && typeof window !== 'undefined') {
         }
 
       case 'CHANGE_DISTORTION':
-        if (type === 'distortion') {
-          for (const distortion of Object.values(distortions)) {
-            distortion.distortion = value
-          }
-        }
-        if (type === 'wet') {
-          for (const distortion of Object.values(distortions)) {
-            distortion[type].value = value
-          }
-          for (const channel of Object.values(distortionChannels)) {
-            channel.volume.value = value
-          }
+        for (const distortion of Object.values(distortions)) {
+          if (type === 'distortion') distortion.distortion = value
+          if (type === 'wet') distortion[type].value = value
         }
         return { ...state, distortion: { ...state.distortion, [type]: value } }
 
@@ -322,26 +315,14 @@ if (Tone && typeof window !== 'undefined') {
         for (const pingPong of Object.values(pingPongs)) {
           pingPong[type].value = value
         }
-        if (type === 'wet') {
-          for (const channel of Object.values(pingPongChannels)) {
-            channel.volume.value = value
-          }
-        }
         return { ...state, pingPong: { ...state.pingPong, [type]: value } }
 
       case 'CHANGE_REVERB':
-        if (type === 'wet') {
-          for (const reverb of Object.values(reverbs)) reverb.wet.value = value
-          for (const channel of Object.values(reverbChannels)) {
-            channel.volume.value = value
-          }
-        } else {
-          for (const reverb of Object.values(reverbs)) reverb[type] = value
+        for (const reverb of Object.values(reverbs)) {
+          if (type === 'wet') reverb.wet.value = value
+          else reverb[type] = value
         }
-        return {
-          ...state,
-          reverb: { ...state.reverb, [type]: value }
-        }
+        return { ...state, reverb: { ...state.reverb, [type]: value } }
 
       case 'START':
         if (!started) {

@@ -78,12 +78,12 @@ const initialValues = {
     E: 0
   },
   samples: [
-    { name: 'A', sample: samples[29].sample, sampleName: samples[29].name },
-    { name: 'B', sample: samples[13].sample, sampleName: samples[13].name },
-    { name: 'C', sample: samples[63].sample, sampleName: samples[63].name },
-    { name: 'D', sample: samples[51].sample, sampleName: samples[51].name },
-    { name: 'E', sample: samples[10].sample, sampleName: samples[10].name },
-    { name: 'F', sample: samples[57].sample, sampleName: samples[57].name }
+    { inst: 'A', name: samples[29].name },
+    { inst: 'B', name: samples[13].name },
+    { inst: 'C', name: samples[63].name },
+    { inst: 'D', name: samples[51].name },
+    { inst: 'E', name: samples[10].name },
+    { inst: 'F', name: samples[57].name }
   ],
   sequencerGrid: {
     A: [2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0],

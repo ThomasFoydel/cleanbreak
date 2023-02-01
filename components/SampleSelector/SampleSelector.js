@@ -1,79 +1,60 @@
 import React, { useContext } from 'react'
 import SampleDropDown from './SampleDropDown'
 import styles from './SampleSelector.module.scss'
+import sampleList from '../../assets/audio'
 import { CTX } from '../../context/Store'
-import samples from '../../assets/audio'
 
 const SampleSelector = () => {
-  const [appState, updateState] = useContext(CTX)
+  const [{ samples }, updateState] = useContext(CTX)
 
   const handleIncDec = (e) => {
-    const direction = e.target.attributes[1].value
-    const { id, name } = e.target
-    const instrumentIndex = appState.samples.findIndex(
-      (sample) => sample.name === name
-    )
-    const currentSampleName = appState.samples[instrumentIndex].sampleName
-    let sampleIndex = samples.findIndex(
-      (sample) => sample.name === currentSampleName
-    )
+    const { id, name, attributes } = e.target
+    const direction = attributes.direction.value
+
+    let sampleIndex = sampleList.findIndex((sample) => sample.name === name)
     if (direction === 'increment') {
-      if (sampleIndex < samples.length - 1) {
-        sampleIndex++
-      } else {
-        sampleIndex = 0
-      }
-    } else if (direction === 'decrement') {
-      if (sampleIndex > 0) {
-        sampleIndex--
-      } else {
-        sampleIndex = samples.length - 1
-      }
+      if (sampleIndex < sampleList.length - 1) sampleIndex++
+      else sampleIndex = 0
     }
-    const newSampleUrl = samples[sampleIndex].sample
-    const newSampleName = samples[sampleIndex].name
+    if (direction === 'decrement') {
+      if (sampleIndex > 0) sampleIndex--
+      else sampleIndex = sampleList.length - 1
+    }
+
+    const newSample = sampleList[sampleIndex]
+
     updateState({
       type: 'CHANGE_SAMPLE',
-      payload: {
-        instrument: id,
-        newSampleUrl,
-        newSampleName,
-        sampleIndex,
-        name: name
-      }
+      payload: { sample: newSample, inst: id }
     })
   }
 
-  const handleClear = (e) => {
-    const { name } = e.target
-    updateState({ type: 'CLEAR_GRID_INST', payload: { name } })
+  const handleClear = ({ target }) => {
+    updateState({ type: 'CLEAR_GRID_INST', payload: { name: target.name } })
   }
 
   return (
     <div className={styles.sampleSelectorContainer}>
-      {appState.samples.map((instrument, i) => (
+      {samples.map(({ inst, name }, i) => (
         <div className={styles.sampleSelector} key={i}>
           <button
-            id={instrument.type}
-            name={instrument.name}
+            id={inst}
+            name={name}
             direction='decrement'
             onClick={handleIncDec}
             className={styles.selectorBtn}>
             {'<'}
           </button>
-          <SampleDropDown name={instrument.name} samples={samples} />
+          <SampleDropDown sampleName={name} inst={inst} />
           <button
-            id={instrument.type}
-            name={instrument.name}
+            id={inst}
+            name={name}
             direction='increment'
             onClick={handleIncDec}
             className={styles.selectorBtn}>
             {'>'}
           </button>
-          <button
-            name={instrument.name}
-            onClick={handleClear}
-            className={styles.clearBtn}>
+          <button name={name} onClick={handleClear} className={styles.clearBtn}>
             clear
           </button>
         </div>

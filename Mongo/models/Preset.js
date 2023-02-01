@@ -73,13 +73,7 @@ const presetData = new Schema({
     D: { type: Number },
     E: { type: Number }
   },
-  samples: [
-    {
-      name: { type: String },
-      sample: { type: String },
-      sampleName: { type: String }
-    }
-  ],
+  samples: [{ name: { type: String }, inst: { type: String } }],
   sequencerGrid: {
     A: { type: [Number] },
     B: { type: [Number] },

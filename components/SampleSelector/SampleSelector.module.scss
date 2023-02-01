@@ -4,9 +4,11 @@
   height: 30rem;
   border-radius: 2px;
 }
+
 .sampleSelector {
   display: flex;
   height: 5rem;
+  align-items: center;
 
   .selectorBtn {
     font-weight: bold;
@@ -32,16 +34,16 @@
   }
 }
 
-.sampleDropdown {
-  background: rgb(209, 209, 209);;
+.sampleDropDown {
+  background: rgb(209, 209, 209);
   height: 4.2rem;
   border: 2px solid transparent;
-  padding-top: 1.2rem;
-  margin-top: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 2px;
   color: rgb(5, 5, 5);
-  width: 80%;
-  font-size: 1rem;
+  width: 7rem;
   text-align: center;
   position: relative;
   cursor: pointer;
@@ -50,8 +52,7 @@
     background: rgb(100, 100, 100);
     border: 2px solid rgb(175, 24, 24);
   }
-  // .currentSampleName { }
-  
+
   .currentSampleName,
   .sampleName {
     cursor: pointer;
@@ -60,11 +61,14 @@
   .sampleName {
     border-radius: 2px;
     background: rgb(194, 194, 194);
-    transition: all 0.2s ease;
+    transition: all 0.4s ease;
+    padding: 0.2rem 0;
+    border: 1px solid lightgrey;
 
     &:hover {
       background: rgb(59, 59, 59);
       color: rgb(235, 63, 63);
+      border: 1px solid rgb(59, 59, 59);
     }
   }
 
@@ -73,10 +77,10 @@
     overflow-y: scroll;
     position: absolute;
     background: rgb(175, 24, 24);
-    width: 6.6rem;
-    margin-left: 50%;
-    transform: translate(-50%);
-    margin-top: 0.9rem;
+    width: 7rem;
+    left: 50%;
+    top: 4rem;
+    transform: translateX(-50%);
     border-radius: 2px;
     border: 2px solid rgb(175, 24, 24);
     border-top: none;

@@ -7,12 +7,14 @@ import styles from './Presets.module.scss'
 import { CTX } from '../../context/Store'
 
 const filterOut = ['user', 'presets', 'playing', 'clickActive', 'currentPreset']
+const sampleFilter = ({ name, sampleName }) => ({ name, sampleName })
 
 const filter = (state) => {
   return Object.keys(state)
     .filter((key) => !filterOut.includes(key))
     .reduce((obj, key) => {
-      obj[key] = state[key]
+      if (key === 'samples') obj[key] = sampleFilter(state[key])
+      else obj[key] = state[key]
       return obj
     }, {})
 }
@@ -35,24 +37,15 @@ const Presets = ({ openAuth }) => {
     }
 
     const filteredState = filter(appState)
-    Axios.post('api/presets', {
-      name: presetName,
-      state: filteredState,
-      username: appState.user.name
-    })
+
+    Axios.post('api/presets', { name: presetName, state: filteredState })
       .then((result) => {
         if (result.data.status === 'error') {
           closeAll()
           setPresetName('')
           return toast.error(result.data.message)
         }
-        updateState({
-          type: 'UPDATE_PRESETS',
-          payload: {
-            presets: result.data.presets,
-            current: result.data.current
-          }
-        })
+        updateState({ type: 'ADD_PRESET', payload: result.data.preset })
         closeAll()
         toast.success(result.data.message)
         setPresetName('')
@@ -86,9 +79,8 @@ const Presets = ({ openAuth }) => {
   }
 
   const deletePreset = () => {
-    Axios.delete(`/api/presets/${appState.currentPreset.id}`, {
-      name: appState.currentPreset.name,
-      username: appState.user.name
+    Axios.delete(`/api/presets/${appState.currentPreset._id}`, {
+      name: appState.currentPreset.name
     })
       .then((result) => {
         if (result.data.status === 'error') {

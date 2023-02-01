@@ -1,16 +1,16 @@
 import cn from 'classnames'
 import React, { useContext } from 'react'
 import styles from './PresetDropDown.module.scss'
+import { findWithAttr } from '../../../utils'
 import { CTX } from '../../../context/Store'
 
 const PresetDropDown = ({ open }) => {
-  const [appState, updateState] = useContext(CTX)
+  const [{ presets, currentPreset }, updateState] = useContext(CTX)
 
   const handleSelect = (e) => {
-    let { id } = e.target
-    let name = e.target.getAttribute('name')
-    let value = JSON.parse(id)
-    updateState({ type: 'LOAD_PRESET', payload: { value }, current: name })
+    const selectedPresetIndex = findWithAttr(presets, 'name', id)
+    const selectedPreset = presets[selectedPresetIndex]
+    updateState({ type: 'LOAD_PRESET', payload: selectedPreset })
   }
 
   return (
@@ -24,18 +24,16 @@ const PresetDropDown = ({ open }) => {
           : 'translateX(-50%) translateY(-5rem)'
       }}>
       <div className={styles.presetsList}>
-        {appState.presets.map((preset) => (
+        {presets.map((preset) => (
           <div
             className={cn(
               styles.presetName,
-              preset.text === appState.currentPreset &&
-                styles.currentActivePreset
+              preset.name === currentPreset.name && styles.currentActivePreset
             )}
-            key={preset.text}
-            id={JSON.stringify(preset.value)}
-            name={preset.text}
+            key={preset.name}
+            id={preset.name}
             onClick={handleSelect}>
-            {preset.text}
+            {preset.name}
           </div>
         ))}
       </div>

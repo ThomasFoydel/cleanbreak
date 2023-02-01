@@ -1,47 +1,29 @@
 import cn from 'classnames'
 import React, { useContext, useState } from 'react'
 import styles from './SampleSelector.module.scss'
+import sampleList from '../../assets/audio'
 import { CTX } from '../../context/Store'
 
-const SampleDropDown = ({ name, samples }) => {
-  const [appState, updateState] = useContext(CTX)
+const SampleDropDown = ({ sampleName, inst }) => {
+  const [, updateState] = useContext(CTX)
   const [opened, setOpened] = useState(false)
 
-  const index = appState.samples.findIndex((sample) => sample.name === name)
-
-  const handleSelect = (e) => {
-    e.preventDefault()
-    const { id } = e.target
-    const newSampleName = e.target.attributes.name.value
-    const index = appState.samples.findIndex(
-      (sample) => sample.name === newSampleName
-    )
-
-    updateState({
-      type: 'CHANGE_SAMPLE',
-      payload: {
-        instrument: name,
-        newSampleUrl: id,
-        newSampleName,
-        sampleIndex: index,
-        name
-      }
-    })
+  const handleSelect = (name) => {
+    const selectedIndex = sampleList.findIndex((s) => s.name === name)
+    const selectedSample = sampleList[selectedIndex]
+    const payload = { sample: selectedSample, inst }
+    updateState({ type: 'CHANGE_SAMPLE', payload })
   }
 
-  const handleClick = (e) => {
-    if (e.target.getAttribute('type') === 'sample-name') {
-      handleSelect(e)
-    } else setOpened(!opened)
-  }
+  const toggleOpen = () => setOpened(!opened)
 
   return (
     <div
-      className={styles.sampleDropdown}
-      onClick={handleClick}
+      className={styles.sampleDropDown}
+      onClick={toggleOpen}
       onMouseLeave={() => setOpened(false)}>
       <div className={styles.currentSampleName}>
-        {appState.samples[index].sampleName}
+        <p>{sampleName}</p>
       </div>
       <div
         className={styles.hoverOpen}
@@ -52,19 +34,18 @@ const SampleDropDown = ({ name, samples }) => {
             ? 'translateX(-50%) translateY(0)'
             : 'translateX(-50%) translateY(-4rem)'
         }}>
-        {samples.map((sample, i) => (
+        {sampleList.map(({ name }) => (
           <div
             type='sample-name'
             className={cn(
               styles.sampleName,
-              sample.name === appState.samples[index].sampleName &&
-                styles.currentActiveSample
+              name === sampleName && styles.currentActiveSample
             )}
-            name={sample.name}
-            onClick={handleClick}
-            id={sample.sample}
-            key={i}>
-            {sample.name}
+            name={name}
+            onClick={() => handleSelect(name)}
+            id={name}
+            key={name}>
+            {name}
           </div>
         ))}
       </div>
