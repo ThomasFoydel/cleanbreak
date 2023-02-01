@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
-import { CTX } from '../../context/Store'
+import styles from '../TempoAndSwing.module.scss'
+import { CTX } from '../../../context/Store'
 
 const Tempo = () => {
   const [{ bpm }, updateState] = useContext(CTX)
@@ -10,11 +11,11 @@ const Tempo = () => {
 
   return (
     <div>
-      <div className='name'>tempo</div>
+      <div className={styles.name}>tempo</div>
       <input
         type='range'
-        min='65'
-        max='200'
+        min={65}
+        max={200}
         value={bpm}
         onChange={handleChange}
       />
