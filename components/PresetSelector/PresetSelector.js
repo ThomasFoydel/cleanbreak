@@ -2,7 +2,7 @@ import { useSession } from 'next-auth/react'
 import React, { useContext, useState } from 'react'
 import PresetDropDown from './PresetDropDown/PresetDropDown'
 import styles from './PresetSelector.module.scss'
-import { findWithAttr } from '../../utils'
+import { findIndexWithAttr } from '../../utils'
 import { CTX } from '../../context/Store'
 
 const PresetSelector = ({ openAuth }) => {
@@ -15,7 +15,7 @@ const PresetSelector = ({ openAuth }) => {
     const { id } = e.target
     if (!loggedIn) return openAuth()
     if (presets.length <= 1) return
-    const current = findWithAttr(presets, 'name', currentPreset?.name)
+    const current = findIndexWithAttr(presets, 'name', currentPreset?.name)
 
     let newCurrent
     if (id === 'left') {

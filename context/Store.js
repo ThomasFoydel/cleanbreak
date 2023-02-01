@@ -171,8 +171,7 @@ if (Tone && typeof window !== 'undefined') {
     }
 
     for (const s of samples) {
-      const sampleIndex = findWithAttr(sampleList, 'name', s.name)
-      const sample = sampleList[sampleIndex]
+      const sample = findWithAttr(sampleList, 'name', s.name)
       instruments[s.inst].load(sample.audio)
     }
 
@@ -350,9 +349,9 @@ if (Tone && typeof window !== 'undefined') {
         return { ...state }
 
       case 'LOAD_PRESET':
-        const presetIndex = findWithAttr(state.presets, 'name', payload.name)
-        applyPreset(state.presets[presetIndex].state)
-        return { ...state, ...payload.state, currentPreset: payload }
+        const preset = findWithAttr(state.presets, 'name', payload.name)
+        applyPreset(preset.state)
+        return { ...state, ...preset.state, currentPreset: preset }
 
       case 'REMOVE_PRESET':
         const removedIndex = state.presets.findIndex((p) => p._id === payload)

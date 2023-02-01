@@ -8,8 +8,7 @@ const PresetDropDown = ({ open, onClose }) => {
   const [{ presets, currentPreset }, updateState] = useContext(CTX)
 
   const handleSelect = ({ target }) => {
-    const selectedPresetIndex = findWithAttr(presets, 'name', target.id)
-    const selectedPreset = presets[selectedPresetIndex]
+    const selectedPreset = findWithAttr(presets, 'name', target.id)
     updateState({ type: 'LOAD_PRESET', payload: selectedPreset })
     onClose()
   }
