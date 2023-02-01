@@ -345,13 +345,9 @@ if (Tone && typeof window !== 'undefined') {
         }
       }
 
-      case 'REVERT':
-        return { ...state }
-
       case 'LOAD_PRESET':
-        const preset = findWithAttr(state.presets, 'name', payload.name)
-        applyPreset(preset.state)
-        return { ...state, ...preset.state, currentPreset: preset }
+        applyPreset(payload.state)
+        return { ...state, ...payload.state, currentPreset: payload }
 
       case 'REMOVE_PRESET':
         const removedIndex = state.presets.findIndex((p) => p._id === payload)

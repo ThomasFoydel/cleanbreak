@@ -18,10 +18,7 @@ const RevertButton = ({ openAuth }) => {
         if (result.data.status === 'error') {
           return toast.error(result.data.message)
         }
-        updateState({
-          type: 'LOAD_PRESET',
-          payload: result.data.preset
-        })
+        updateState({ type: 'LOAD_PRESET', payload: result.data.preset })
         toast.success('Preset reverted')
       })
       .catch(() => toast.error('Revert failed'))
