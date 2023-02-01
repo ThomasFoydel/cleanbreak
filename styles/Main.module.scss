@@ -31,18 +31,21 @@
 
 .openAuth {
   width: 100%;
-  background: rgba(63, 63, 63, 0.4);
-  color: rgba(255, 255, 255, 0.4);
+  background: rgba(41, 41, 41, 0.7);
+  color: rgba(255, 255, 255, 0.878);
+  backdrop-filter: blur(4px);
+  border: none;
+  padding: 1.15rem;
   font-size: 2rem;
   letter-spacing: 1.2rem;
   text-align: center;
   transition: all 0.2s ease;
   position: fixed;
   z-index: 1;
+  opacity: 0;
 
   &:hover {
-    background: rgba(63, 63, 63, 1);
-    color: rgba(255, 255, 255, 1);
+    opacity: 1;
   }
 }
 
@@ -58,10 +61,16 @@
 .logOutBtn {
   position: absolute;
   right: 1rem;
-  opacity: 0.6;
-  padding: 0.2rem 1rem;
+  opacity: 0.95;
+  padding: 0.4rem 1.4rem;
+  background: rgb(208, 208, 208);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  border: none;
+  top: 1rem;
 
   &:hover {
+    background: white;
     opacity: 1;
   }
 }

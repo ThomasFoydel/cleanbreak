@@ -59,7 +59,7 @@ function App() {
     <div className={styles.App}>
       {!loggedIn && (
         <button className={styles.openAuth} onClick={openAuth}>
-          login / register
+          LOGIN / REGISTER
         </button>
       )}
       <div className={styles.background}></div>
