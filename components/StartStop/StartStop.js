@@ -15,10 +15,14 @@ const StartStop = () => {
     <div className={styles.startStop}>
       <TempoAndSwing />
       <div className={styles.buttonsContainer}>
-        <div className={styles.triangleContainer} onClick={handleStart}>
+        <div
+          className={cn(styles.triangleContainer, playing && styles.pushedIn)}
+          onClick={handleStart}>
           <div className={cn(styles.playTriangle, playing && styles.playing)} />
         </div>
-        <div className={styles.pauseContainer} onClick={handleStop}>
+        <div
+          className={cn(styles.pauseContainer, !playing && styles.pushedIn)}
+          onClick={handleStop}>
           <div
             className={cn(
               styles.pauseButton,
