@@ -317,3 +317,31 @@ input:focus {
 .active {
   background: rgb(148, 35, 35) !important;
 }
+
+.Toastify__toast-container {
+  font-size: 16px;
+}
+
+.Toastify__progress-bar {
+  background: rgb(116, 34, 34) !important;
+}
+
+.Toastify__toast--error,
+.Toastify__toast--info,
+.Toastify__toast--success {
+  background: rgba(228, 47, 47, 0.613) !important;
+  backdrop-filter: blur(4px);
+  color: rgb(255, 255, 255) !important;
+  font-family: 'Source Sans Pro', sanserif !important;
+  box-shadow: 7px 7px 12px #00000047 !important;
+}
+
+.Toastify__toast--info svg,
+.Toastify__toast--error svg,
+.Toastify__toast--success svg {
+  fill: rgb(255, 255, 255);
+}
+
+.Toastify__close-button--light {
+  opacity: 0.6;
+}
