@@ -16,8 +16,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           content='https://cleanbreak.vercel.app/images/preview.jpg'
         />
 
-        <meta property='og:image:width' content='1800px' />
-        <meta property='og:image:height' content='1800px' />
+        <meta property='og:image:width' content='1200px' />
+        <meta property='og:image:height' content='630px' />
         <meta property='og:title' content='CLEAN BREAK' />
         <meta
           property='og:description'
