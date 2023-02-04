@@ -27,6 +27,10 @@ This project uses:
 - MongoDB / Mongoose
 - ToneJS
 
+<div align="center">
+<img src="./public/images/diagram.png" width="100%" >
+</div>
+
 See the rest of my portfolio at <a href="https://thomasfoydel.com/">https://thomasfoydel.com/</a>
 
 See my other project repositories at <a href="https://github.com/thomasFoydel">https://github.com/thomasFoydel</a>
